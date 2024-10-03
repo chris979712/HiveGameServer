@@ -87,9 +87,6 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>HiveDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>HiveDataModel.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
