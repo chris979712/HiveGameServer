@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiveGameServerCLI", "HiveGameServerCLI\HiveGameServerCLI.csproj", "{3D0D67B8-8FBB-4089-ADBC-7ACF032DABF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiveGameServer", "HiveGameServerCLI\HiveGameServer.csproj", "{3D0D67B8-8FBB-4089-ADBC-7ACF032DABF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HiveGameService", "HiveGameService\HiveGameService.csproj", "{B674E230-3D3F-4DA7-888A-2329B381A385}"
 EndProject
