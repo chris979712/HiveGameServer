@@ -22,7 +22,7 @@ namespace HiveGameServer
             profile.imagePath = "Imagen1.jpg";
             profile.reputation = 100;
             int resultadoServicio = servicio.AddUser(profile);
-            Console.WriteLine("El resultado de la inserción es: "+resultadoServicio);
+            Console.WriteLine("El resultado de la inserción es: "+resultadoServicio);   
         }
     }
 }
