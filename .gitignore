@@ -319,11 +319,11 @@ FodyWeavers.xsd
 *.sln.iml
 
 #Ignorar cambios en las carpetas bin y obj
-HiveGameServer/HiveGameServer/DataBaseManager/bin
-HiveGameServer/HiveGameServer/DataBaseManager/obj
-HiveGameServer/HiveGameServer/HiveGameServerCLI/bin
-HiveGameServer/HiveGameServer/HiveGameServerCLI/obj
-HiveGameServer/HiveGameServer/HiveGameService/bin
-HiveGameServer/HiveGameServer/HiveGameService/obj
-HiveGameServer/HiveGameServer/HiveGameService/.vs
+/HiveGameServer/DataBaseManager/bin
+/HiveGameServer/DataBaseManager/obj
+/HiveGameServer/HiveGameServerCLI/bin
+/HiveGameServer/HiveGameServerCLI/obj
+/HiveGameServer/HiveGameService/bin
+/HiveGameServer/HiveGameService/obj
+/HiveGameServer/HiveGameService/.vs
 
