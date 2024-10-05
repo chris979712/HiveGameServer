@@ -318,10 +318,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-#Ignorar carpetas bin y obj
+#Ignorar cambios en las carpetas bin y obj
 HiveGameServer/HiveGameServer/DataBaseManager/bin
 HiveGameServer/HiveGameServer/DataBaseManager/obj
 HiveGameServer/HiveGameServer/HiveGameServerCLI/bin
 HiveGameServer/HiveGameServer/HiveGameServerCLI/obj
 HiveGameServer/HiveGameServer/HiveGameService/bin
 HiveGameServer/HiveGameServer/HiveGameService/obj
+
