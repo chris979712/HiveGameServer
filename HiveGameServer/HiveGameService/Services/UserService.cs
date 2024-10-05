@@ -123,7 +123,7 @@ namespace HiveGameService.Services
                         try
                         {
                             var existingAccessAccount = dataBaseContext.AccesAccount.FirstOrDefault(accessAccount => accessAccount.email == email);
-                            var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == profileDataBase.idAccesAccount);
+                            var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
                             if (existingAccessAccount != null && existingProfile != null)
                             {
                                 existingAccessAccount.username = profile.email;
