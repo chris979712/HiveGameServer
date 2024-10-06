@@ -326,3 +326,9 @@ HiveGameServer/HiveGameServer/HiveGameServerCLI/obj
 HiveGameServer/HiveGameServer/HiveGameService/bin
 HiveGameServer/HiveGameServer/HiveGameService/obj
 
+HiveGameServer/DataBaseManager/bin
+HiveGameServer/DataBaseManager/obj
+HiveGameServer/HiveGameServerCLI/bin
+HiveGameServer/HiveGameServerCLI/obj
+HiveGameServer/HiveGameService/bin
+HiveGameServer/HiveGameService/obj
