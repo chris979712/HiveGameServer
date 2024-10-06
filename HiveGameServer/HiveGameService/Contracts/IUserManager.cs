@@ -28,15 +28,15 @@ namespace HiveGameService.Contracts
     {
 
         [DataMember]
-        public int idProfile;
+        public int idProfile {  get; set; }
         [DataMember]
-        public DateTime createdDate;
+        public DateTime createdDate {  get; set; }
         [DataMember]
-        public string imagePath;
+        public string imagePath {  get; set; }
         [DataMember]
-        public string nickname;
+        public string nickname {  get; set; }
         [DataMember]
-        public int idAccount;
+        public int idAccount {  get; set; }
 
     }
 
@@ -45,15 +45,15 @@ namespace HiveGameService.Contracts
     {
 
         [DataMember]
-        public int idAccesAccount;
+        public int idAccesAccount {  get; set; }
         [DataMember]
-        public string username;
+        public string username {  get; set; }
         [DataMember] 
-        public string password;
+        public string password {  get; set; }
         [DataMember]
-        public string email;
+        public string email {  get; set; }
         [DataMember]
-        public int reputation;
+        public int reputation {  get; set; }
 
     }
 }
