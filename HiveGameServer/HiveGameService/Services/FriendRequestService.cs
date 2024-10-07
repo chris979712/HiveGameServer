@@ -59,7 +59,8 @@ namespace HiveGameService.Services
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
                 {
-                    friendRequestsList = dataBaseContext.Friendship.Where(user => user.idPlayerTwo == player.idAccount)
+                    friendRequestsList = dataBaseContext.Friendship.Where(user => user.idPlayerTwo == player.idAccount &&
+                        user.state == Utilities.Enumerations.FriendshipStates.Requested.ToString())
                         .Join(dataBaseContext.Profile, user => user.idPlayerTwo, playerFound => playerFound.FK_IdAccount,
                         (user, playerFound) => new Contracts.Profile
                         {
@@ -122,7 +123,7 @@ namespace HiveGameService.Services
             int responseResult = Constants.ERROR_OPERATION;
             try
             {
-                using (var dataBaseContext = new HiveEntityDataModel())
+                using(var dataBaseContext = new HiveEntityDataModel())
                 {
                     var existingFriendRequest = dataBaseContext.Friendship.FirstOrDefault(friendRequest => friendRequest.FK_idPlayerOne == playerOne.idAccount && friendRequest.idPlayerTwo == playerTwo.idAccount);
                     if (existingFriendRequest != null)
