@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HiveGameService.Utilities.Enumerations;
 
 namespace HiveGameService.Services
 {
@@ -22,8 +23,8 @@ namespace HiveGameService.Services
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
                 {
-                    var existingFriendship = dataBaseContext.Friendship.FirstOrDefault(friendship => (friendship.FK_idPlayerOne == removingPlayer.idAccount && friendship.idPlayerTwo == friendToRemove.idAccount) ||
-                        (friendship.FK_idPlayerOne == friendToRemove.idAccount && friendship.idPlayerTwo == removingPlayer.idAccount));
+                    var existingFriendship = dataBaseContext.Friendship.FirstOrDefault(friendship => ((friendship.FK_idPlayerOne == removingPlayer.idAccount && friendship.idPlayerTwo == friendToRemove.idAccount) ||
+                        (friendship.FK_idPlayerOne == friendToRemove.idAccount && friendship.idPlayerTwo == removingPlayer.idAccount)) && friendship.state == Enumerations.FriendshipStates.Accepted.ToString());
                     if (existingFriendship != null)
                     {
                         dataBaseContext.Friendship.Remove(existingFriendship);
