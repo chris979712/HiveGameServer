@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {
-    partial class FriendRequestService : IFriendRequestManager
+    public partial class HiveGameService : IFriendRequestManager
     {
         public int CreateFriendRequest(Contracts.Profile playerOne, Contracts.Profile playerTwo)
         {

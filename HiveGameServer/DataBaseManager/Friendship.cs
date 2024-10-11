@@ -19,6 +19,6 @@ namespace DataBaseManager
         public int FK_idPlayerOne { get; set; }
         public string state { get; set; }
     
-        public virtual AccesAccount AccesAccount { get; set; }
+        public virtual AccessAccount AccessAccount { get; set; }
     }
 }

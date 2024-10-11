@@ -55,7 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccesAccount.cs">
+    <Compile Include="AccessAccount.cs">
       <DependentUpon>HiveDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Friendship.cs">

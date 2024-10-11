@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eee564141a7b46d1923fc924bf32db61" Name="Diagram1" ZoomLevel="57">
-        <EntityTypeShape EntityType="HiveModel.AccesAccount" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HiveModel.Friendship" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="HiveModel.Match" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="HiveModel.Profile" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="HiveModel.Leaderboard" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
-        <AssociationConnector Association="HiveModel.AccountLeaderBoard" ManuallyRouted="false" />
-        <AssociationConnector Association="HiveModel.AccountProfile" ManuallyRouted="false" />
-        <AssociationConnector Association="HiveModel.Friendships" ManuallyRouted="false" />
-        <AssociationConnector Association="HiveModel.StarterOfTheMatch" ManuallyRouted="false" />
+      <Diagram DiagramId="eee564141a7b46d1923fc924bf32db61" Name="Diagram1" ZoomLevel="52">
+        <EntityTypeShape EntityType="HiveModel.Friendship" PointX="7.125" PointY="6.25" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HiveModel.Match" PointX="5.625" PointY="0.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HiveModel.Profile" PointX="3.625" PointY="7.625" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HiveModel.Leaderboard" PointX="7.125" PointY="3.125" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HiveModel.AccessAccount" PointX="1.5" PointY="3.625" Width="1.5" />
+        <AssociationConnector Association="HiveModel.AccountLeaderBoard1" />
+        <AssociationConnector Association="HiveModel.AccountProfile1" />
+        <AssociationConnector Association="HiveModel.Friendships1" />
+        <AssociationConnector Association="HiveModel.StarterOfTheMatch1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

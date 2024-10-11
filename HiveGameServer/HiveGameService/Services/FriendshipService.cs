@@ -9,11 +9,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HiveGameService.Utilities.Enumerations;
 
 namespace HiveGameService.Services
 {
-    internal class FriendshipService : IFriendshipManager
+    public partial class HiveGameService : IFriendshipManager
     {
         public int DeleteFriend(Contracts.Profile removingPlayer, Contracts.Profile friendToRemove)
         {
@@ -55,20 +54,32 @@ namespace HiveGameService.Services
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             List<Contracts.Profile> friendsListFounded = new List<Contracts.Profile>();
+            List<DataBaseManager.Friendship> friendShipsListFounded = new List<DataBaseManager.Friendship>();
+            List<int> idFoundAccounts = new List<int>();   
             Contracts.Profile failedSearching = new Contracts.Profile();
             failedSearching.idProfile = Constants.ERROR_OPERATION;
             try
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
                 {
-                    friendsListFounded = dataBaseContext.Friendship.Where(user => (user.FK_idPlayerOne == player.idAccount ||
-                    user.idPlayerTwo == player.idAccount) && user.state == Utilities.Enumerations.FriendshipStates.Accepted.ToString())
-                        .Select(friendship => friendship.FK_idPlayerOne == player.idProfile
-                         ?dataBaseContext.AccesAccount.Where(account => account.idAccessAccount == friendship.idPlayerTwo).
-                         Select(account => account.Profile).FirstOrDefault()
-                         : dataBaseContext.AccesAccount.Where(account => account.idAccessAccount == friendship.FK_idPlayerOne).
-                         Select(account => account.Profile).FirstOrDefault()
-                    ).Where(profile => profile != null && profile.idProfile != player.idProfile).ToList();
+                    friendShipsListFounded = dataBaseContext.Friendship.Where(FriendShip => (FriendShip.FK_idPlayerOne == player.idAccount ||
+                    FriendShip.idPlayerTwo == player.idAccount) && FriendShip.state == Utilities.Enumerations.FriendshipStates.Accepted.ToString()).ToList();
+                    for(int counterFriendshipListIndex = 0;counterFriendshipListIndex < friendShipsListFounded.Count;counterFriendshipListIndex++)
+                    {
+                        DataBaseManager.Friendship friendshipFound = friendShipsListFounded[counterFriendshipListIndex];
+                        if (friendshipFound.idPlayerTwo != player.idAccount)
+                        {
+                            idFoundAccounts.Add(friendshipFound.idPlayerTwo);
+                        }else if(friendshipFound.FK_idPlayerOne != player.idAccount)
+                        {
+                            idFoundAccounts.Add(friendshipFound.FK_idPlayerOne);
+                        }
+                    }
+                    for(int counterIdAccountListFound = 0; counterIdAccountListFound < idFoundAccounts.Count; counterIdAccountListFound++) 
+                    { 
+                        Contracts.Profile foundProfile = (Contracts.Profile)dataBaseContext.Profile.Where(profileFound => profileFound.FK_IdAccount == idFoundAccounts[counterIdAccountListFound]);
+                        friendsListFounded.Add(foundProfile);
+                    }
                 }
             }catch(SqlException sqlException)
             {
@@ -85,23 +96,37 @@ namespace HiveGameService.Services
         public Contracts.Profile GetFriendByUsername(Contracts.Profile player, string username)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            Contracts.Profile foundedFriend = new Contracts.Profile();
+            Contracts.Profile foundFriend = new Contracts.Profile();
+            foundFriend.idAccesAccount = Utilities.Constants.ERROR_OPERATION;
             try
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
                 {
-                    
+                    var acceptedFriendship = dataBaseContext.Friendship.Where(friendship => (friendship.FK_idPlayerOne == player.idAccount ||
+                    friendship.idPlayerTwo == player.idAccount) && friendship.state == Utilities.Enumerations.FriendshipStates.Accepted.ToString()).Join(
+                    dataBaseContext.AccessAccount, friendship => friendship.FK_idPlayerOne == player.idAccount
+                    ?friendship.idPlayerTwo:friendship.FK_idPlayerOne, account => account.idAccessAccount,(friendship, accessAccount) => new { FriendShip = friendship,
+                    AccessAccount = accessAccount}).FirstOrDefault(friendshipAndAccount => friendshipAndAccount.AccessAccount.username == username);
+                    if(acceptedFriendship != null)
+                    {
+                        foundFriend = (Contracts.Profile)dataBaseContext.Profile.Where(profileFound => profileFound.FK_IdAccount == acceptedFriendship.AccessAccount.idAccessAccount);
+                    }
+                    else
+                    {
+                        foundFriend.idAccesAccount = Utilities.Constants.NO_DATA_MATCHES;
+                    }
+
                 }
             }catch(SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                foundedFriend.idProfile = Constants.ERROR_OPERATION;
+                foundFriend.idProfile = Constants.ERROR_OPERATION;
             }catch(EntityException entityException)
             {
                 logger.LogError(entityException);
-                foundedFriend.idProfile = Constants.ERROR_OPERATION;
+                foundFriend.idProfile = Constants.ERROR_OPERATION;
             }
-            return foundedFriend;
+            return foundFriend;
         }
     }
 }
