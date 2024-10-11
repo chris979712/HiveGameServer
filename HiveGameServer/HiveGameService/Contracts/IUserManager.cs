@@ -12,7 +12,7 @@ namespace HiveGameService.Contracts
         int AddUser(Profile profile);
 
         [OperationContract]
-        int UpdateLoginCredentials(Profile profile, Profile updatedProfile);
+        int UpdateLoginCredentials(AccessAccount profile, AccessAccount updatedProfile);
 
         [OperationContract]
         int UpdateProfile(Profile profile, string email);
@@ -24,7 +24,7 @@ namespace HiveGameService.Contracts
     }
 
     [DataContract]
-    public class Profile : AccesAccount
+    public class Profile : AccessAccount
     {
 
         [DataMember]
@@ -41,7 +41,7 @@ namespace HiveGameService.Contracts
     }
 
     [DataContract]
-    public class AccesAccount
+    public class AccessAccount
     {
 
         [DataMember]

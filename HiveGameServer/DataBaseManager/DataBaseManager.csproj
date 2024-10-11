@@ -85,7 +85,8 @@
     <Compile Include="Match.cs">
       <DependentUpon>HiveDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Operations\User.cs" />
+    <Compile Include="Operations\FriendshipOperations.cs" />
+    <Compile Include="Operations\UserOperations.cs" />
     <Compile Include="Profile.cs">
       <DependentUpon>HiveDataModel.tt</DependentUpon>
     </Compile>

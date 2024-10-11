@@ -1,16 +1,11 @@
-﻿using System;
-using System.Data;
-using HiveGameService.Contracts;
+﻿using HiveGameService.Contracts;
 using HiveGameService.Utilities;
 using System.Linq;
 using System.Data.SqlClient;
-using System.Data.Entity;
 using DataBaseManager;
 using System.Text;
 using System.Data.Entity.Infrastructure;
-using System.Linq.Expressions;
-using System.Data.Entity.Core;
-using HiveGameService.Utilities;
+using DataBaseManager.Operations;
 
 namespace HiveGameService.Services
 {
@@ -19,173 +14,62 @@ namespace HiveGameService.Services
 
         public int AddUser(Contracts.Profile profile)
         {
-            LoggerManager logger = new LoggerManager(this.GetType());
-            int result = Constants.ERROR_OPERATION;
-            try
+            UserOperations operations = new UserOperations();
+            DataBaseManager.AccessAccount newAccount = new DataBaseManager.AccessAccount()
             {
-                using(var dataBaseContext = new HiveEntityDataModel())
-                {
-                    using (var dataBaseContextTransaction = dataBaseContext.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            var newAccessAccount = new DataBaseManager.AccessAccount
-                            {
-                                password = Encoding.UTF8.GetBytes(profile.password),
-                                username = profile.username,
-                                email = profile.email,
-                                reputation = profile.reputation
-                            };
-                            dataBaseContext.AccessAccount.Add(newAccessAccount);
-                            dataBaseContext.SaveChanges();
-                            int lastIdAccountInserted = newAccessAccount.idAccessAccount;
-                            var newProfile = new DataBaseManager.Profile
-                            {
-                                imagePath = Constants.DEFAULT_IMAGE_PLAYER,
-                                createdDate = profile.createdDate,
-                                nickname = profile.nickname,
-                                FK_IdAccount = lastIdAccountInserted
-                            };
-                            dataBaseContext.Profile.Add(newProfile);
-                            dataBaseContext.SaveChanges();
-                            dataBaseContextTransaction.Commit();
-                            result = Constants.SUCCES_OPERATION;
-                        }catch(DbUpdateException updateException)
-                        {
-                            logger.LogError(updateException);
-                            dataBaseContextTransaction.Rollback();
-                            result = Constants.ERROR_OPERATION;
-                        }catch(SqlException sqlException)
-                        { 
-                            logger.LogError(sqlException);
-                            dataBaseContextTransaction.Rollback();
-                            result = Constants.ERROR_OPERATION;
-                        }
-                    }
-                }
-            }catch(System.Data.EntityException entityException)
-            {
-                logger.LogError(entityException);  
-            }
-            return result;
+                password = Encoding.UTF8.GetBytes(profile.password),
+                username = profile.username,
+                email = profile.email,
+                reputation = 100
+            };
+            DataBaseManager.Profile newProfile = new DataBaseManager.Profile() { 
+                nickname = profile.nickname,
+                createdDate = profile.createdDate,
+                imagePath = profile.imagePath,
+            };
+            int insertionResult = operations.addUserToDataBase(newProfile,newAccount);
+            return insertionResult;
         }
 
-        public int UpdateLoginCredentials(Contracts.Profile profile, Contracts.Profile updatedProfile)
+        public int UpdateLoginCredentials(Contracts.AccessAccount oldCredentials, Contracts.AccessAccount newCredentials)
         {
-            int updatedResult = -1;
-            LoggerManager logger = new LoggerManager(this.GetType());
-            try
+            UserOperations operations = new UserOperations();
+            DataBaseManager.AccessAccount oldUpdatedAccessAccount = new DataBaseManager.AccessAccount()
             {
-                using(var dataBaseContext = new HiveEntityDataModel())
-                {
-                    try
-                    {
-                        var existingAccessAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == profile.email);
-                        if (existingAccessAccount != null)
-                        {
-                            existingAccessAccount.email = updatedProfile.email;
-                            existingAccessAccount.password = Encoding.UTF8.GetBytes(updatedProfile.password);
-                            dataBaseContext.SaveChanges();
-                            updatedResult = Constants.SUCCES_OPERATION;
-                        }
-                        else
-                        {
-                            updatedResult = 0;
-                        }
-                    }catch(DbUpdateException updateException)
-                    {
-                        logger.LogError(updateException);
-                        updatedResult = Constants.ERROR_OPERATION;
-                    }catch(SqlException sqlException)
-                    {
-                        logger.LogError(sqlException);
-                        updatedResult = Constants.ERROR_OPERATION;
-                    }
-                }
-            }catch(System.Data.EntityException entityException)
-            {
-                logger.LogError(entityException);
-            }
+                idAccessAccount = oldCredentials.idAccesAccount,
+                password = Encoding.UTF8.GetBytes(oldCredentials.password),
+                email = oldCredentials.email
+            };
+            DataBaseManager.AccessAccount updatedAccesAccount = new DataBaseManager.AccessAccount() 
+            { 
+                idAccessAccount = newCredentials.idAccesAccount,
+                password = Encoding.UTF8.GetBytes(newCredentials.password),
+                email = newCredentials.email
+            };
+            int updatedResult = operations.updateLoginCredentialsToDataBase(oldUpdatedAccessAccount, updatedAccesAccount);
             return updatedResult;
-            
         }
 
         public int UpdateProfile(Contracts.Profile profile, string email)
         {
-            int updateResult = -1;
-            LoggerManager logger = new LoggerManager(this.GetType());
-            try
+            UserOperations operations = new UserOperations();
+            DataBaseManager.AccessAccount accessAccount = new DataBaseManager.AccessAccount()
             {
-                using (var dataBaseContext = new HiveEntityDataModel())
-                {
-                    using (var dataBaseContextTransaction = dataBaseContext.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            var existingAccessAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email);
-                            var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
-                            if (existingAccessAccount != null && existingProfile != null)
-                            {
-                                existingAccessAccount.username = profile.email;
-                                existingProfile.nickname = profile.nickname;
-                                existingProfile.imagePath = profile.imagePath;
-                                dataBaseContext.SaveChanges();
-                                dataBaseContextTransaction.Commit();
-                                updateResult = Constants.SUCCES_OPERATION;
-                            }
-                            else
-                            {
-                                updateResult = Constants.NO_DATA_MATCHES;
-                            }
-                        }
-                        catch (DbUpdateException updateException)
-                        {
-                            logger.LogError(updateException);
-                            dataBaseContextTransaction.Rollback();
-                            updateResult = Constants.ERROR_OPERATION;
-                        }
-                        catch (SqlException sqlException)
-                        {
-                            logger.LogError(sqlException);
-                            dataBaseContextTransaction.Rollback();
-                            updateResult = Constants.ERROR_OPERATION;
-                        }
-                    }
-                }
-            }catch(System.Data.EntityException entityException)
+                email = email
+            };
+            DataBaseManager.Profile profileToUpdate = new DataBaseManager.Profile()
             {
-                logger.LogError(entityException);
-            }
+                nickname = profile.nickname,
+                imagePath = profile.imagePath,
+            };
+            int updateResult = operations.updateProfileToDataBase(profileToUpdate,accessAccount, email);
             return updateResult;
         }
 
         public int VerifyExistingAccesAccount(string email, string username)
         {
-            int verificationResult = -1;
-            LoggerManager logger = new LoggerManager(this.GetType());
-            try
-            {
-                using(var dataBaseContext = new HiveEntityDataModel())
-                {
-                    var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email || accessAccount.username == username);
-                    if (existingAccount != null)
-                    {
-                        verificationResult = Constants.NO_DATA_MATCHES;
-                    }
-                    else
-                    {
-                        verificationResult = Constants.DATA_MATCHES;
-                    }
-                }
-            }catch(SqlException sqlException)
-            {
-                logger.LogError(sqlException);
-                verificationResult = Constants.ERROR_OPERATION;
-            }catch(System.Data.EntityException entityException)
-            {
-                logger.LogError(entityException);
-                verificationResult = Constants.ERROR_OPERATION;
-            }
+            UserOperations operations = new UserOperations();
+            int verificationResult = operations.verifyExistingAccessAccountIntoDataBase(email,username);
             return verificationResult;
         }
     }
