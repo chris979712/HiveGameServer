@@ -14,7 +14,7 @@ using HiveGameService.Utilities;
 
 namespace HiveGameService.Services
 {
-    public partial class UserService : IUserManager
+    public partial class HiveGameService : IUserManager
     {
 
         public int AddUser(Contracts.Profile profile)
@@ -29,14 +29,14 @@ namespace HiveGameService.Services
                     {
                         try
                         {
-                            var newAccessAccount = new DataBaseManager.AccesAccount
+                            var newAccessAccount = new DataBaseManager.AccessAccount
                             {
                                 password = Encoding.UTF8.GetBytes(profile.password),
                                 username = profile.username,
                                 email = profile.email,
                                 reputation = profile.reputation
                             };
-                            dataBaseContext.AccesAccount.Add(newAccessAccount);
+                            dataBaseContext.AccessAccount.Add(newAccessAccount);
                             dataBaseContext.SaveChanges();
                             int lastIdAccountInserted = newAccessAccount.idAccessAccount;
                             var newProfile = new DataBaseManager.Profile
@@ -80,7 +80,7 @@ namespace HiveGameService.Services
                 {
                     try
                     {
-                        var existingAccessAccount = dataBaseContext.AccesAccount.FirstOrDefault(accessAccount => accessAccount.email == profile.email);
+                        var existingAccessAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == profile.email);
                         if (existingAccessAccount != null)
                         {
                             existingAccessAccount.email = updatedProfile.email;
@@ -122,7 +122,7 @@ namespace HiveGameService.Services
                     {
                         try
                         {
-                            var existingAccessAccount = dataBaseContext.AccesAccount.FirstOrDefault(accessAccount => accessAccount.email == email);
+                            var existingAccessAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email);
                             var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
                             if (existingAccessAccount != null && existingProfile != null)
                             {
@@ -167,7 +167,7 @@ namespace HiveGameService.Services
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
                 {
-                    var existingAccount = dataBaseContext.AccesAccount.FirstOrDefault(accessAccount => accessAccount.email == email || accessAccount.username == username);
+                    var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email || accessAccount.username == username);
                     if (existingAccount != null)
                     {
                         verificationResult = Constants.NO_DATA_MATCHES;

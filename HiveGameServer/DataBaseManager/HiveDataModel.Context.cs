@@ -27,11 +27,11 @@ namespace DataBaseManager
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AccesAccount> AccesAccount { get; set; }
         public virtual DbSet<Friendship> Friendship { get; set; }
         public virtual DbSet<Match> Match { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
         public virtual DbSet<Leaderboard> Leaderboard { get; set; }
+        public virtual DbSet<AccessAccount> AccessAccount { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

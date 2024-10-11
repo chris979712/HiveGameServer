@@ -4,25 +4,25 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HiveModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AccesAccount">
+    <Schema Namespace="HiveModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessAccount">
           <Key>
             <PropertyRef Name="idAccessAccount" />
           </Key>
-          <Property Name="idAccessAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="varbinary" MaxLength="255" Nullable="false" />
-          <Property Name="email" Type="varchar" MaxLength="254" Nullable="false" />
-          <Property Name="reputation" Type="int" Nullable="false" />
+          <Property Name="idAccessAccount" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="username" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="password" Nullable="false" MaxLength="255" Type="varbinary" />
+          <Property Name="email" Nullable="false" MaxLength="254" Type="varchar" />
+          <Property Name="reputation" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Friendship">
           <Key>
             <PropertyRef Name="idFriendship" />
           </Key>
-          <Property Name="idFriendship" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="idPlayerTwo" Type="int" Nullable="false" />
-          <Property Name="FK_idPlayerOne" Type="int" Nullable="false" />
-          <Property Name="state" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="idFriendship" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="idPlayerTwo" Nullable="false" Type="int" />
+          <Property Name="FK_idPlayerOne" Nullable="false" Type="int" />
+          <Property Name="state" Nullable="false" MaxLength="15" Type="varchar" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -34,37 +34,37 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
             <PropertyRef Name="totalOfMatches" />
             <PropertyRef Name="FK_IdAccount" />
           </Key>
-          <Property Name="wonMatches" Type="int" Nullable="false" />
-          <Property Name="lostMatches" Type="int" Nullable="false" />
-          <Property Name="drawMatches" Type="int" Nullable="false" />
-          <Property Name="totalOfMatches" Type="int" Nullable="false" />
-          <Property Name="FK_IdAccount" Type="int" Nullable="false" />
+          <Property Name="wonMatches" Nullable="false" Type="int" />
+          <Property Name="lostMatches" Nullable="false" Type="int" />
+          <Property Name="drawMatches" Nullable="false" Type="int" />
+          <Property Name="totalOfMatches" Nullable="false" Type="int" />
+          <Property Name="FK_IdAccount" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Match">
           <Key>
             <PropertyRef Name="idMatch" />
           </Key>
-          <Property Name="idMatch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="code" Type="varchar" MaxLength="6" Nullable="false" />
-          <Property Name="date" Type="date" Nullable="false" />
-          <Property Name="state" Type="varchar" MaxLength="15" Nullable="false" />
-          <Property Name="FK_IdAccount" Type="int" Nullable="false" />
+          <Property Name="idMatch" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="code" Nullable="false" MaxLength="6" Type="varchar" />
+          <Property Name="date" Nullable="false" Type="date" />
+          <Property Name="state" Nullable="false" MaxLength="15" Type="varchar" />
+          <Property Name="FK_IdAccount" Nullable="false" Type="int" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="idProfile" />
           </Key>
-          <Property Name="idProfile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="imagePath" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="createdDate" Type="date" Nullable="false" />
-          <Property Name="nickname" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FK_IdAccount" Type="int" Nullable="false" />
+          <Property Name="idProfile" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
+          <Property Name="imagePath" Nullable="false" MaxLength="255" Type="varchar" />
+          <Property Name="createdDate" Nullable="false" Type="date" />
+          <Property Name="nickname" Nullable="false" MaxLength="50" Type="varchar" />
+          <Property Name="FK_IdAccount" Nullable="false" Type="int" />
         </EntityType>
         <Association Name="AccountLeaderBoard">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Leaderboard" Type="Self.Leaderboard" Multiplicity="*" />
+          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="Self.Leaderboard" Multiplicity="*" Role="Leaderboard" />
           <ReferentialConstraint>
-            <Principal Role="AccesAccount">
+            <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
             </Principal>
             <Dependent Role="Leaderboard">
@@ -73,10 +73,10 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </ReferentialConstraint>
         </Association>
         <Association Name="AccountProfile">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="Self.Profile" Multiplicity="*" Role="Profile" />
           <ReferentialConstraint>
-            <Principal Role="AccesAccount">
+            <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
             </Principal>
             <Dependent Role="Profile">
@@ -85,10 +85,10 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </ReferentialConstraint>
         </Association>
         <Association Name="Friendships">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="Self.Friendship" Multiplicity="*" Role="Friendship" />
           <ReferentialConstraint>
-            <Principal Role="AccesAccount">
+            <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
             </Principal>
             <Dependent Role="Friendship">
@@ -97,10 +97,10 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </ReferentialConstraint>
         </Association>
         <Association Name="StarterOfTheMatch">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Match" Type="Self.Match" Multiplicity="*" />
+          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="Self.Match" Multiplicity="*" Role="Match" />
           <ReferentialConstraint>
-            <Principal Role="AccesAccount">
+            <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
             </Principal>
             <Dependent Role="Match">
@@ -140,7 +140,7 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="HiveModelStoreContainer">
-          <EntitySet Name="AccesAccount" EntityType="Self.AccesAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccessAccount" EntityType="Self.AccessAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
@@ -154,72 +154,57 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
     FROM [dbo].[Leaderboard] AS [Leaderboard]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="AccountLeaderBoard" Association="Self.AccountLeaderBoard">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Leaderboard" EntitySet="Leaderboard" />
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Leaderboard" Role="Leaderboard" />
           </AssociationSet>
           <AssociationSet Name="AccountProfile" Association="Self.AccountProfile">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Profile" EntitySet="Profile" />
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Profile" Role="Profile" />
           </AssociationSet>
           <AssociationSet Name="Friendships" Association="Self.Friendships">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Friendship" EntitySet="Friendship" />
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Friendship" Role="Friendship" />
           </AssociationSet>
           <AssociationSet Name="StarterOfTheMatch" Association="Self.StarterOfTheMatch">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Match" EntitySet="Match" />
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Match" Role="Match" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HiveModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AccesAccount">
-          <Key>
-            <PropertyRef Name="idAccessAccount" />
-          </Key>
-          <Property Name="idAccessAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="Binary" MaxLength="255" FixedLength="false" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="reputation" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Leaderboard" Relationship="Self.AccountLeaderBoard" FromRole="AccesAccount" ToRole="Leaderboard" />
-          <NavigationProperty Name="Profile" Relationship="Self.AccountProfile" FromRole="AccesAccount" ToRole="Profile" />
-          <NavigationProperty Name="Friendship" Relationship="Self.Friendships" FromRole="AccesAccount" ToRole="Friendship" />
-          <NavigationProperty Name="Match" Relationship="Self.StarterOfTheMatch" FromRole="AccesAccount" ToRole="Match" />
-        </EntityType>
         <EntityType Name="Friendship">
           <Key>
             <PropertyRef Name="idFriendship" />
           </Key>
-          <Property Name="idFriendship" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idPlayerTwo" Type="Int32" Nullable="false" />
-          <Property Name="FK_idPlayerOne" Type="Int32" Nullable="false" />
-          <Property Name="state" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="AccesAccount" Relationship="Self.Friendships" FromRole="Friendship" ToRole="AccesAccount" />
+          <Property Name="idFriendship" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="idPlayerTwo" Nullable="false" Type="Int32" />
+          <Property Name="FK_idPlayerOne" Nullable="false" Type="Int32" />
+          <Property Name="state" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="AccessAccount" Relationship="HiveModel.Friendships1" FromRole="Friendship" ToRole="AccessAccount" />
         </EntityType>
         <EntityType Name="Match">
           <Key>
             <PropertyRef Name="idMatch" />
           </Key>
-          <Property Name="idMatch" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="state" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FK_IdAccount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AccesAccount" Relationship="Self.StarterOfTheMatch" FromRole="Match" ToRole="AccesAccount" />
+          <Property Name="idMatch" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="code" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="date" Nullable="false" Precision="0" Type="DateTime" />
+          <Property Name="state" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="FK_IdAccount" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="AccessAccount" Relationship="HiveModel.StarterOfTheMatch1" FromRole="Match" ToRole="AccessAccount" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="idProfile" />
           </Key>
-          <Property Name="idProfile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="imagePath" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="createdDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="nickname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FK_IdAccount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AccesAccount" Relationship="Self.AccountProfile" FromRole="Profile" ToRole="AccesAccount" />
+          <Property Name="idProfile" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="imagePath" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="createdDate" Nullable="false" Precision="0" Type="DateTime" />
+          <Property Name="nickname" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="FK_IdAccount" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="AccessAccount" Relationship="HiveModel.AccountProfile1" FromRole="Profile" ToRole="AccessAccount" />
         </EntityType>
         <EntityType Name="Leaderboard">
           <Key>
@@ -229,83 +214,18 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
             <PropertyRef Name="totalOfMatches" />
             <PropertyRef Name="FK_IdAccount" />
           </Key>
-          <Property Name="wonMatches" Type="Int32" Nullable="false" />
-          <Property Name="lostMatches" Type="Int32" Nullable="false" />
-          <Property Name="drawMatches" Type="Int32" Nullable="false" />
-          <Property Name="totalOfMatches" Type="Int32" Nullable="false" />
-          <Property Name="FK_IdAccount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AccesAccount" Relationship="Self.AccountLeaderBoard" FromRole="Leaderboard" ToRole="AccesAccount" />
+          <Property Name="wonMatches" Nullable="false" Type="Int32" />
+          <Property Name="lostMatches" Nullable="false" Type="Int32" />
+          <Property Name="drawMatches" Nullable="false" Type="Int32" />
+          <Property Name="totalOfMatches" Nullable="false" Type="Int32" />
+          <Property Name="FK_IdAccount" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="AccessAccount" Relationship="HiveModel.AccountLeaderBoard1" FromRole="Leaderboard" ToRole="AccessAccount" />
         </EntityType>
-        <Association Name="AccountLeaderBoard">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Leaderboard" Type="Self.Leaderboard" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccesAccount">
-              <PropertyRef Name="idAccessAccount" />
-            </Principal>
-            <Dependent Role="Leaderboard">
-              <PropertyRef Name="FK_IdAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="AccountProfile">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccesAccount">
-              <PropertyRef Name="idAccessAccount" />
-            </Principal>
-            <Dependent Role="Profile">
-              <PropertyRef Name="FK_IdAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="Friendships">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccesAccount">
-              <PropertyRef Name="idAccessAccount" />
-            </Principal>
-            <Dependent Role="Friendship">
-              <PropertyRef Name="FK_idPlayerOne" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="StarterOfTheMatch">
-          <End Role="AccesAccount" Type="Self.AccesAccount" Multiplicity="1" />
-          <End Role="Match" Type="Self.Match" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccesAccount">
-              <PropertyRef Name="idAccessAccount" />
-            </Principal>
-            <Dependent Role="Match">
-              <PropertyRef Name="FK_IdAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="HiveEntityDataModel" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AccesAccount" EntityType="Self.AccesAccount" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" />
           <EntitySet Name="Match" EntityType="Self.Match" />
           <EntitySet Name="Profile" EntityType="Self.Profile" />
           <EntitySet Name="Leaderboard" EntityType="Self.Leaderboard" />
-          <AssociationSet Name="AccountLeaderBoard" Association="Self.AccountLeaderBoard">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Leaderboard" EntitySet="Leaderboard" />
-          </AssociationSet>
-          <AssociationSet Name="AccountProfile" Association="Self.AccountProfile">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Profile" EntitySet="Profile" />
-          </AssociationSet>
-          <AssociationSet Name="Friendships" Association="Self.Friendships">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Friendship" EntitySet="Friendship" />
-          </AssociationSet>
-          <AssociationSet Name="StarterOfTheMatch" Association="Self.StarterOfTheMatch">
-            <End Role="AccesAccount" EntitySet="AccesAccount" />
-            <End Role="Match" EntitySet="Match" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -336,6 +256,23 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="AccessAccount" EntityType="HiveModel.AccessAccount" />
+          <AssociationSet Name="AccountLeaderBoard1" Association="HiveModel.AccountLeaderBoard1">
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Leaderboard" Role="Leaderboard" />
+          </AssociationSet>
+          <AssociationSet Name="AccountProfile1" Association="HiveModel.AccountProfile1">
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Profile" Role="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="Friendships1" Association="HiveModel.Friendships1">
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Friendship" Role="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="StarterOfTheMatch1" Association="HiveModel.StarterOfTheMatch1">
+            <End EntitySet="AccessAccount" Role="AccessAccount" />
+            <End EntitySet="Match" Role="Match" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -348,23 +285,74 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="AccessAccount">
+          <Key>
+            <PropertyRef Name="idAccessAccount" />
+          </Key>
+          <Property Name="idAccessAccount" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="password" Nullable="false" MaxLength="255" FixedLength="false" Type="Binary" />
+          <Property Name="email" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="reputation" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Leaderboard" Relationship="HiveModel.AccountLeaderBoard1" FromRole="AccessAccount" ToRole="Leaderboard" />
+          <NavigationProperty Name="Profile" Relationship="HiveModel.AccountProfile1" FromRole="AccessAccount" ToRole="Profile" />
+          <NavigationProperty Name="Friendship" Relationship="HiveModel.Friendships1" FromRole="AccessAccount" ToRole="Friendship" />
+          <NavigationProperty Name="Match" Relationship="HiveModel.StarterOfTheMatch1" FromRole="AccessAccount" ToRole="Match" />
+        </EntityType>
+        <Association Name="AccountLeaderBoard1">
+          <End Type="HiveModel.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="HiveModel.Leaderboard" Multiplicity="*" Role="Leaderboard" />
+          <ReferentialConstraint>
+            <Principal Role="AccessAccount">
+              <PropertyRef Name="idAccessAccount" />
+            </Principal>
+            <Dependent Role="Leaderboard">
+              <PropertyRef Name="FK_IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AccountProfile1">
+          <End Type="HiveModel.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="HiveModel.Profile" Multiplicity="*" Role="Profile" />
+          <ReferentialConstraint>
+            <Principal Role="AccessAccount">
+              <PropertyRef Name="idAccessAccount" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="FK_IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Friendships1">
+          <End Type="HiveModel.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="HiveModel.Friendship" Multiplicity="*" Role="Friendship" />
+          <ReferentialConstraint>
+            <Principal Role="AccessAccount">
+              <PropertyRef Name="idAccessAccount" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="FK_idPlayerOne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StarterOfTheMatch1">
+          <End Type="HiveModel.AccessAccount" Multiplicity="1" Role="AccessAccount" />
+          <End Type="HiveModel.Match" Multiplicity="*" Role="Match" />
+          <ReferentialConstraint>
+            <Principal Role="AccessAccount">
+              <PropertyRef Name="idAccessAccount" />
+            </Principal>
+            <Dependent Role="Match">
+              <PropertyRef Name="FK_IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="HiveModelStoreContainer" CdmEntityContainer="HiveEntityDataModel">
-          <EntitySetMapping Name="AccesAccount">
-            <EntityTypeMapping TypeName="HiveModel.AccesAccount">
-              <MappingFragment StoreEntitySet="AccesAccount">
-                <ScalarProperty Name="idAccessAccount" ColumnName="idAccessAccount" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="reputation" ColumnName="reputation" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Friendship">
             <EntityTypeMapping TypeName="HiveModel.Friendship">
               <MappingFragment StoreEntitySet="Friendship">
@@ -432,6 +420,17 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HiveModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HiveModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="AccessAccount">
+            <EntityTypeMapping TypeName="HiveModel.AccessAccount">
+              <MappingFragment StoreEntitySet="AccessAccount">
+                <ScalarProperty Name="reputation" ColumnName="reputation" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="idAccessAccount" ColumnName="idAccessAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
