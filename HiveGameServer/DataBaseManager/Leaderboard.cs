@@ -20,6 +20,6 @@ namespace DataBaseManager
         public int totalOfMatches { get; set; }
         public int FK_IdAccount { get; set; }
     
-        public virtual AccesAccount AccesAccount { get; set; }
+        public virtual AccessAccount AccessAccount { get; set; }
     }
 }

@@ -12,10 +12,10 @@ namespace DataBaseManager
     using System;
     using System.Collections.Generic;
     
-    public partial class AccesAccount
+    public partial class AccessAccount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AccesAccount()
+        public AccessAccount()
         {
             this.Leaderboard = new HashSet<Leaderboard>();
             this.Profile = new HashSet<Profile>();
