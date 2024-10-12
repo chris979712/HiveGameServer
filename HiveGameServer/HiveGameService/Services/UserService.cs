@@ -14,7 +14,7 @@ namespace HiveGameService.Services
 
         public int AddUser(Contracts.Profile profile)
         {
-            UserOperations operations = new UserOperations();
+            UserOperation operations = new UserOperation();
             DataBaseManager.AccessAccount newAccount = new DataBaseManager.AccessAccount()
             {
                 password = Encoding.UTF8.GetBytes(profile.password),
@@ -33,7 +33,7 @@ namespace HiveGameService.Services
 
         public int UpdateLoginCredentials(Contracts.AccessAccount oldCredentials, Contracts.AccessAccount newCredentials)
         {
-            UserOperations operations = new UserOperations();
+            UserOperation operations = new UserOperation();
             DataBaseManager.AccessAccount oldUpdatedAccessAccount = new DataBaseManager.AccessAccount()
             {
                 idAccessAccount = oldCredentials.idAccesAccount,
@@ -52,23 +52,19 @@ namespace HiveGameService.Services
 
         public int UpdateProfile(Contracts.Profile profile, string email)
         {
-            UserOperations operations = new UserOperations();
-            DataBaseManager.AccessAccount accessAccount = new DataBaseManager.AccessAccount()
-            {
-                email = email
-            };
+            UserOperation operations = new UserOperation();
             DataBaseManager.Profile profileToUpdate = new DataBaseManager.Profile()
             {
                 nickname = profile.nickname,
                 imagePath = profile.imagePath,
             };
-            int updateResult = operations.updateProfileToDataBase(profileToUpdate,accessAccount, email);
+            int updateResult = operations.updateProfileToDataBase(profileToUpdate, email);
             return updateResult;
         }
 
         public int VerifyExistingAccesAccount(string email, string username)
         {
-            UserOperations operations = new UserOperations();
+            UserOperation operations = new UserOperation();
             int verificationResult = operations.verifyExistingAccessAccountIntoDataBase(email,username);
             return verificationResult;
         }
