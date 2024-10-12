@@ -1,11 +1,12 @@
 ﻿using HiveGameService.Contracts;
-using HiveGameService.Utilities;
+using HiveGameService.UtilitiesService;
 using System.Linq;
 using System.Data.SqlClient;
 using DataBaseManager;
 using System.Text;
 using System.Data.Entity.Infrastructure;
 using DataBaseManager.Operations;
+using System;
 
 namespace HiveGameService.Services
 {
@@ -17,7 +18,7 @@ namespace HiveGameService.Services
             UserOperation operations = new UserOperation();
             DataBaseManager.AccessAccount newAccount = new DataBaseManager.AccessAccount()
             {
-                password = Encoding.UTF8.GetBytes(profile.password),
+                password = profile.password,
                 username = profile.username,
                 email = profile.email,
                 reputation = 100
@@ -31,22 +32,42 @@ namespace HiveGameService.Services
             return insertionResult;
         }
 
+        public Contracts.Profile GetUserProfile(string username, string password)
+        {
+            UserOperation operations = new UserOperation();
+            Contracts.Profile profileObtained = new Contracts.Profile();
+            UserData profileFromDataBase = (UserData)operations.GetUserDataFromDataBase(username, password);
+            if(profileFromDataBase.idAccessAccount!=Constants.ERROR_OPERATION&& profileFromDataBase.idAccessAccount != Constants.ERROR_OPERATION)
+            {
+                profileObtained.idAccesAccount = profileFromDataBase.idAccessAccount;
+                profileObtained.imagePath = profileFromDataBase.imagePath;
+                profileObtained.nickname = profileFromDataBase.nickname;
+                profileObtained.username = profileFromDataBase.username;
+                profileObtained.email = profileFromDataBase.email;
+                profileObtained.createdDate = profileFromDataBase.createdDate;
+                profileObtained.reputation = profileFromDataBase.reputation;
+                profileObtained.idAccount = profileFromDataBase.FK_IdAccount;
+                profileObtained.idProfile = profileFromDataBase.idProfile;
+            }
+            return profileObtained;
+        }
+
         public int UpdateLoginCredentials(Contracts.AccessAccount oldCredentials, Contracts.AccessAccount newCredentials)
         {
             UserOperation operations = new UserOperation();
             DataBaseManager.AccessAccount oldUpdatedAccessAccount = new DataBaseManager.AccessAccount()
             {
                 idAccessAccount = oldCredentials.idAccesAccount,
-                password = Encoding.UTF8.GetBytes(oldCredentials.password),
+                password = oldCredentials.password,
                 email = oldCredentials.email
             };
             DataBaseManager.AccessAccount updatedAccesAccount = new DataBaseManager.AccessAccount() 
             { 
                 idAccessAccount = newCredentials.idAccesAccount,
-                password = Encoding.UTF8.GetBytes(newCredentials.password),
+                password = newCredentials.password,
                 email = newCredentials.email
             };
-            int updatedResult = operations.updateLoginCredentialsToDataBase(oldUpdatedAccessAccount, updatedAccesAccount);
+            int updatedResult = operations.UpdateLoginCredentialsToDataBase(oldUpdatedAccessAccount, updatedAccesAccount);
             return updatedResult;
         }
 
@@ -58,14 +79,21 @@ namespace HiveGameService.Services
                 nickname = profile.nickname,
                 imagePath = profile.imagePath,
             };
-            int updateResult = operations.updateProfileToDataBase(profileToUpdate, email);
+            int updateResult = operations.UpdateProfileToDataBase(profileToUpdate, email);
             return updateResult;
         }
 
         public int VerifyExistingAccesAccount(string email, string username)
         {
             UserOperation operations = new UserOperation();
-            int verificationResult = operations.verifyExistingAccessAccountIntoDataBase(email,username);
+            int verificationResult = operations.VerifyExistingAccessAccountIntoDataBase(email,username);
+            return verificationResult;
+        }
+
+        public int VerifyCredentials(string email, string password)
+        {
+            UserOperation operations = new UserOperation();
+            int verificationResult = operations.VerifyCredentialsFromDataBase(email,password);
             return verificationResult;
         }
     }

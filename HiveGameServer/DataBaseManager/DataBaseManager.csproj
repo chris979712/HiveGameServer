@@ -101,6 +101,8 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Enumerations.cs" />
     <Compile Include="Utilities\LoggerManager.cs" />
+    <Compile Include="Utilities\ShaEncripter.cs" />
+    <Compile Include="Utilities\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

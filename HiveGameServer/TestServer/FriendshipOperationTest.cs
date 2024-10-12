@@ -46,7 +46,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void GetFriendByUsernameTestFailed()
+        public void GetFriendByUsernameTestSuccess()
         {
             AccessAccount accountTest = new AccessAccount()
             {
