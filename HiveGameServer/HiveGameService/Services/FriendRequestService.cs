@@ -1,7 +1,6 @@
 ﻿using DataBaseManager;
 using HiveGameService.Contracts;
 using HiveGameService.Utilities;
-using DataBaseManager;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Infrastructure;

@@ -19,20 +19,7 @@ namespace DataBaseManager
         public System.DateTime date { get; set; }
         public string state { get; set; }
         public int FK_IdAccount { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            if(obj is Match other)
-            {
-                return idMatch == other.idMatch &&
-                    code == other.code &&
-                    date == other.date &&
-                    state == other.state &&
-                    FK_IdAccount == other.FK_IdAccount;
-            }
-            return false;
-        }
-
+    
         public virtual AccessAccount AccessAccount { get; set; }
     }
 }
