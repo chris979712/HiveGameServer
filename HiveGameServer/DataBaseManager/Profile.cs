@@ -20,18 +20,6 @@ namespace DataBaseManager
         public string nickname { get; set; }
         public int FK_IdAccount { get; set; }
     
-        public override bool Equals(object obj)
-        {
-            if(obj is Profile other)
-            {
-                return idProfile == other.idProfile &&
-                    imagePath == other.imagePath &&
-                    nickname == other.nickname &&
-                    FK_IdAccount == other.FK_IdAccount &&
-                    createdDate == other.createdDate;
-            }
-            return false;
-        }
         public virtual AccessAccount AccessAccount { get; set; }
     }
 }
