@@ -18,7 +18,19 @@ namespace DataBaseManager
         public int idPlayerTwo { get; set; }
         public int FK_idPlayerOne { get; set; }
         public string state { get; set; }
-    
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Friendship other)
+            {
+                return idFriendship == other.idFriendship &&
+                    idPlayerTwo == other.idPlayerTwo &&
+                    FK_idPlayerOne == other.FK_idPlayerOne &&
+                    state == other.state;
+            }
+            return false;
+        }
+
         public virtual AccessAccount AccessAccount { get; set; }
     }
 }

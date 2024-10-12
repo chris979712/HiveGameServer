@@ -11,7 +11,7 @@ using System.Data.Entity.Core;
 
 namespace DataBaseManager.Operations
 {
-    public class UserOperations
+    public class UserOperation
     {
         public int addUserToDataBase(Profile profile, AccessAccount accessAccount)
         {
@@ -83,7 +83,7 @@ namespace DataBaseManager.Operations
                         if (existingAccessAccount != null)
                         {
                             existingAccessAccount.email = updatedAccessAccount.email;
-                            existingAccessAccount.password = Encoding.UTF8.GetBytes(updatedProfile.password);
+                            existingAccessAccount.password = updatedAccessAccount.password;
                             dataBaseContext.SaveChanges();
                             updatedResult = Constants.SUCCES_OPERATION;
                         }
@@ -111,7 +111,7 @@ namespace DataBaseManager.Operations
             return updatedResult;
         }
 
-        public int updateProfileToDataBase(Profile profile,AccessAccount accessAccount, string email)
+        public int updateProfileToDataBase(Profile profile, string email)
         {
             int updateResult = -1;
             LoggerManager logger = new LoggerManager(this.GetType());
@@ -171,11 +171,11 @@ namespace DataBaseManager.Operations
                     var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email || accessAccount.username == username);
                     if (existingAccount != null)
                     {
-                        verificationResult = Constants.NO_DATA_MATCHES;
+                        verificationResult = Constants.DATA_MATCHES;
                     }
                     else
                     {
-                        verificationResult = Constants.DATA_MATCHES;
+                        verificationResult = Constants.NO_DATA_MATCHES;
                     }
                 }
             }
@@ -191,5 +191,6 @@ namespace DataBaseManager.Operations
             }
             return verificationResult;
         }
+     
     }
 }

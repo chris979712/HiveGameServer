@@ -19,7 +19,20 @@ namespace DataBaseManager
         public int drawMatches { get; set; }
         public int totalOfMatches { get; set; }
         public int FK_IdAccount { get; set; }
-    
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Leaderboard other)
+            {
+                return wonMatches == other.wonMatches &&
+                    lostMatches == other.lostMatches &&
+                    drawMatches == other.drawMatches &&
+                    totalOfMatches == other.totalOfMatches &&
+                    FK_IdAccount == other.FK_IdAccount;
+            }
+            return false;
+        }
+
         public virtual AccessAccount AccessAccount { get; set; }
     }
 }

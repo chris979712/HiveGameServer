@@ -28,7 +28,20 @@ namespace DataBaseManager
         public byte[] password { get; set; }
         public string email { get; set; }
         public int reputation { get; set; }
-    
+
+        public override bool Equals(object obj)
+        {
+            if (obj is AccessAccount other)
+            {
+                return idAccessAccount == other.idAccessAccount &&
+                       username == other.username &&
+                       email == other.email &&
+                       reputation == other.reputation &&
+                       password == other.password;
+            }
+            return false;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Leaderboard> Leaderboard { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,7 +1,7 @@
 ﻿using DataBaseManager;
 using HiveGameService.Contracts;
 using HiveGameService.Utilities;
-using System;
+using DataBaseManager;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Infrastructure;
@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataBaseManager.Operations;
 
 namespace HiveGameService.Services
 {
@@ -16,173 +17,84 @@ namespace HiveGameService.Services
     {
         public int CreateFriendRequest(Contracts.Profile playerOne, Contracts.Profile playerTwo)
         {
-            LoggerManager logger = new LoggerManager(this.GetType());
-            int creationResult = Constants.ERROR_OPERATION;
-            try
+            FriendRequestOperation friendRequestObtained = new FriendRequestOperation();
+            DataBaseManager.AccessAccount senderPlayer = new DataBaseManager.AccessAccount()
             {
-                using(var dataBaseContext = new HiveEntityDataModel())
-                {
-                        var newFriendRequest = new DataBaseManager.Friendship
-                        {
-                            FK_idPlayerOne = playerOne.idAccount,
-                            idPlayerTwo = playerTwo.idAccount,
-                            state = Utilities.Enumerations.FriendshipStates.Requested.ToString()
-                        };
-                        dataBaseContext.Friendship.Add(newFriendRequest);
-                        dataBaseContext.SaveChanges();
-                        creationResult = Constants.SUCCES_OPERATION;
-                }
-            }catch (DbUpdateException dbUpdateException)
-            {
-                logger.LogError(dbUpdateException);
-                creationResult = Constants.ERROR_OPERATION;
-            }
-            catch (SqlException dbSqlException)
-            {
-                logger.LogError(dbSqlException);
-                creationResult = Constants.ERROR_OPERATION;
-            }
-            catch (EntityException entityException)
-            {
-                logger.LogError(entityException);
-            }
+                idAccessAccount = playerOne.idAccesAccount
+            };
+            DataBaseManager.AccessAccount receiverPlayer = new DataBaseManager.AccessAccount() 
+            { 
+                idAccessAccount = playerTwo.idAccesAccount
+            };
+            int creationResult = friendRequestObtained.CreateFriendRequestToDataBase(senderPlayer, receiverPlayer);
             return creationResult;
         }
 
         public List<Contracts.Profile> GetFriendRequests(Contracts.Profile player)
-        {
-            List<Contracts.Profile> friendRequestsList = new List<Contracts.Profile>();
-            LoggerManager logger = new LoggerManager(this.GetType());
-            Contracts.Profile errorAtDoingSearching = new Contracts.Profile();
-            errorAtDoingSearching.idProfile = Constants.ERROR_OPERATION;
-            try
+        { 
+            FriendRequestOperation friendRequestOperation = new FriendRequestOperation();
+            DataBaseManager.Profile searcherPlayer = new DataBaseManager.Profile()
             {
-                using (var dataBaseContext = new HiveEntityDataModel())
+                FK_IdAccount = player.idAccesAccount
+            };
+            List<DataBaseManager.Profile> friendRequestsObtained = friendRequestOperation.GetFriendRequestsFromDataBase(searcherPlayer);
+            List<Contracts.Profile> friendRequestList = new List<Contracts.Profile>();
+            for (int friendRequestsObtainedIndex = 0;friendRequestsObtained.Count > friendRequestsObtainedIndex;friendRequestsObtainedIndex++)
+            {
+                Contracts.Profile friendRequestObtained = new Contracts.Profile() 
                 {
-                    friendRequestsList = dataBaseContext.Friendship.Where(user => user.idPlayerTwo == player.idAccount &&
-                        user.state == Utilities.Enumerations.FriendshipStates.Requested.ToString())
-                        .Join(dataBaseContext.Profile, user => user.idPlayerTwo, playerFound => playerFound.FK_IdAccount,
-                        (user, playerFound) => new Contracts.Profile
-                        {
-                            idProfile = player.idProfile,
-                            nickname = playerFound.nickname,
-                            imagePath = playerFound.imagePath,
-                            createdDate = playerFound.createdDate,
-                        }).ToList();
-                }
+                    nickname = friendRequestsObtained[friendRequestsObtainedIndex].nickname,
+                    createdDate = friendRequestsObtained[friendRequestsObtainedIndex].createdDate,
+                    imagePath = friendRequestsObtained[friendRequestsObtainedIndex].imagePath
+                };
+                friendRequestList.Add(friendRequestObtained);
             }
-            catch (SqlException sqlException)
-            { 
-                logger.LogError(sqlException);
-                friendRequestsList.Insert(0,errorAtDoingSearching);
-            }
-            catch (EntityException exception)
-            {
-                logger.LogError(exception);
-                friendRequestsList.Insert(0, errorAtDoingSearching);
-            }
-            return friendRequestsList;
+            return friendRequestList;
         }
 
         public int AcceptFriendRequest(Contracts.Profile playerOne, Contracts.Profile playerTwo)
         {
-            LoggerManager logger = new LoggerManager(this.GetType());
-            int responseResult = Constants.ERROR_OPERATION;
-            try
+            FriendRequestOperation friendRequestOperation = new FriendRequestOperation();
+            DataBaseManager.AccessAccount askerPlayer = new DataBaseManager.AccessAccount()
             {
-                using (var dataBaseContext = new HiveEntityDataModel())
-                {
-                    var existingFriendRequest = dataBaseContext.Friendship.FirstOrDefault(friendRequest => friendRequest.FK_idPlayerOne == playerOne.idAccount && friendRequest.idPlayerTwo == playerTwo.idAccount);
-                    if (existingFriendRequest != null)
-                    {
-                        existingFriendRequest.state = Utilities.Enumerations.FriendshipStates.Accepted.ToString();
-                        responseResult = dataBaseContext.SaveChanges();
-                    }
-                }
-            }catch (DbUpdateException dbUpdateException)
+                idAccessAccount = playerOne.idAccesAccount
+            };
+            DataBaseManager.AccessAccount answeredPlayer = new DataBaseManager.AccessAccount() 
             {
-                logger.LogError(dbUpdateException);
-                responseResult = Constants.ERROR_OPERATION;
-            }
-            catch (SqlException sqlException) 
-            {
-                logger.LogError(sqlException);
-                responseResult = Constants.ERROR_OPERATION;
-            }
-            catch (EntityException exception)
-            {
-                logger.LogError(exception);
-                responseResult = Constants.ERROR_OPERATION;
-            }
+                idAccessAccount = playerTwo.idAccesAccount
+            };
+            int responseResult = friendRequestOperation.AcceptFriendRequestInToDataBase(askerPlayer, answeredPlayer);
             return responseResult;
         }
 
         public int DeclineFriendRequest(Contracts.Profile playerOne, Contracts.Profile playerTwo)
         {
-            LoggerManager logger = new LoggerManager(this.GetType());
-            int responseResult = Constants.ERROR_OPERATION;
-            try
+            FriendRequestOperation friendRequestOperation = new FriendRequestOperation();
+            DataBaseManager.AccessAccount askerPlayer = new DataBaseManager.AccessAccount()
             {
-                using(var dataBaseContext = new HiveEntityDataModel())
-                {
-                    var existingFriendRequest = dataBaseContext.Friendship.FirstOrDefault(friendRequest => friendRequest.FK_idPlayerOne == playerOne.idAccount && friendRequest.idPlayerTwo == playerTwo.idAccount);
-                    if (existingFriendRequest != null)
-                    {
-                        dataBaseContext.Friendship.Remove(existingFriendRequest);
-                        responseResult = dataBaseContext.SaveChanges();
-                    }
-                }
-            }catch (DbUpdateException dbUpdateException)
+                idAccessAccount = playerOne.idAccesAccount
+            };
+            DataBaseManager.AccessAccount answeredPlayer = new DataBaseManager.AccessAccount()
             {
-                logger.LogError(dbUpdateException);
-                responseResult = Constants.ERROR_OPERATION;
-            }
-            catch (SqlException sqlException)
-            {
-                logger.LogError(sqlException);
-                responseResult = Constants.ERROR_OPERATION;
-            }
-            catch (EntityException exception)
-            {
-                logger.LogError(exception);
-                responseResult = Constants.ERROR_OPERATION;
-            }
+                idAccessAccount = playerTwo.idAccesAccount
+            };
+            int responseResult = friendRequestOperation.DeclineFriendRequestToDataBase(askerPlayer, answeredPlayer);
             return responseResult;
         }
 
         public int VerifyFriendRequestRegistered(Contracts.Profile playerOne, Contracts.Profile playerTwo)
         {
-            LoggerManager logger = new LoggerManager(this.GetType());
-            int responseResult = Constants.ERROR_OPERATION;
-            try
+            FriendRequestOperation friendRequestOperation = new FriendRequestOperation();
+            DataBaseManager.AccessAccount askerPlayer = new DataBaseManager.AccessAccount()
             {
-                using(var dataBaseContext = new HiveEntityDataModel())
-                {
-                    var existingFriendRequestRegistered = dataBaseContext.Friendship.FirstOrDefault(friendRequest => friendRequest.FK_idPlayerOne == playerOne.idAccount && friendRequest.idPlayerTwo == playerTwo.idAccount);
-                    if (existingFriendRequestRegistered != null)
-                    {
-                        responseResult = Constants.SUCCES_OPERATION;
-                    }
-                    else
-                    {
-                        responseResult = Constants.NO_DATA_MATCHES;
-                    }
-                }
-            }catch(DbUpdateException dbUpdateException)
+                idAccessAccount = playerOne.idAccesAccount
+            };
+            DataBaseManager.AccessAccount answeredPlayer = new DataBaseManager.AccessAccount()
             {
-                logger.LogError(dbUpdateException);
-                responseResult = Constants.ERROR_OPERATION;
-            }catch(SqlException sqlException)
-            {
-                logger.LogError(sqlException);
-                responseResult = Constants.ERROR_OPERATION;
-            }catch(EntityException entityException)
-            {
-                logger.LogError(entityException);
-                responseResult = Constants.ERROR_OPERATION;
-            }
-            return responseResult;
-
+                idAccessAccount = playerTwo.idAccesAccount
+            };
+            int verifyResult = friendRequestOperation.VerifyExistingFriendRequestInToDataBase(askerPlayer, answeredPlayer); 
+            return verifyResult;
         }
     }
 }
