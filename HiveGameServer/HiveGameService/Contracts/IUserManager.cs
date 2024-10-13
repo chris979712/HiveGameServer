@@ -5,14 +5,17 @@ using System.Runtime.Serialization;
 namespace HiveGameService.Contracts
 {
     [ServiceContract]
-    interface IUserManager
+    public interface IUserManager
     {
 
         [OperationContract]
         int AddUser(Profile profile);
 
         [OperationContract]
-        int UpdateLoginCredentials(Profile profile, Profile updatedProfile);
+        Profile GetUserProfile(string email, string username);
+
+        [OperationContract]
+        int UpdateLoginCredentials(AccessAccount profile, AccessAccount updatedProfile);
 
         [OperationContract]
         int UpdateProfile(Profile profile, string email);
@@ -20,11 +23,13 @@ namespace HiveGameService.Contracts
         [OperationContract]
         int VerifyExistingAccesAccount(string email, string username);
 
+        [OperationContract]
+        int VerifyCredentials(string email, string password);
         
     }
 
     [DataContract]
-    public class Profile : AccesAccount
+    public class Profile : AccessAccount
     {
 
         [DataMember]
@@ -41,7 +46,7 @@ namespace HiveGameService.Contracts
     }
 
     [DataContract]
-    public class AccesAccount
+    public class AccessAccount
     {
 
         [DataMember]

@@ -9,20 +9,20 @@
           <Key>
             <PropertyRef Name="idAccessAccount" />
           </Key>
-          <Property Name="idAccessAccount" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="username" Nullable="false" MaxLength="50" Type="varchar" />
-          <Property Name="password" Nullable="false" MaxLength="255" Type="varbinary" />
-          <Property Name="email" Nullable="false" MaxLength="254" Type="varchar" />
-          <Property Name="reputation" Nullable="false" Type="int" />
+          <Property Name="idAccessAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="reputation" Type="int" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
         <EntityType Name="Friendship">
           <Key>
             <PropertyRef Name="idFriendship" />
           </Key>
-          <Property Name="idFriendship" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="idPlayerTwo" Nullable="false" Type="int" />
-          <Property Name="FK_idPlayerOne" Nullable="false" Type="int" />
-          <Property Name="state" Nullable="false" MaxLength="15" Type="varchar" />
+          <Property Name="idFriendship" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idPlayerTwo" Type="int" Nullable="false" />
+          <Property Name="FK_idPlayerOne" Type="int" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -34,35 +34,35 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
             <PropertyRef Name="totalOfMatches" />
             <PropertyRef Name="FK_IdAccount" />
           </Key>
-          <Property Name="wonMatches" Nullable="false" Type="int" />
-          <Property Name="lostMatches" Nullable="false" Type="int" />
-          <Property Name="drawMatches" Nullable="false" Type="int" />
-          <Property Name="totalOfMatches" Nullable="false" Type="int" />
-          <Property Name="FK_IdAccount" Nullable="false" Type="int" />
+          <Property Name="wonMatches" Type="int" Nullable="false" />
+          <Property Name="lostMatches" Type="int" Nullable="false" />
+          <Property Name="drawMatches" Type="int" Nullable="false" />
+          <Property Name="totalOfMatches" Type="int" Nullable="false" />
+          <Property Name="FK_IdAccount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Match">
           <Key>
             <PropertyRef Name="idMatch" />
           </Key>
-          <Property Name="idMatch" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="code" Nullable="false" MaxLength="6" Type="varchar" />
-          <Property Name="date" Nullable="false" Type="date" />
-          <Property Name="state" Nullable="false" MaxLength="15" Type="varchar" />
-          <Property Name="FK_IdAccount" Nullable="false" Type="int" />
+          <Property Name="idMatch" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="FK_IdAccount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="idProfile" />
           </Key>
-          <Property Name="idProfile" Nullable="false" StoreGeneratedPattern="Identity" Type="int" />
-          <Property Name="imagePath" Nullable="false" MaxLength="255" Type="varchar" />
-          <Property Name="createdDate" Nullable="false" Type="date" />
-          <Property Name="nickname" Nullable="false" MaxLength="50" Type="varchar" />
-          <Property Name="FK_IdAccount" Nullable="false" Type="int" />
+          <Property Name="idProfile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imagePath" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="createdDate" Type="date" Nullable="false" />
+          <Property Name="nickname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FK_IdAccount" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="AccountLeaderBoard">
-          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
-          <End Type="Self.Leaderboard" Multiplicity="*" Role="Leaderboard" />
+          <End Role="AccessAccount" Type="Self.AccessAccount" Multiplicity="1" />
+          <End Role="Leaderboard" Type="Self.Leaderboard" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
@@ -73,8 +73,8 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </ReferentialConstraint>
         </Association>
         <Association Name="AccountProfile">
-          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
-          <End Type="Self.Profile" Multiplicity="*" Role="Profile" />
+          <End Role="AccessAccount" Type="Self.AccessAccount" Multiplicity="1" />
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
@@ -85,8 +85,8 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </ReferentialConstraint>
         </Association>
         <Association Name="Friendships">
-          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
-          <End Type="Self.Friendship" Multiplicity="*" Role="Friendship" />
+          <End Role="AccessAccount" Type="Self.AccessAccount" Multiplicity="1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
@@ -97,8 +97,8 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </ReferentialConstraint>
         </Association>
         <Association Name="StarterOfTheMatch">
-          <End Type="Self.AccessAccount" Multiplicity="1" Role="AccessAccount" />
-          <End Type="Self.Match" Multiplicity="*" Role="Match" />
+          <End Role="AccessAccount" Type="Self.AccessAccount" Multiplicity="1" />
+          <End Role="Match" Type="Self.Match" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AccessAccount">
               <PropertyRef Name="idAccessAccount" />
@@ -154,20 +154,20 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
     FROM [dbo].[Leaderboard] AS [Leaderboard]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="AccountLeaderBoard" Association="Self.AccountLeaderBoard">
-            <End EntitySet="AccessAccount" Role="AccessAccount" />
-            <End EntitySet="Leaderboard" Role="Leaderboard" />
+            <End Role="AccessAccount" EntitySet="AccessAccount" />
+            <End Role="Leaderboard" EntitySet="Leaderboard" />
           </AssociationSet>
           <AssociationSet Name="AccountProfile" Association="Self.AccountProfile">
-            <End EntitySet="AccessAccount" Role="AccessAccount" />
-            <End EntitySet="Profile" Role="Profile" />
+            <End Role="AccessAccount" EntitySet="AccessAccount" />
+            <End Role="Profile" EntitySet="Profile" />
           </AssociationSet>
           <AssociationSet Name="Friendships" Association="Self.Friendships">
-            <End EntitySet="AccessAccount" Role="AccessAccount" />
-            <End EntitySet="Friendship" Role="Friendship" />
+            <End Role="AccessAccount" EntitySet="AccessAccount" />
+            <End Role="Friendship" EntitySet="Friendship" />
           </AssociationSet>
           <AssociationSet Name="StarterOfTheMatch" Association="Self.StarterOfTheMatch">
-            <End EntitySet="AccessAccount" Role="AccessAccount" />
-            <End EntitySet="Match" Role="Match" />
+            <End Role="AccessAccount" EntitySet="AccessAccount" />
+            <End Role="Match" EntitySet="Match" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -291,7 +291,7 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </Key>
           <Property Name="idAccessAccount" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="password" Nullable="false" MaxLength="255" FixedLength="false" Type="Binary" />
+          <Property Name="password" Type="String" Nullable="false" />
           <Property Name="email" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="reputation" Nullable="false" Type="Int32" />
           <NavigationProperty Name="Leaderboard" Relationship="HiveModel.AccountLeaderBoard1" FromRole="AccessAccount" ToRole="Leaderboard" />

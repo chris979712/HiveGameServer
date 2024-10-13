@@ -25,7 +25,7 @@ namespace DataBaseManager
     
         public int idAccessAccount { get; set; }
         public string username { get; set; }
-        public byte[] password { get; set; }
+        public string password { get; set; }
         public string email { get; set; }
         public int reputation { get; set; }
     
