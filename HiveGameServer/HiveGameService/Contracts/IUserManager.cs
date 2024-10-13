@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace HiveGameService.Contracts
 {
     [ServiceContract]
-    interface IUserManager
+    public interface IUserManager
     {
 
         [OperationContract]
