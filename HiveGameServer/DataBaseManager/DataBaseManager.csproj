@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Operations\FriendRequestOperation.cs" />
     <Compile Include="Operations\FriendshipOperation.cs" />
+    <Compile Include="Operations\LeaderBoardOperation.cs" />
     <Compile Include="Operations\UserOperation.cs" />
     <Compile Include="Profile.cs">
       <DependentUpon>HiveDataModel.tt</DependentUpon>
@@ -101,6 +102,7 @@
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Enumerations.cs" />
     <Compile Include="Utilities\LoggerManager.cs" />
+    <Compile Include="Utilities\PlayerLeaderBoard.cs" />
     <Compile Include="Utilities\ShaEncripter.cs" />
     <Compile Include="Utilities\UserData.cs" />
   </ItemGroup>

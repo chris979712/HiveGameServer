@@ -46,7 +46,8 @@ namespace HiveGameService.Services
                     nickname = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].nickname,
                     idProfile = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].idProfile,
                     imagePath = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].imagePath,
-                    idAccount = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].FK_IdAccount
+                    idAccount = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].FK_IdAccount,
+                    description = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].description
                 };
                 friendsObtained.Add(friend);
             }
@@ -66,7 +67,8 @@ namespace HiveGameService.Services
                 idProfile = friendObtainedFromDataBase.idProfile,
                 nickname = friendObtainedFromDataBase.nickname,
                 imagePath = friendObtainedFromDataBase.imagePath,
-                idAccount = friendObtainedFromDataBase.FK_IdAccount
+                idAccount = friendObtainedFromDataBase.FK_IdAccount,
+                description = friendObtainedFromDataBase.description
             };
             return friendObtained;
         }

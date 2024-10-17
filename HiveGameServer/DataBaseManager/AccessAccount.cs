@@ -17,10 +17,10 @@ namespace DataBaseManager
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AccessAccount()
         {
-            this.Leaderboard = new HashSet<Leaderboard>();
             this.Profile = new HashSet<Profile>();
             this.Friendship = new HashSet<Friendship>();
             this.Match = new HashSet<Match>();
+            this.Leaderboard = new HashSet<Leaderboard>();
         }
     
         public int idAccessAccount { get; set; }
@@ -30,12 +30,12 @@ namespace DataBaseManager
         public int reputation { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Leaderboard> Leaderboard { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Profile> Profile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Friendship> Friendship { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Match> Match { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Leaderboard> Leaderboard { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace HiveGameService.Services
                 nickname = profile.nickname,
                 createdDate = profile.createdDate,
                 imagePath = profile.imagePath,
+                description = profile.description,
             };
             int insertionResult = operations.addUserToDataBase(newProfile,newAccount);
             return insertionResult;
@@ -36,7 +37,7 @@ namespace HiveGameService.Services
         {
             UserOperation operations = new UserOperation();
             Contracts.Profile profileObtained = new Contracts.Profile();
-            UserData profileFromDataBase = (UserData)operations.GetUserDataFromDataBase(username, password);
+            Utilities.UserData profileFromDataBase = (Utilities.UserData)operations.GetUserDataFromDataBase(username, password);
             if(profileFromDataBase.idAccessAccount!=Constants.ERROR_OPERATION&& profileFromDataBase.idAccessAccount != Constants.ERROR_OPERATION)
             {
                 profileObtained.idAccesAccount = profileFromDataBase.idAccessAccount;
@@ -48,6 +49,7 @@ namespace HiveGameService.Services
                 profileObtained.reputation = profileFromDataBase.reputation;
                 profileObtained.idAccount = profileFromDataBase.FK_IdAccount;
                 profileObtained.idProfile = profileFromDataBase.idProfile;
+                profileObtained.description = profileObtained.description;
             }
             return profileObtained;
         }
@@ -78,6 +80,7 @@ namespace HiveGameService.Services
             {
                 nickname = profile.nickname,
                 imagePath = profile.imagePath,
+                description = profile.description,
             };
             int updateResult = operations.UpdateProfileToDataBase(profileToUpdate, email);
             return updateResult;
