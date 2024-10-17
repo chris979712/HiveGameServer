@@ -34,6 +34,7 @@ namespace DataBaseManager.Operations
                                 reputation = accessAccount.reputation
                             };
                             dataBaseContext.AccessAccount.Add(newAccessAccount);
+                            dataBaseContext.SaveChanges();
                             int lastIdAccountInserted = newAccessAccount.idAccessAccount;
                             var newProfile = new Profile
                             {
@@ -44,6 +45,7 @@ namespace DataBaseManager.Operations
                                 description = profile.description,
                             };
                             dataBaseContext.Profile.Add(newProfile);
+                            dataBaseContext.SaveChanges();
                             var newLeaderboard = new Leaderboard
                             {
                                 FK_IdAccount = lastIdAccountInserted,

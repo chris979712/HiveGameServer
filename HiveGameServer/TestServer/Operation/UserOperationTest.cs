@@ -36,7 +36,7 @@ namespace TestServer
             string hashedPassword = hashToSHA1("chrisSiu12*");
             DataBaseManager.AccessAccount newAccessAccountTest = new DataBaseManager.AccessAccount()
             {
-                username = "Chris985",
+                username = "Chris984",
                 password = hashedPassword,
                 email = "chrisvasquez985@gmail.com",
                 reputation = 100
