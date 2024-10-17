@@ -20,7 +20,7 @@ namespace DataBaseManager.Utilities
 
         public int idAccount { get; set; }
 
-        public bool Equals(Object obj)
+        public override bool Equals(Object obj)
         {
             if(obj is PlayerLeaderBoard other)
             {
