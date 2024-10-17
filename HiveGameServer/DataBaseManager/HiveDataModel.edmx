@@ -24,21 +24,16 @@
           <Property Name="FK_idPlayerOne" Type="int" Nullable="false" />
           <Property Name="state" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Leaderboard">
           <Key>
-            <PropertyRef Name="wonMatches" />
-            <PropertyRef Name="lostMatches" />
-            <PropertyRef Name="drawMatches" />
-            <PropertyRef Name="totalOfMatches" />
-            <PropertyRef Name="FK_IdAccount" />
+            <PropertyRef Name="idLeaderboard" />
           </Key>
           <Property Name="wonMatches" Type="int" Nullable="false" />
           <Property Name="lostMatches" Type="int" Nullable="false" />
           <Property Name="drawMatches" Type="int" Nullable="false" />
           <Property Name="totalOfMatches" Type="int" Nullable="false" />
           <Property Name="FK_IdAccount" Type="int" Nullable="false" />
+          <Property Name="idLeaderboard" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Match">
           <Key>
@@ -59,6 +54,7 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           <Property Name="createdDate" Type="date" Nullable="false" />
           <Property Name="nickname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FK_IdAccount" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="AccountLeaderBoard">
           <End Role="AccessAccount" Type="Self.AccessAccount" Multiplicity="1" />
@@ -142,17 +138,9 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
         <EntityContainer Name="HiveModelStoreContainer">
           <EntitySet Name="AccessAccount" EntityType="Self.AccessAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Leaderboard" EntityType="Self.Leaderboard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Match" EntityType="Self.Match" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Leaderboard" EntityType="Self.Leaderboard" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Leaderboard].[wonMatches] AS [wonMatches], 
-    [Leaderboard].[lostMatches] AS [lostMatches], 
-    [Leaderboard].[drawMatches] AS [drawMatches], 
-    [Leaderboard].[totalOfMatches] AS [totalOfMatches], 
-    [Leaderboard].[FK_IdAccount] AS [FK_IdAccount]
-    FROM [dbo].[Leaderboard] AS [Leaderboard]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="AccountLeaderBoard" Association="Self.AccountLeaderBoard">
             <End Role="AccessAccount" EntitySet="AccessAccount" />
             <End Role="Leaderboard" EntitySet="Leaderboard" />
@@ -205,27 +193,12 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           <Property Name="nickname" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="FK_IdAccount" Nullable="false" Type="Int32" />
           <NavigationProperty Name="AccessAccount" Relationship="HiveModel.AccountProfile1" FromRole="Profile" ToRole="AccessAccount" />
-        </EntityType>
-        <EntityType Name="Leaderboard">
-          <Key>
-            <PropertyRef Name="wonMatches" />
-            <PropertyRef Name="lostMatches" />
-            <PropertyRef Name="drawMatches" />
-            <PropertyRef Name="totalOfMatches" />
-            <PropertyRef Name="FK_IdAccount" />
-          </Key>
-          <Property Name="wonMatches" Nullable="false" Type="Int32" />
-          <Property Name="lostMatches" Nullable="false" Type="Int32" />
-          <Property Name="drawMatches" Nullable="false" Type="Int32" />
-          <Property Name="totalOfMatches" Nullable="false" Type="Int32" />
-          <Property Name="FK_IdAccount" Nullable="false" Type="Int32" />
-          <NavigationProperty Name="AccessAccount" Relationship="HiveModel.AccountLeaderBoard1" FromRole="Leaderboard" ToRole="AccessAccount" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="HiveEntityDataModel" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Friendship" EntityType="Self.Friendship" />
           <EntitySet Name="Match" EntityType="Self.Match" />
           <EntitySet Name="Profile" EntityType="Self.Profile" />
-          <EntitySet Name="Leaderboard" EntityType="Self.Leaderboard" />
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -257,10 +230,6 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <EntitySet Name="AccessAccount" EntityType="HiveModel.AccessAccount" />
-          <AssociationSet Name="AccountLeaderBoard1" Association="HiveModel.AccountLeaderBoard1">
-            <End EntitySet="AccessAccount" Role="AccessAccount" />
-            <End EntitySet="Leaderboard" Role="Leaderboard" />
-          </AssociationSet>
           <AssociationSet Name="AccountProfile1" Association="HiveModel.AccountProfile1">
             <End EntitySet="AccessAccount" Role="AccessAccount" />
             <End EntitySet="Profile" Role="Profile" />
@@ -272,6 +241,11 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           <AssociationSet Name="StarterOfTheMatch1" Association="HiveModel.StarterOfTheMatch1">
             <End EntitySet="AccessAccount" Role="AccessAccount" />
             <End EntitySet="Match" Role="Match" />
+          </AssociationSet>
+          <EntitySet Name="Leaderboard" EntityType="HiveModel.Leaderboard" />
+          <AssociationSet Name="AccountLeaderBoard" Association="HiveModel.AccountLeaderBoard">
+            <End Role="AccessAccount" EntitySet="AccessAccount" />
+            <End Role="Leaderboard" EntitySet="Leaderboard" />
           </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -291,26 +265,14 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           </Key>
           <Property Name="idAccessAccount" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <Property Name="username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
-          <Property Name="password" Type="String" Nullable="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="email" Nullable="false" MaxLength="254" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="reputation" Nullable="false" Type="Int32" />
-          <NavigationProperty Name="Leaderboard" Relationship="HiveModel.AccountLeaderBoard1" FromRole="AccessAccount" ToRole="Leaderboard" />
           <NavigationProperty Name="Profile" Relationship="HiveModel.AccountProfile1" FromRole="AccessAccount" ToRole="Profile" />
           <NavigationProperty Name="Friendship" Relationship="HiveModel.Friendships1" FromRole="AccessAccount" ToRole="Friendship" />
           <NavigationProperty Name="Match" Relationship="HiveModel.StarterOfTheMatch1" FromRole="AccessAccount" ToRole="Match" />
+          <NavigationProperty Name="Leaderboard" Relationship="HiveModel.AccountLeaderBoard" FromRole="AccessAccount" ToRole="Leaderboard" />
         </EntityType>
-        <Association Name="AccountLeaderBoard1">
-          <End Type="HiveModel.AccessAccount" Multiplicity="1" Role="AccessAccount" />
-          <End Type="HiveModel.Leaderboard" Multiplicity="*" Role="Leaderboard" />
-          <ReferentialConstraint>
-            <Principal Role="AccessAccount">
-              <PropertyRef Name="idAccessAccount" />
-            </Principal>
-            <Dependent Role="Leaderboard">
-              <PropertyRef Name="FK_IdAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="AccountProfile1">
           <End Type="HiveModel.AccessAccount" Multiplicity="1" Role="AccessAccount" />
           <End Type="HiveModel.Profile" Multiplicity="*" Role="Profile" />
@@ -347,6 +309,30 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Leaderboard">
+          <Key>
+            <PropertyRef Name="idLeaderboard" />
+          </Key>
+          <Property Name="wonMatches" Type="Int32" Nullable="false" />
+          <Property Name="lostMatches" Type="Int32" Nullable="false" />
+          <Property Name="drawMatches" Type="Int32" Nullable="false" />
+          <Property Name="totalOfMatches" Type="Int32" Nullable="false" />
+          <Property Name="FK_IdAccount" Type="Int32" Nullable="false" />
+          <Property Name="idLeaderboard" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AccessAccount" Relationship="HiveModel.AccountLeaderBoard" FromRole="Leaderboard" ToRole="AccessAccount" />
+        </EntityType>
+        <Association Name="AccountLeaderBoard">
+          <End Type="HiveModel.AccessAccount" Role="AccessAccount" Multiplicity="1" />
+          <End Type="HiveModel.Leaderboard" Role="Leaderboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccessAccount">
+              <PropertyRef Name="idAccessAccount" />
+            </Principal>
+            <Dependent Role="Leaderboard">
+              <PropertyRef Name="FK_IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -377,21 +363,11 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
           <EntitySetMapping Name="Profile">
             <EntityTypeMapping TypeName="HiveModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="idProfile" ColumnName="idProfile" />
                 <ScalarProperty Name="imagePath" ColumnName="imagePath" />
                 <ScalarProperty Name="createdDate" ColumnName="createdDate" />
                 <ScalarProperty Name="nickname" ColumnName="nickname" />
-                <ScalarProperty Name="FK_IdAccount" ColumnName="FK_IdAccount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Leaderboard">
-            <EntityTypeMapping TypeName="HiveModel.Leaderboard">
-              <MappingFragment StoreEntitySet="Leaderboard">
-                <ScalarProperty Name="wonMatches" ColumnName="wonMatches" />
-                <ScalarProperty Name="lostMatches" ColumnName="lostMatches" />
-                <ScalarProperty Name="drawMatches" ColumnName="drawMatches" />
-                <ScalarProperty Name="totalOfMatches" ColumnName="totalOfMatches" />
                 <ScalarProperty Name="FK_IdAccount" ColumnName="FK_IdAccount" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -428,6 +404,18 @@ advertencia 6002: La tabla o vista 'Hive.dbo.Leaderboard' no tiene definida ning
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="idAccessAccount" ColumnName="idAccessAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Leaderboard">
+            <EntityTypeMapping TypeName="HiveModel.Leaderboard">
+              <MappingFragment StoreEntitySet="Leaderboard">
+                <ScalarProperty Name="idLeaderboard" ColumnName="idLeaderboard" />
+                <ScalarProperty Name="FK_IdAccount" ColumnName="FK_IdAccount" />
+                <ScalarProperty Name="totalOfMatches" ColumnName="totalOfMatches" />
+                <ScalarProperty Name="drawMatches" ColumnName="drawMatches" />
+                <ScalarProperty Name="lostMatches" ColumnName="lostMatches" />
+                <ScalarProperty Name="wonMatches" ColumnName="wonMatches" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

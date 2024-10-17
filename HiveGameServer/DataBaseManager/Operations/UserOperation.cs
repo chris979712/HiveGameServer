@@ -26,28 +26,33 @@ namespace DataBaseManager.Operations
                     {
                         try
                         {
-                            SHA256 sha256 = SHA256.Create();
-                            byte[] stringPassword = Encoding.UTF8.GetBytes(accessAccount.password);
-                            byte[] hashpassword = sha256.ComputeHash(stringPassword);
-                            string hashStringPassword = BitConverter.ToString(hashpassword).Replace("-", "").ToLowerInvariant();
                             var newAccessAccount = new AccessAccount
                             {
-                                password = hashStringPassword,
+                                password = accessAccount.password,
                                 username = accessAccount.username,
                                 email = accessAccount.email,
                                 reputation = accessAccount.reputation
                             };
                             dataBaseContext.AccessAccount.Add(newAccessAccount);
-                            dataBaseContext.SaveChanges();
                             int lastIdAccountInserted = newAccessAccount.idAccessAccount;
                             var newProfile = new Profile
                             {
                                 imagePath = Constants.DEFAULT_IMAGE_PLAYER,
                                 createdDate = profile.createdDate,
                                 nickname = profile.nickname,
-                                FK_IdAccount = lastIdAccountInserted
+                                FK_IdAccount = lastIdAccountInserted,
+                                description = profile.description,
                             };
                             dataBaseContext.Profile.Add(newProfile);
+                            var newLeaderboard = new Leaderboard
+                            {
+                                FK_IdAccount = lastIdAccountInserted,
+                                totalOfMatches = 0,
+                                drawMatches = 0,
+                                wonMatches = 0,
+                                lostMatches = 0
+                            };
+                            dataBaseContext.Leaderboard.Add(newLeaderboard);
                             dataBaseContext.SaveChanges();
                             dataBaseContextTransaction.Commit();
                             result = Constants.SUCCES_OPERATION;
@@ -80,13 +85,9 @@ namespace DataBaseManager.Operations
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {
-                SHA256 sha256 = SHA256.Create();
-                byte[] inputBytes = Encoding.UTF8.GetBytes(password);
-                byte[] hashpassword = sha256.ComputeHash(inputBytes);
-                string hashStringPassword = BitConverter.ToString(hashpassword).Replace("-", "").ToLowerInvariant();
                 using (var dataBaseContext = new HiveEntityDataModel())
                 {
-                    var userData = dataBaseContext.AccessAccount.Where(account => account.username == username && account.password == hashStringPassword).Join(
+                    var userData = dataBaseContext.AccessAccount.Where(account => account.username == username && account.password == password).Join(
                         dataBaseContext.Profile, account => account.idAccessAccount, profile => profile.FK_IdAccount, (account, profile) => new UserData
                         {
                             idAccessAccount = account.idAccessAccount,
@@ -97,7 +98,8 @@ namespace DataBaseManager.Operations
                             FK_IdAccount = profile.FK_IdAccount,
                             nickname = profile.nickname,
                             imagePath = profile.imagePath,
-                            createdDate = profile.createdDate
+                            createdDate = profile.createdDate,
+                            description = profile.description,
                         }).FirstOrDefault();
                     if(userData != null)
                     {
@@ -131,15 +133,11 @@ namespace DataBaseManager.Operations
                 {
                     try
                     {
-                        SHA256 sha256 = SHA256.Create();
-                        byte[] passwordString = Encoding.UTF8.GetBytes(oldAccessAccount.password);
-                        byte[] hashpassword = sha256.ComputeHash(passwordString);
-                        string hashStringPassword = BitConverter.ToString(hashpassword).Replace("-", "").ToLowerInvariant();
                         var existingAccessAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == oldAccessAccount.email);
                         if (existingAccessAccount != null)
                         {
                             existingAccessAccount.email = updatedAccessAccount.email;
-                            existingAccessAccount.password = hashStringPassword;
+                            existingAccessAccount.password = updatedAccessAccount.password;
                             dataBaseContext.SaveChanges();
                             updatedResult = Constants.SUCCES_OPERATION;
                         }
@@ -185,6 +183,7 @@ namespace DataBaseManager.Operations
                             { 
                                 existingProfile.nickname = profile.nickname;
                                 existingProfile.imagePath = profile.imagePath;
+                                existingProfile.description = profile.description;
                                 dataBaseContext.SaveChanges();
                                 dataBaseContextTransaction.Commit();
                                 updateResult = Constants.SUCCES_OPERATION;
@@ -256,12 +255,8 @@ namespace DataBaseManager.Operations
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
                 {
-                    SHA256 sha256 = SHA256.Create();
-                    byte[] hashBytes = Encoding.UTF8.GetBytes(password);
-                    byte[] hashpassword = sha256.ComputeHash(hashBytes);
-                    string hashStringPassword = BitConverter.ToString(hashpassword).Replace("-", "").ToLowerInvariant();
                     var existingAccount = dataBaseContext.AccessAccount.Where(accessAccount => accessAccount.username == username).FirstOrDefault();
-                    if (existingAccount != null && existingAccount.password == hashStringPassword)
+                    if (existingAccount != null && existingAccount.password == password)
                     {
                         verificationResult = Constants.DATA_MATCHES;
                     }

@@ -19,6 +19,7 @@ namespace DataBaseManager
         public System.DateTime createdDate { get; set; }
         public string nickname { get; set; }
         public int FK_IdAccount { get; set; }
+        public string description { get; set; }
     
         public virtual AccessAccount AccessAccount { get; set; }
     }
