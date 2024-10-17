@@ -29,6 +29,24 @@ namespace TestServer
         }
 
         [Fact]
+        public void CreateFriendRequestToDataBasetFailTestSuccess()
+        {
+            AccessAccount accountPlayerTest = new AccessAccount()
+            {
+                idAccessAccount = 1
+            };
+            AccessAccount receiverPlaterTest = new AccessAccount()
+            {
+                idAccessAccount = 2
+            };
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.CreateFriendRequestToDataBase(accountPlayerTest, receiverPlaterTest);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+
+
+        [Fact]
         public void GetFriendRequestsFromDataBaseTest()
         {
             List<Profile> friendsRequestListExpected = new List<Profile>();
@@ -59,6 +77,23 @@ namespace TestServer
         }
 
         [Fact]
+        public void GetFriendRequestsFromDataBaseFailTestSuccess()
+        {
+            List<Profile> friendsRequestListExpected = new List<Profile>();
+            Profile profileObtainedTest = new Profile()
+            {
+                idProfile = -1
+            };
+            Profile searcherPlayerTest = new Profile()
+            {
+                FK_IdAccount = 2
+            };
+            friendsRequestListExpected.Add(profileObtainedTest);
+            List<Profile> friendRequestListObtained = operation.GetFriendRequestsFromDataBase(searcherPlayerTest);
+            Assert.Equal(friendsRequestListExpected[0].idProfile, friendRequestListObtained[0].idProfile);
+        }
+
+        [Fact]
         public void AcceptFriendRequestInToDataBaseTest()
         {
             AccessAccount playerOne = new AccessAccount()
@@ -75,7 +110,23 @@ namespace TestServer
         }
 
         [Fact]
-        public void DeclineFriendRequestToDataBaseTest()
+        public void AcceptFriendRequestInToDataBaseFailTestSuccess()
+        {
+            AccessAccount playerOne = new AccessAccount()
+            {
+                idAccessAccount = 2
+            };
+            AccessAccount playerTwo = new AccessAccount()
+            {
+                idAccessAccount = 3
+            };
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.AcceptFriendRequestInToDataBase(playerOne, playerTwo);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void DeclineFriendRequestToDataBaseTestSuccess()
         {
             AccessAccount playerOne = new AccessAccount()
             {
@@ -91,7 +142,24 @@ namespace TestServer
         }
 
         [Fact]
-        public void VerifyExistingFriendRequestInToDataBaseTest()
+        public void DeclineFriendRequestToDataBaseFailTestSuccess()
+        {
+            AccessAccount playerOne = new AccessAccount()
+            {
+                idAccessAccount = 2
+            };
+            AccessAccount playerTwo = new AccessAccount()
+            {
+                idAccessAccount = 3
+            };
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.DeclineFriendRequestToDataBase(playerOne, playerTwo);
+            Assert.Equal(resultExpected , resultObtained);
+        }
+        
+
+        [Fact]
+        public void VerifyExistingFriendRequestInToDataBaseTestSuccess()
         {
             AccessAccount playerOne = new AccessAccount()
             {
@@ -103,7 +171,23 @@ namespace TestServer
             };
             int resultExpected = Constants.DATA_MATCHES;
             int resultObtained = operation.VerifyExistingFriendRequestInToDataBase(playerOne,playerTwo);
-            Assert.Equal((int)resultExpected, resultObtained);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void VerifyExistingFriendRequestInToDataBaseFailTestSuccess()
+        {
+            AccessAccount playerOne = new AccessAccount()
+            {
+                idAccessAccount = 2
+            };
+            AccessAccount playerTwo = new AccessAccount()
+            {
+                idAccessAccount = 1
+            };
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.VerifyExistingFriendRequestInToDataBase(playerOne, playerTwo);
+            Assert.Equal(resultExpected, resultObtained);
         }
     }
 }

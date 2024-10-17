@@ -19,6 +19,8 @@ namespace HiveGameService.Utilities
         public string imagePath { get; set; }
         public DateTime createdDate { get; set; }
 
+        public string description { get; set; }
+
         public override bool Equals(object obj)
         {
             if(obj is  UserData other)
@@ -27,7 +29,8 @@ namespace HiveGameService.Utilities
                     username == other.username && email == other.email &&
                     reputation == other.reputation && idProfile == other.idProfile &&
                     FK_IdAccount == other.FK_IdAccount && nickname == other.nickname &&
-                    imagePath == other.imagePath && createdDate == other.createdDate;
+                    imagePath == other.imagePath && createdDate == other.createdDate &&
+                    description == other.description;
             }
             return false;
         }

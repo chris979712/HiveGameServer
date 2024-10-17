@@ -61,7 +61,8 @@ namespace HiveGameService.Services
                     try
                     {
                         chatCallBacks[usersList[usersIndex].username].ReceiveMessage(ObtainMessagesFromAnSpecificLobby(code));
-                    }catch(CommunicationException communicationException)
+                    }
+                    catch(CommunicationException communicationException)
                     {
                         logger.LogError(communicationException);
                     }catch(TimeoutException timeOutException)

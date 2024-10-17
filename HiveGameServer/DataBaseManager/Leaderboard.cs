@@ -19,6 +19,7 @@ namespace DataBaseManager
         public int drawMatches { get; set; }
         public int totalOfMatches { get; set; }
         public int FK_IdAccount { get; set; }
+        public int idLeaderboard { get; set; }
     
         public virtual AccessAccount AccessAccount { get; set; }
     }

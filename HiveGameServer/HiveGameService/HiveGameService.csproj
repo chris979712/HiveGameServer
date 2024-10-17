@@ -62,13 +62,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IChatManager.cs" />
+    <Compile Include="Contracts\IEmailService.cs" />
     <Compile Include="Contracts\IFriendRequestManager.cs" />
     <Compile Include="Contracts\IFriendshipManager.cs" />
+    <Compile Include="Contracts\ILeaderBoardService.cs" />
     <Compile Include="Contracts\IUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatService.cs" />
+    <Compile Include="Services\EmailManager.cs" />
     <Compile Include="Services\FriendRequestService.cs" />
     <Compile Include="Services\FriendshipService.cs" />
+    <Compile Include="Services\LeaderBoardService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utilities\Constants.cs" />
     <Compile Include="Utilities\Enumerations.cs" />
