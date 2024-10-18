@@ -50,7 +50,7 @@
             <PropertyRef Name="idProfile" />
           </Key>
           <Property Name="idProfile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="imagePath" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="imagePath" Type="nvarchar" MaxLength="255" />
           <Property Name="createdDate" Type="date" Nullable="false" />
           <Property Name="nickname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FK_IdAccount" Type="int" Nullable="false" />
@@ -188,7 +188,7 @@
             <PropertyRef Name="idProfile" />
           </Key>
           <Property Name="idProfile" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-          <Property Name="imagePath" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="imagePath" MaxLength="255" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="createdDate" Nullable="false" Precision="0" Type="DateTime" />
           <Property Name="nickname" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <Property Name="FK_IdAccount" Nullable="false" Type="Int32" />

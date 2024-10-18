@@ -34,16 +34,18 @@ namespace DataBaseManager.Operations
                                 reputation = accessAccount.reputation
                             };
                             dataBaseContext.AccessAccount.Add(newAccessAccount);
+                            dataBaseContext.SaveChanges();
                             int lastIdAccountInserted = newAccessAccount.idAccessAccount;
                             var newProfile = new Profile
                             {
-                                imagePath = Constants.DEFAULT_IMAGE_PLAYER,
+                                imagePath = profile.imagePath,
                                 createdDate = profile.createdDate,
                                 nickname = profile.nickname,
                                 FK_IdAccount = lastIdAccountInserted,
                                 description = profile.description,
                             };
                             dataBaseContext.Profile.Add(newProfile);
+                            dataBaseContext.SaveChanges();
                             var newLeaderboard = new Leaderboard
                             {
                                 FK_IdAccount = lastIdAccountInserted,
