@@ -49,7 +49,7 @@ namespace HiveGameService.Services
                 profileObtained.reputation = profileFromDataBase.reputation;
                 profileObtained.idAccount = profileFromDataBase.FK_IdAccount;
                 profileObtained.idProfile = profileFromDataBase.idProfile;
-                profileObtained.description = profileObtained.description;
+                profileObtained.description = profileFromDataBase.description;
             }
             return profileObtained;
         }

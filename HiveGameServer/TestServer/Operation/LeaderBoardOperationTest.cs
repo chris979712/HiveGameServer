@@ -39,7 +39,7 @@ namespace TestServer.Operation
         }
 
         [Fact]
-        public void GetAllPlayersLeaderboardsFromDataBaseFailTest()
+        public void GetAllPlayersLeaderboardsFromDataBaseFailTestSucces()
         {
             List<PlayerLeaderBoard> leaderBoardsExpected = new List<PlayerLeaderBoard>();
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
@@ -72,7 +72,7 @@ namespace TestServer.Operation
         }
 
         [Fact]
-        public void GetPersonalLeaderBoardFailTest()
+        public void GetPersonalLeaderBoardFailTestSucces()
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 1;

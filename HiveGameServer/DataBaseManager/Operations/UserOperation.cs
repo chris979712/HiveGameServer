@@ -38,7 +38,7 @@ namespace DataBaseManager.Operations
                             int lastIdAccountInserted = newAccessAccount.idAccessAccount;
                             var newProfile = new Profile
                             {
-                                imagePath = Constants.DEFAULT_IMAGE_PLAYER,
+                                imagePath = profile.imagePath,
                                 createdDate = profile.createdDate,
                                 nickname = profile.nickname,
                                 FK_IdAccount = lastIdAccountInserted,
