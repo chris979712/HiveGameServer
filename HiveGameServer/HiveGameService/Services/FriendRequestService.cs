@@ -44,7 +44,9 @@ namespace HiveGameService.Services
                 {
                     nickname = friendRequestsObtained[friendRequestsObtainedIndex].nickname,
                     createdDate = friendRequestsObtained[friendRequestsObtainedIndex].createdDate,
-                    imagePath = friendRequestsObtained[friendRequestsObtainedIndex].imagePath
+                    imagePath = friendRequestsObtained[friendRequestsObtainedIndex].imagePath,
+                    idProfile = friendRequestsObtained[friendRequestsObtainedIndex].idProfile,
+                    idAccesAccount = friendRequestsObtained[friendRequestsObtainedIndex].FK_IdAccount
                 };
                 friendRequestList.Add(friendRequestObtained);
             }

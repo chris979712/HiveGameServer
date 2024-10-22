@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {
-    public class LeaderBoardService : ILeaderBoardService
+    public partial class HiveGameService : ILeaderBoardManager
     {
         public List<LeaderBoardPlayer> GetAllPlayersLeaderboards()
         {

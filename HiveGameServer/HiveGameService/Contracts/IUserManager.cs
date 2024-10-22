@@ -12,6 +12,9 @@ namespace HiveGameService.Contracts
         int AddUser(Profile profile);
 
         [OperationContract]
+        Profile GetUserProfileByUsername(string username);
+
+        [OperationContract]
         Profile GetUserProfile(string username, string password);
 
         [OperationContract]
@@ -24,8 +27,11 @@ namespace HiveGameService.Contracts
         int VerifyExistingAccesAccount(string email, string username);
 
         [OperationContract]
-        int VerifyCredentials(string email, string password);
-        
+        int VerifyCredentials(string username, string email);
+
+        [OperationContract]
+        int VerifyPasswordCredentials(string email, string password);
+
     }
 
     [DataContract]
