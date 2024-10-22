@@ -106,7 +106,9 @@ namespace DataBaseManager.Operations
                     if (leaderBoard != null)
                     {
                         leaderBoard.drawMatches += 1;
+                        leaderBoard.totalOfMatches += 1;
                         dataBaseContext.SaveChanges();
+                        resultUpdate = Constants.SUCCES_OPERATION;
                     }
                     else
                     {
@@ -143,14 +145,15 @@ namespace DataBaseManager.Operations
                     if (leaderBoard != null)
                     {
                         leaderBoard.wonMatches += 1;
+                        leaderBoard.totalOfMatches += 1;
                         dataBaseContext.SaveChanges();
+                        resultUpdate = Constants.SUCCES_OPERATION;
                     }
                     else
                     {
                         resultUpdate = Constants.NO_DATA_MATCHES;
                     }
                 }
-
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -182,7 +185,9 @@ namespace DataBaseManager.Operations
                     if (leaderBoard != null)
                     {
                         leaderBoard.lostMatches += 1;
+                        leaderBoard.totalOfMatches += 1;
                         dataBaseContext.SaveChanges();
+                        resultUpdate = Constants.SUCCES_OPERATION;
                     }
                     else
                     {

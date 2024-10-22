@@ -62,14 +62,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IChatManager.cs" />
-    <Compile Include="Contracts\IEmailService.cs" />
+    <Compile Include="Contracts\IEmailInvitationManager.cs" />
+    <Compile Include="Contracts\IEmailVerificationManager.cs" />
     <Compile Include="Contracts\IFriendRequestManager.cs" />
     <Compile Include="Contracts\IFriendshipManager.cs" />
-    <Compile Include="Contracts\ILeaderBoardService.cs" />
+    <Compile Include="Contracts\ILeaderBoardManager.cs" />
     <Compile Include="Contracts\IUserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatService.cs" />
-    <Compile Include="Services\EmailManager.cs" />
+    <Compile Include="Services\EmailInvitationService.cs" />
+    <Compile Include="Services\EmailVerificationService.cs" />
     <Compile Include="Services\FriendRequestService.cs" />
     <Compile Include="Services\FriendshipService.cs" />
     <Compile Include="Services\LeaderBoardService.cs" />
@@ -89,6 +91,10 @@
       <Project>{A1946BFE-D287-45A6-AF86-7346013F168D}</Project>
       <Name>DataBaseManager</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Utilities\IvitationEmail.html" />
+    <Content Include="Utilities\VerificationEmail.html" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -112,9 +112,9 @@ namespace DataBaseManager.Operations
                     Friendship friendshipFound = dataBaseContext.Friendship.Where(friendship => (friendship.FK_idPlayerOne == accessAccount.idAccessAccount
                     || accessAccount.idAccessAccount == friendship.idPlayerTwo) && friendship.state == Enumerations.FriendshipStates.Accepted.ToString()).
                     Join(dataBaseContext.AccessAccount, friendship => (friendship.FK_idPlayerOne == accessAccount.idAccessAccount ? friendship.idPlayerTwo : friendship.FK_idPlayerOne),
-                    account => account.idAccessAccount,(friendship,account) => new { Friendship = friendship, AccessAccount = account}).Where(result => result.AccessAccount.username == username).
+                    account => account.idAccessAccount, (friendship, account) => new { Friendship = friendship, AccessAccount = account }).Where(result => result.AccessAccount.username == username).
                     Select(result => result.Friendship).FirstOrDefault();
-                    if(friendshipFound != null)
+                    if (friendshipFound != null)
                     {
                         int idFriendAccount = (friendshipFound.FK_idPlayerOne == accessAccount.idAccessAccount ? friendshipFound.idPlayerTwo : friendshipFound.FK_idPlayerOne);
                         foundFriend = dataBaseContext.Profile.AsNoTracking().FirstOrDefault(account => account.FK_IdAccount == idFriendAccount);

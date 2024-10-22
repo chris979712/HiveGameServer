@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace HiveGameService.Contracts
 {
     [ServiceContract]
-    public interface ILeaderBoardService
+    public interface ILeaderBoardManager
     {
         [OperationContract]
         int UpdateWinnerResultToPlayerLeaderBoard(int idAccounr);

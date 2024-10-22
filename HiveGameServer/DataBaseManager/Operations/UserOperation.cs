@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity.Core;
 using System.Security.Cryptography;
+using System.Security.Principal;
 
 namespace DataBaseManager.Operations
 {
@@ -34,16 +35,18 @@ namespace DataBaseManager.Operations
                                 reputation = accessAccount.reputation
                             };
                             dataBaseContext.AccessAccount.Add(newAccessAccount);
+                            dataBaseContext.SaveChanges();
                             int lastIdAccountInserted = newAccessAccount.idAccessAccount;
                             var newProfile = new Profile
                             {
-                                imagePath = Constants.DEFAULT_IMAGE_PLAYER,
+                                imagePath = profile.imagePath,
                                 createdDate = profile.createdDate,
                                 nickname = profile.nickname,
                                 FK_IdAccount = lastIdAccountInserted,
                                 description = profile.description,
                             };
                             dataBaseContext.Profile.Add(newProfile);
+                            dataBaseContext.SaveChanges();
                             var newLeaderboard = new Leaderboard
                             {
                                 FK_IdAccount = lastIdAccountInserted,
@@ -79,7 +82,50 @@ namespace DataBaseManager.Operations
             return result;
         }
 
-        public Object GetUserDataFromDataBase(string username, string password)
+
+        public UserData GetUserProfileByUsername(string username)
+        {
+            LoggerManager logger = new LoggerManager(this.GetType());
+            UserData userFound = new UserData();
+            userFound.idProfile = Constants.ERROR_OPERATION;
+            try
+            {
+                using(var dataBaseContet = new HiveEntityDataModel())
+                {
+                    var userData = dataBaseContet.AccessAccount.Where(account => account.username == username).Join(dataBaseContet.Profile,
+                        account => account.idAccessAccount, profile => profile.FK_IdAccount, (account, profile) => new UserData
+                        {
+                            idAccessAccount = account.idAccessAccount,
+                            username = account.username,
+                            idProfile = profile.idProfile,
+                            FK_IdAccount = profile.FK_IdAccount,
+                            nickname = profile.nickname,
+                            imagePath = profile.imagePath,
+                        }).FirstOrDefault();
+                    if (userData != null)
+                    {
+                        userFound = userData;
+                    }
+                    else
+                    {
+                        userFound.idProfile = Constants.NO_DATA_MATCHES;
+                    }
+                }
+            }
+            catch (SqlException sqlException)
+            {
+                logger.LogError(sqlException);
+                userFound.idProfile = Constants.ERROR_OPERATION;
+            }
+            catch (EntityException entityException)
+            {
+                logger.LogError(entityException);
+                userFound.idProfile = Constants.ERROR_OPERATION;
+            }
+            return userFound;
+        }
+
+        public UserData GetUserDataFromDataBase(string username, string password)
         {
             UserData dataObtained = new UserData();
             LoggerManager logger = new LoggerManager(this.GetType());
@@ -247,7 +293,39 @@ namespace DataBaseManager.Operations
             return verificationResult;
         }
 
-        public int VerifyCredentialsFromDataBase(string username, string password)
+        public int VerifyCredentialsFromDataBase(string username, string email)
+        {
+            int verificationResult = -1;
+            LoggerManager logger = new LoggerManager(this.GetType());
+            try
+            {
+                using (var dataBaseContext = new HiveEntityDataModel())
+                {
+                    var existingAccount = dataBaseContext.AccessAccount.Where(accessAccount => accessAccount.email == email).FirstOrDefault();
+                    if (existingAccount != null && existingAccount.username != username)
+                    {
+                        verificationResult = Constants.DATA_MATCHES;
+                    }
+                    else
+                    {
+                        verificationResult = Constants.NO_DATA_MATCHES;
+                    }
+                }
+            }
+            catch (SqlException sqlException)
+            {
+                logger.LogError(sqlException);
+                verificationResult = Constants.ERROR_OPERATION;
+            }
+            catch (EntityException entityException)
+            {
+                logger.LogError(entityException);
+                verificationResult = Constants.ERROR_OPERATION;
+            }
+            return verificationResult;
+        }
+
+        public int VerifyPasswordCredentialsFromDataBase(string username, string password)
         {
             int verificationResult = -1;
             LoggerManager logger = new LoggerManager(this.GetType());
@@ -278,6 +356,6 @@ namespace DataBaseManager.Operations
             }
             return verificationResult;
         }
-     
+
     }
 }

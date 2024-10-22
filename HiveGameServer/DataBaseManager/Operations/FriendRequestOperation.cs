@@ -45,6 +45,7 @@ namespace DataBaseManager.Operations
             catch (EntityException entityException)
             {
                 logger.LogError(entityException);
+                creationResult = Constants.ERROR_OPERATION;
             }
             return creationResult;
         }

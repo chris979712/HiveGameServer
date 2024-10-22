@@ -9,15 +9,22 @@ using System.Threading.Tasks;
 namespace HiveGameService.Contracts
 {
     [ServiceContract]
-    public interface IEmailService
+    public interface IEmailVerificationManager
     {
-        
+
+        [OperationContract]
+        int SendVerificationEmail(string emailToSend);
+
+        [OperationContract]
+        bool VerifyCodeVerification(UserVerificator userVerificator);
     }
 
     [DataContract]
-    public class Register
+    public class UserVerificator
     {
         [DataMember]
         public string email;
+        [DataMember]
+        public string code;
     }
 }
