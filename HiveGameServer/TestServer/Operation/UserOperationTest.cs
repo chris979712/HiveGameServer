@@ -54,13 +54,42 @@ namespace TestServer
         }
 
         [Fact]
-        public void AddUserToDataBaseFailTestSuccess()
+        public void AddUserToDataBaseExceptionTestSuccess()
         {
             DataBaseManager.AccessAccount newAccessAcountEmpty = new DataBaseManager.AccessAccount();
             DataBaseManager.Profile newProfileEmpty = new DataBaseManager.Profile();
             int resultExpected = Constants.ERROR_OPERATION;
             int resultObtained = operation.addUserToDataBase(newProfileEmpty, newAccessAcountEmpty);
             Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void GetUserProfileByUsernameTestSuccess()
+        {
+            string username = "Chris985";
+            UserData userDataExpected = new UserData()
+            {
+                idProfile = 1,
+                idAccessAccount = 1,
+                FK_IdAccount = 1,
+                imagePath = "images/Avatars/Avatar1.png",
+                username = "Chris985",
+                nickname = "christolin"
+            };
+            UserData userDataObtained = operation.GetUserProfileByUsername(username);
+            Assert.Equal(userDataExpected, userDataObtained);
+        }
+
+        [Fact]
+        public void GetUserProfileByUsernameExceptionSuccess()
+        {
+            string username = "Chris985";
+            UserData userDataExpected = new UserData()
+            {
+                idProfile = -1
+            };
+            UserData userDataObtained = operation.GetUserProfileByUsername(username);
+            Assert.Equal(userDataExpected, userDataObtained);
         }
 
         [Fact]
@@ -79,12 +108,12 @@ namespace TestServer
             userExpected.reputation = 100;
             userExpected.FK_IdAccount = 1;
             userExpected.description = "Hola soy chris :D";
-            UserData userObtained = (UserData)operation.GetUserDataFromDataBase(username, password);
+            UserData userObtained = operation.GetUserDataFromDataBase(username, password);
             Assert.Equal(userExpected, userObtained);
         }
 
         [Fact]
-        public void GetUserToDataBaseFailTest()
+        public void GetUserToDataBaseExceptionTest()
         {
             UserData userExpected = new UserData();
             string username = "Chris985";
@@ -113,7 +142,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void UpdateLoginCredentialToDataBaseFailTestSuccess()
+        public void UpdateLoginCredentialToDataBaseExceptionTestSuccess()
         {
             DataBaseManager.AccessAccount odlAccessAccountTest = new DataBaseManager.AccessAccount()
             {
@@ -146,7 +175,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void UpdateProfileToDataBaseFailTestSucces()
+        public void UpdateProfileToDataBaseExceptionTestSucces()
         {
             DataBaseManager.Profile newUpdatedProfile = new DataBaseManager.Profile()
             {
@@ -171,7 +200,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void VerifyExistingAccessAccountIntoDataBaseFailTestSuccess()
+        public void VerifyExistingAccessAccountIntoDataBaseExceptionTestSuccess()
         {
             string email = "vasquezChris984@gmail.com";
             string username = "Chris985";
@@ -183,15 +212,35 @@ namespace TestServer
         [Fact]
         public void VerifyCredentialsFromDataBaseTestSuccess()
         {
-            string username = "Chris985";
-            string password = "654321";
-            int resultExpected = Constants.DATA_MATCHES;
-            int resultObtained = operation.VerifyCredentialsFromDataBase(username, password);
+            string username = "Christo9999";
+            string email = "chrivasquez2500@gmail.com";
+            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultObtained = operation.VerifyCredentialsFromDataBase(username, email);
             Assert.Equal(resultExpected,resultObtained);
         }
 
         [Fact]
-        public void VerifyCredentialsFromDataBaseFailTestSuccess()
+        public void VerifyCredentialsFromDataBaseExceptionTestSuccess()
+        {
+            string username = "Chris985";
+            string email = "chrisvasquez985@gmail.com";
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.VerifyCredentialsFromDataBase(username, email);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void VerifyPasswordCredentialsFromDataBaseTestSuccess()
+        {
+            string username = "Chris985";
+            string password = "654321";
+            int resultExpected = Constants.DATA_MATCHES;
+            int resultObtained = operation.VerifyCredentialsFromDataBase(username, password);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void VerifyPasswordCredentialsFromDataBaseExceptionTestSuccess()
         {
             string username = "Chris985";
             string password = "654321";

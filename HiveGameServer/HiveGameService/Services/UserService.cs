@@ -33,6 +33,22 @@ namespace HiveGameService.Services
             return insertionResult;
         }
 
+        public Contracts.Profile GetUserProfileByUsername(string username)
+        {
+            UserOperation userOperation = new UserOperation();
+            var userObtained = userOperation.GetUserProfileByUsername(username);
+            Contracts.Profile profileObtained = new Contracts.Profile()
+            {
+                idAccesAccount = userObtained.idAccessAccount,
+                username = userObtained.username,
+                idProfile = userObtained.idProfile,
+                idAccount = userObtained.FK_IdAccount,
+                nickname = userObtained.nickname,
+                imagePath = userObtained.imagePath
+            };
+            return profileObtained;
+        }
+
         public Contracts.Profile GetUserProfile(string username, string password)
         {
             UserOperation operations = new UserOperation();
@@ -92,11 +108,17 @@ namespace HiveGameService.Services
             int verificationResult = operations.VerifyExistingAccessAccountIntoDataBase(email,username);
             return verificationResult;
         }
-
-        public int VerifyCredentials(string email, string password)
+        public int VerifyPasswordCredentials(string email, string password)
         {
             UserOperation operations = new UserOperation();
-            int verificationResult = operations.VerifyCredentialsFromDataBase(email,password);
+            int verificationResult = operations.VerifyPasswordCredentialsFromDataBase(email, password);
+            return verificationResult;
+        }
+
+        public int VerifyCredentials(string username, string email)
+        {
+            UserOperation operations = new UserOperation();
+            int verificationResult = operations.VerifyCredentialsFromDataBase(username, email);
             return verificationResult;
         }
     }
