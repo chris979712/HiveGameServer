@@ -27,6 +27,7 @@ namespace DataBaseManager.Operations
                     if (existingFriendship != null)
                     {
                         dataBaseContext.Friendship.Remove(existingFriendship);
+                        dataBaseContext.SaveChanges();
                         deleteResult = Constants.SUCCES_OPERATION;
                     }
                     else
@@ -53,13 +54,13 @@ namespace DataBaseManager.Operations
             return deleteResult;
         }
 
-        public List<Profile> GetAllFriendsFromDataBase(AccessAccount searcherPlayer)
+        public List<UserData> GetAllFriendsFromDataBase(AccessAccount searcherPlayer)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            List<Profile> friendsListFounded = new List<Profile>();
             List<Friendship> friendShipsListFounded = new List<Friendship>();
+            List<UserData> friendsData = new List<UserData>();
             List<int> idFoundAccounts = new List<int>();
-            Profile failedSearching = new Profile();
+            UserData failedSearching = new UserData();
             failedSearching.idProfile = Constants.ERROR_OPERATION;
             try
             {
@@ -82,22 +83,33 @@ namespace DataBaseManager.Operations
                     for (int counterIdAccountListFound = 0; counterIdAccountListFound < idFoundAccounts.Count; counterIdAccountListFound++)
                     {
                         int idAccount = idFoundAccounts[counterIdAccountListFound];
-                        Profile foundProfile = dataBaseContext.Profile.Where(profileFound => profileFound.FK_IdAccount == idAccount).FirstOrDefault();
-                        friendsListFounded.Add(foundProfile);
+                        var userDataFound = dataBaseContext.Profile.Where(profileFound => profileFound.FK_IdAccount == idAccount).Join(dataBaseContext.AccessAccount,
+                            userProfile => userProfile.FK_IdAccount, userAccount => userAccount.idAccessAccount, (userProfile, userAccount) => new UserData { 
+                                idAccessAccount = userAccount.idAccessAccount,
+                                idProfile = userProfile.idProfile,
+                                username = userAccount.username,
+                                email = userAccount.email,
+                                nickname = userProfile.nickname,
+                                description = userProfile.description,
+                                imagePath = userProfile.imagePath,
+                                reputation = userAccount.reputation,
+                                createdDate = userProfile.createdDate
+                            }).FirstOrDefault();
+                        friendsData.Add((UserData)userDataFound);
                     }
                 }
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                friendsListFounded.Insert(0, failedSearching);
+                friendsData.Insert(0, failedSearching);
             }
             catch (EntityException entityException)
             {
                 logger.LogError(entityException);
-                friendsListFounded.Insert(0, failedSearching);
+                friendsData.Insert(0, failedSearching);
             }
-            return friendsListFounded;
+            return friendsData;
         }
 
         public Profile GetFriendByUsername(AccessAccount accessAccount, string username)

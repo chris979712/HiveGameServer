@@ -64,7 +64,6 @@ namespace DataBaseManager.Operations
                         .Where(user => user.idPlayerTwo == searcherPlayer.FK_IdAccount &&
                             user.state == Enumerations.FriendshipStates.Requested.ToString())
                         .ToList(); 
-
                     friendRequestsList = friendRequests
                         .Join(dataBaseContext.Profile.ToList(), 
                         user => user.FK_idPlayerOne, playerFound => playerFound.FK_IdAccount,

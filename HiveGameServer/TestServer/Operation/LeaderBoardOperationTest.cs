@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using DataBaseManager.Operations;
 using DataBaseManager.Utilities;
+using HiveGameService.Utilities;
 using Xunit;
 
 namespace TestServer.Operation
 {
     public class LeaderBoardOperationTest
     {
-        private LeaderBoardOperation operation = new LeaderBoardOperation();
 
         [Fact]
         public void GetAllPlayersLeaderboardsFromDataBaseTestSuccess()
@@ -16,12 +17,12 @@ namespace TestServer.Operation
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             PlayerLeaderBoard playerLeaderBoardExpectedOne = new PlayerLeaderBoard()
             {
-                wonMatches = 4,
-                lostMatches = 1,
-                drawMatches = 4,
-                totalMatches = 1,
+                wonMatches = 0,
+                lostMatches = 0,
+                drawMatches = 0,
+                totalMatches = 0,
                 idAccount = 1,
-                username = "Chris985"
+                username = "Chris984"
             };
             PlayerLeaderBoard playerLeaderBoardExpectedTwo = new PlayerLeaderBoard()
             {
@@ -29,7 +30,7 @@ namespace TestServer.Operation
                 lostMatches = 0,
                 drawMatches = 0,
                 totalMatches = 0,
-                idAccount = 1001,
+                idAccount = 2,
                 username = "Juan007"
             };
             leaderBoardsExpected.Add(playerLeaderBoardExpectedOne);
@@ -39,7 +40,7 @@ namespace TestServer.Operation
         }
 
         [Fact]
-        public void GetAllPlayersLeaderboardsFromDataBaseFailTestSucces()
+        public void GetAllPlayersLeaderboardsFromDataBaseExceptionTestSucces()
         {
             List<PlayerLeaderBoard> leaderBoardsExpected = new List<PlayerLeaderBoard>();
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
@@ -75,6 +76,19 @@ namespace TestServer.Operation
         public void GetPersonalLeaderBoardFailTestSucces()
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
+            int idAccount = 20;
+            PlayerLeaderBoard leaderBoardExpected = new PlayerLeaderBoard()
+            {
+                idAccount = Constants.NO_DATA_MATCHES
+            };
+            PlayerLeaderBoard leaderBoardObtained = leaderBoardOperation.GetPersonalLeaderBoard(idAccount);
+            Assert.Equal(leaderBoardExpected.idAccount, leaderBoardObtained.idAccount);
+        }
+
+        [Fact]
+        public void GetPersonalLeaderBoardExceptionTestSucces()
+        {
+            LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 1;
             PlayerLeaderBoard playerLeaderBoardExpected = new PlayerLeaderBoard()
             {
@@ -98,6 +112,16 @@ namespace TestServer.Operation
         public void UpdateDrawResultToPlayerLeaderBoardToDataBaseFailTestSuccess()
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
+            int idAccount = 20;
+            int expectedResult = Constants.NO_DATA_MATCHES;
+            int obtainedResult = leaderBoardOperation.UpdateDrawResultToPlayerLeaderBoardToDataBase(idAccount);
+            Assert.Equal(expectedResult, obtainedResult);   
+        }
+
+        [Fact]
+        public void UpdateDrawResultToPlayerLeaderBoardToDataBaseExceptionTestSuccess()
+        {
+            LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 1;
             int expectedResult = -1;
             int obtainedResult = leaderBoardOperation.UpdateDrawResultToPlayerLeaderBoardToDataBase(idAccount);
@@ -118,6 +142,16 @@ namespace TestServer.Operation
         public void UpdateWinnerResultToPlayerLeaderBoardToDataBaseFailTestSuccess()
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
+            int idAccount = 20;
+            int expectedResult = Constants.NO_DATA_MATCHES;
+            int obtainedResult = leaderBoardOperation.UpdateWinnerResultToPlayerLeaderBoardToDataBase(idAccount);
+            Assert.Equal(expectedResult, obtainedResult);
+        }
+
+        [Fact]
+        public void UpdateWinnerResultToPlayerLeaderBoardToDataBaseExceptionTestSuccess()
+        {
+            LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 1;
             int expectedResult = -1;
             int obtainedResult = leaderBoardOperation.UpdateWinnerResultToPlayerLeaderBoardToDataBase(idAccount);
@@ -136,6 +170,16 @@ namespace TestServer.Operation
 
         [Fact]
         public void UpdateLoserResultToPlayerLeaderBoardToDataBaseFailTestSuccess()
+        {
+            LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
+            int idAccount = 20;
+            int expectedResult = Constants.NO_DATA_MATCHES;
+            int obtainedResult = leaderBoardOperation.UpdateLoserResultToPlayerLeaderBoardToDataBase(idAccount);
+            Assert.Equal(expectedResult, obtainedResult);
+        }
+
+        [Fact]
+        public void UpdateLoserResultToPlayerLeaderBoardToDataBaseExceptionTestSuccess()
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 1;

@@ -224,9 +224,9 @@ namespace DataBaseManager.Operations
                         try
                         {
                             var existingAccessAccount = dataBaseContext.AccessAccount.FirstOrDefault(AccessAccount => AccessAccount.email == email);
-                            var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
-                            if (existingAccessAccount != null && existingProfile != null)
-                            { 
+                            if (existingAccessAccount != null)
+                            {
+                                var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
                                 existingProfile.nickname = profile.nickname;
                                 existingProfile.imagePath = profile.imagePath;
                                 existingProfile.description = profile.description;

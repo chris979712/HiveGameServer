@@ -37,7 +37,7 @@ namespace HiveGameService.Services
             {
                 idAccessAccount = player.idAccesAccount
             };
-            List<DataBaseManager.Profile> friendsObtainedFromDataBase = friendshipOperations.GetAllFriendsFromDataBase(searcherPlayer);
+            List<UserData> friendsObtainedFromDataBase = friendshipOperations.GetAllFriendsFromDataBase(searcherPlayer);
             List<Contracts.Profile> friendsObtained = new List<Contracts.Profile>();
             for(int friendsObtainedFromDataBaseIndex = 0; friendsObtainedFromDataBaseIndex < friendsObtainedFromDataBase.Count; friendsObtainedFromDataBaseIndex++)
             {
@@ -46,8 +46,12 @@ namespace HiveGameService.Services
                     nickname = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].nickname,
                     idProfile = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].idProfile,
                     imagePath = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].imagePath,
-                    idAccount = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].FK_IdAccount,
-                    description = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].description
+                    idAccount = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].idAccessAccount,
+                    description = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].description,
+                    reputation = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].reputation,
+                    email = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].email,
+                    username = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].username,
+                    createdDate = friendsObtainedFromDataBase[friendsObtainedFromDataBaseIndex].createdDate
                 };
                 friendsObtained.Add(friend);
             }
