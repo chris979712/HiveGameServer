@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {
-    public partial class EmailInvitationService : IEmailInvitationManager
+    public partial class HiveGameService : IEmailInvitationManager
     {
         private static readonly Dictionary<string, string> lobbyCodes = new Dictionary<string, string>();
 
@@ -22,7 +22,7 @@ namespace HiveGameService.Services
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             int resultSendedEmail = Constants.ERROR_OPERATION;
-            string templateInvitationMessage = BodyMessageFormat();
+            string templateInvitationMessage = BodyMessageInvitationFormat();
             if(templateInvitationMessage!="Not found template file")
             {
                 try
@@ -63,7 +63,7 @@ namespace HiveGameService.Services
             return resultSendedEmail;
         }
 
-        public string BodyMessageFormat()
+        public string BodyMessageInvitationFormat()
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             string bodyMessageFormat;

@@ -29,7 +29,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void CreateFriendRequestToDataBasetFailTestSuccess()
+        public void CreateFriendRequestToDataBaseExceptionTestSuccess()
         {
             AccessAccount accountPlayerTest = new AccessAccount()
             {
@@ -44,17 +44,15 @@ namespace TestServer
             Assert.Equal(resultExpected, resultObtained);
         }
 
-
-
         [Fact]
         public void GetFriendRequestsFromDataBaseTest()
         {
             List<Profile> friendsRequestListExpected = new List<Profile>();
             Profile profileObtainedTest = new Profile()
             {
-                nickname = "chrisss",
-                imagePath = "image2.png",
-                createdDate = DateTime.Parse("2024-10-11"),
+                nickname = "Chris984",
+                imagePath = "/Images/Avatars/Avatar1.png",
+                createdDate = DateTime.Parse("2024-10-23"),
                 idProfile = 1,
                 FK_IdAccount = 1
             };
@@ -77,7 +75,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void GetFriendRequestsFromDataBaseFailTestSuccess()
+        public void GetFriendRequestsFromDataBaseExceptionTestSuccess()
         {
             List<Profile> friendsRequestListExpected = new List<Profile>();
             Profile profileObtainedTest = new Profile()
@@ -96,21 +94,21 @@ namespace TestServer
         [Fact]
         public void AcceptFriendRequestInToDataBaseTest()
         {
-            AccessAccount playerOne = new AccessAccount()
+            AccessAccount responderPlayer = new AccessAccount()
             {
                 idAccessAccount = 2
             };
-            AccessAccount playerTwo = new AccessAccount()
+            AccessAccount answererPlayer = new AccessAccount()
             {
-                idAccessAccount = 3
+                idAccessAccount = 1
             };
             int resultExpected = Constants.SUCCES_OPERATION;
-            int resultObtained = operation.AcceptFriendRequestInToDataBase(playerOne, playerTwo);
+            int resultObtained = operation.AcceptFriendRequestInToDataBase(responderPlayer, answererPlayer);
             Assert.Equal(resultExpected, resultObtained);
         }
 
         [Fact]
-        public void AcceptFriendRequestInToDataBaseFailTestSuccess()
+        public void AcceptFriendRequestInToDataBaseExceptionTestSuccess()
         {
             AccessAccount playerOne = new AccessAccount()
             {
@@ -142,7 +140,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void DeclineFriendRequestToDataBaseFailTestSuccess()
+        public void DeclineFriendRequestToDataBaseExceptionTestSuccess()
         {
             AccessAccount playerOne = new AccessAccount()
             {
@@ -175,7 +173,7 @@ namespace TestServer
         }
 
         [Fact]
-        public void VerifyExistingFriendRequestInToDataBaseFailTestSuccess()
+        public void VerifyExistingFriendRequestInToDataBaseExceptionTestSuccess()
         {
             AccessAccount playerOne = new AccessAccount()
             {
