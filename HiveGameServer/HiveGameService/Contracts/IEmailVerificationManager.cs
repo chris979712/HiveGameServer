@@ -17,6 +17,9 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         bool VerifyCodeVerification(UserVerificator userVerificator);
+
+        [OperationContract]
+        string GenerateVerificatonCode(string email);
     }
 
     [DataContract]

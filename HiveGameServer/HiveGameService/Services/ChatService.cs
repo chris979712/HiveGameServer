@@ -88,5 +88,15 @@ namespace HiveGameService.Services
             return users;
         }
 
+        public int DisconectPlayerFromChat(Profile user)
+        {
+            int disconectionResult = Constants.ERROR_OPERATION;
+            if (chatCallBacks.ContainsKey(user.username))
+            {
+                chatCallBacks.Remove(user.username);
+                disconectionResult = Constants.SUCCES_OPERATION;
+            }
+            return disconectionResult;
+        }
     }
 }

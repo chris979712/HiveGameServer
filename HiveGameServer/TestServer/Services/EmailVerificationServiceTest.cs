@@ -1,50 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.ServiceModel;
-using HiveGameService.Contracts;
-using HiveGameService.Services;
+﻿using HiveGameService.Contracts;
 using HiveGameService.Utilities;
-using Moq;
 using Xunit;
-using Xunit.Sdk;
 
 
 namespace TestServer.Services
 {
-    public class EmailVerificationServiceTest : BeforeAfterTestAttribute
+    public class EmailVerificationServiceTest 
     {
-        private readonly Mock<IEmailVerificationManager> emailManagerMock;
-        private ServiceHost serviceHost;
-        private HiveGameService.Services.HiveGameService emailVerificationService;
 
-        public EmailVerificationServiceTest()
+        [Fact]
+        public void SendVerificationEmailTestSuccess()
         {
-            emailManagerMock = new Mock<IEmailVerificationManager>();
-        }
-
-        public override void Before(MethodInfo methodUnderTest)
-        {
-            serviceHost = new ServiceHost(typeof(HiveGameService.Services.HiveGameService));
-            serviceHost.Open();
-            Console.WriteLine("Testing");
-            emailVerificationService = new HiveGameService.Services.HiveGameService();
+            HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
+            string emailToSend = "chrisvasquez985@gmail.com";
+            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultObtained = emailVerificationManagerClient.SendVerificationEmail(emailToSend);
+            Assert.Equal(resultExpected, resultObtained);
         }
 
         [Fact]
-        public void GenerateVerificationCodeTest()
+        public void SendVerificationEmailFailTestSuccess()
         {
-            string verificationCode = emailVerificationService.GenerateVerificatonCode();
-            Assert.NotNull(verificationCode);
+            HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
+            string emailToSend = " ";
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = emailVerificationManagerClient.SendVerificationEmail(emailToSend);
+            Assert.Equal(resultExpected, resultObtained);
         }
 
-        public override void After(MethodInfo methodUnderTest)
+        [Fact]
+        public void GenerateVerificationCodeTestSuccess()
         {
-            if(serviceHost != null)
+            HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
+            string codeVerification = emailVerificationManagerClient.GenerateVerificatonCode("chrisvasquez985@gmail.com");
+            Assert.NotNull(codeVerification);
+        }
+
+        [Fact]
+        public void VerifyCodeVerificationTestSuccess()
+        {
+            HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
+            UserVerificator userVerificatorTest = new UserVerificator()
             {
-                serviceHost.Close();
-                Console.WriteLine("Service disconnected");
-            }
+                email = "chrisvasquez985@gmail.com",
+                code = "267208"
+            };
+            bool resultObtained = emailVerificationManagerClient.VerifyCodeVerification(userVerificatorTest);
+            Assert.True(resultObtained);
+        }
+
+        [Fact]
+        public void VerifyCodeVerificationFailTestSuccess()
+        {
+            HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
+            UserVerificator userVerificatorTest = new UserVerificator()
+            {
+                email = "chrisvasquez985@gmail.com",
+                code = "111111"
+            };
+            bool resultObtained = emailVerificationManagerClient.VerifyCodeVerification(userVerificatorTest);
+            Assert.False(resultObtained);
         }
     }
 }
