@@ -54,6 +54,9 @@ namespace HiveGameService.Services
                 catch (SmtpException smtpException)
                 {
                     logger.LogError(smtpException);
+                }catch(FormatException formatException)
+                {
+                    logger.LogError(formatException);
                 }
                 catch (InvalidOperationException invalidOperationException)
                 {
@@ -73,7 +76,12 @@ namespace HiveGameService.Services
                 string serverPath = Path.GetFullPath(Path.Combine(baseDirectory, "../../../"));
                 string templatePath = Path.Combine(baseDirectory, "HiveGameService/Utilities/InvitationEmail.html");
                 bodyMessageFormat = File.ReadAllText(templatePath);
-            }catch(FileNotFoundException fileNotFoundException)
+            }catch(DirectoryNotFoundException directoryNotFoundException)
+            {
+                logger.LogError(directoryNotFoundException);
+                bodyMessageFormat = "Not found template file";
+            }
+            catch(FileNotFoundException fileNotFoundException)
             {
                 logger.LogError(fileNotFoundException);
                 bodyMessageFormat = "Not found template file";

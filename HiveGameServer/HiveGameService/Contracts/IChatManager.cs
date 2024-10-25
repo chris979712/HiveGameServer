@@ -18,6 +18,8 @@ namespace HiveGameService.Contracts
         [OperationContract(IsOneWay = true)]
         void SendMessages(Message message, string code);
 
+        [OperationContract]
+        int DisconectPlayerFromChat(Profile user);
 
         [OperationContract(IsOneWay = false)]
         ObservableCollection<Profile> GetConnectedUsers();
