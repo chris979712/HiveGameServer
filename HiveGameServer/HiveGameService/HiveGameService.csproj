@@ -67,6 +67,7 @@
     <Compile Include="Contracts\IFriendRequestManager.cs" />
     <Compile Include="Contracts\IFriendshipManager.cs" />
     <Compile Include="Contracts\ILeaderBoardManager.cs" />
+    <Compile Include="Contracts\IMatchCreatorManager.cs" />
     <Compile Include="Contracts\IUserManager.cs" />
     <Compile Include="Contracts\IUserSessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Services\FriendRequestService.cs" />
     <Compile Include="Services\FriendshipService.cs" />
     <Compile Include="Services\LeaderBoardService.cs" />
+    <Compile Include="Services\MatchCreatorService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\UserSessionService.cs" />
     <Compile Include="Utilities\Constants.cs" />
