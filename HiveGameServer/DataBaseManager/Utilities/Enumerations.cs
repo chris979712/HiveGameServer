@@ -17,5 +17,13 @@ namespace HiveGameService.Utilities
             Blocked
         }
 
+        public enum Match
+        {
+            Active,
+            Cancelled,
+            Finished
+        }
+
+
     }
 }
