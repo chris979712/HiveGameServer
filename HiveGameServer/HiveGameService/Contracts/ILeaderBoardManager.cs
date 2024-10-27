@@ -40,5 +40,7 @@ namespace HiveGameService.Contracts
         public string username;
         [DataMember]
         public int idAccount;
+        [DataMember]
+        public string imageProfile;
     }
 }
