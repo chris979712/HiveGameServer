@@ -26,6 +26,7 @@ namespace HiveGameService.Services
                 playerLeaderBoardObtained.totalLostMatches = leaderBoardPlayerObtainedList[leaderBoardPlayerObtainedListIndex].lostMatches;
                 playerLeaderBoardObtained.totalDrawMatches = leaderBoardPlayerObtainedList[leaderBoardPlayerObtainedListIndex].drawMatches;
                 playerLeaderBoardObtained.totalMatches = leaderBoardPlayerObtainedList[leaderBoardPlayerObtainedListIndex].totalMatches;
+                playerLeaderBoardObtained.imageProfile = leaderBoardPlayerObtainedList[leaderBoardPlayerObtainedListIndex].imageProfile;
                 playersLeaderBoardObtained.Add(playerLeaderBoardObtained);
             }
             return playersLeaderBoardObtained;

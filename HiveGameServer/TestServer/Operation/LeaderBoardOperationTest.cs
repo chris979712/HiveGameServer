@@ -22,7 +22,8 @@ namespace TestServer.Operation
                 drawMatches = 0,
                 totalMatches = 0,
                 idAccount = 1,
-                username = "Chris984"
+                username = "Chris984",
+                imageProfile = "/Images/Avatars/Avatar5.png"
             };
             PlayerLeaderBoard playerLeaderBoardExpectedTwo = new PlayerLeaderBoard()
             {
@@ -31,7 +32,8 @@ namespace TestServer.Operation
                 drawMatches = 0,
                 totalMatches = 0,
                 idAccount = 2,
-                username = "Juan007"
+                username = "Juan007",
+                imageProfile = "/Images/Avatars/Avatar1.png"
             };
             leaderBoardsExpected.Add(playerLeaderBoardExpectedOne);
             leaderBoardsExpected.Add(playerLeaderBoardExpectedTwo);

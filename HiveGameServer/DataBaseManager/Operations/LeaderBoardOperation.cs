@@ -30,6 +30,11 @@ namespace DataBaseManager.Operations
                         leaderBoard => leaderBoard.FK_IdAccount, account => account.idAccessAccount, (leaderBoard, account) => new { 
                             Leaderboard = leaderBoard,
                             AccessAccount = account
+                        }).Join(databaseContext.Profile, result => result.AccessAccount.idAccessAccount, profile => profile.FK_IdAccount,
+                        (result,profile) => new { 
+                            result.Leaderboard,
+                            result.AccessAccount,
+                            Profile = profile
                         }).ToList();
                     for(int leaderBoardsListIndex = 0; leaderBoardsListIndex < leaderBoardsListObtainedFromDataBase.Count; leaderBoardsListIndex++)
                     {
@@ -40,6 +45,7 @@ namespace DataBaseManager.Operations
                         playerLeaderBoardFound.wonMatches = leaderBoardsListObtainedFromDataBase[leaderBoardsListIndex].Leaderboard.wonMatches;
                         playerLeaderBoardFound.drawMatches = leaderBoardsListObtainedFromDataBase[leaderBoardsListIndex].Leaderboard.drawMatches;
                         playerLeaderBoardFound.totalMatches = leaderBoardsListObtainedFromDataBase[leaderBoardsListIndex].Leaderboard.totalOfMatches;
+                        playerLeaderBoardFound.imageProfile = leaderBoardsListObtainedFromDataBase[leaderBoardsListIndex].Profile.imagePath;
                         leaderBoardsListObtained.Add(playerLeaderBoardFound);
                     }
                 }
