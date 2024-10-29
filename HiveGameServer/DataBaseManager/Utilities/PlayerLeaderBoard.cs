@@ -20,6 +20,8 @@ namespace DataBaseManager.Utilities
 
         public int idAccount { get; set; }
 
+        public string imageProfile { get; set; }
+
         public override bool Equals(Object obj)
         {
             if(obj is PlayerLeaderBoard other)
@@ -27,7 +29,7 @@ namespace DataBaseManager.Utilities
                 return totalMatches == other.totalMatches && wonMatches == other.wonMatches 
                     && lostMatches == other.lostMatches && drawMatches == other.drawMatches 
                     && drawMatches == other.drawMatches && username.Equals(other.username) 
-                    && idAccount == other.idAccount;
+                    && idAccount == other.idAccount && imageProfile.Equals(other.imageProfile);
             }
             return false;
         }

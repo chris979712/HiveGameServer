@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {
-    public partial class EmailInvitationService : IEmailInvitationManager
+    public partial class HiveGameService : IEmailInvitationManager
     {
         private static readonly Dictionary<string, string> lobbyCodes = new Dictionary<string, string>();
 
@@ -22,7 +22,7 @@ namespace HiveGameService.Services
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             int resultSendedEmail = Constants.ERROR_OPERATION;
-            string templateInvitationMessage = BodyMessageFormat();
+            string templateInvitationMessage = BodyMessageInvitationFormat();
             if(templateInvitationMessage!="Not found template file")
             {
                 try
@@ -54,6 +54,9 @@ namespace HiveGameService.Services
                 catch (SmtpException smtpException)
                 {
                     logger.LogError(smtpException);
+                }catch(FormatException formatException)
+                {
+                    logger.LogError(formatException);
                 }
                 catch (InvalidOperationException invalidOperationException)
                 {
@@ -63,7 +66,7 @@ namespace HiveGameService.Services
             return resultSendedEmail;
         }
 
-        public string BodyMessageFormat()
+        public string BodyMessageInvitationFormat()
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             string bodyMessageFormat;
@@ -73,7 +76,12 @@ namespace HiveGameService.Services
                 string serverPath = Path.GetFullPath(Path.Combine(baseDirectory, "../../../"));
                 string templatePath = Path.Combine(baseDirectory, "HiveGameService/Utilities/InvitationEmail.html");
                 bodyMessageFormat = File.ReadAllText(templatePath);
-            }catch(FileNotFoundException fileNotFoundException)
+            }catch(DirectoryNotFoundException directoryNotFoundException)
+            {
+                logger.LogError(directoryNotFoundException);
+                bodyMessageFormat = "Not found template file";
+            }
+            catch(FileNotFoundException fileNotFoundException)
             {
                 logger.LogError(fileNotFoundException);
                 bodyMessageFormat = "Not found template file";

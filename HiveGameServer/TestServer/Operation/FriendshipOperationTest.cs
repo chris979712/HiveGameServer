@@ -18,48 +18,42 @@ namespace TestServer
         [Fact] 
         public void GetAllFriendsFromDataBaseTestSuccess()
         {
-            List<Profile> expectedProfiles = new List<Profile>();
+            List<UserData> expectedProfiles = new List<UserData>();
             AccessAccount accountTest = new AccessAccount()
             {
                 idAccessAccount = 2
             };
-            Profile profileObtainedTest = new Profile()
+            UserData profileObtainedTest = new UserData()
             {
-                nickname = "chrisss",
-                imagePath = "image2.png",
-                createdDate = DateTime.Parse("2024-10-11"),
+                nickname = "Chris984",
+                imagePath = "/Images/Avatars/Avatar1.png",
+                createdDate = DateTime.Parse("2024-10-23"),
                 idProfile = 1,
-                FK_IdAccount = 1
-            };
-            Profile profileObtainedTwoTest = new Profile()
-            {
-                nickname = "oscarin",
-                imagePath = " ",
-                createdDate = DateTime.Parse("2024-10-11"),
-                idProfile = 3,
-                FK_IdAccount = 3,
-                description = "Hola soy chris :D"
+                idAccessAccount = 1,
+                description = "Hola soy chris :D",
+                username = "Chris984",
+                email = "chrisvasquez985@gmail.com",
+                reputation = 100
             };
             expectedProfiles.Add(profileObtainedTest);
-            expectedProfiles.Add(profileObtainedTwoTest);
-            List<Profile> profilesObtained = friendshipOperation.GetAllFriendsFromDataBase(accountTest);
+            List<UserData> profilesObtained = friendshipOperation.GetAllFriendsFromDataBase(accountTest);
             Assert.Equal(expectedProfiles, profilesObtained);
         }
 
         [Fact]
         public void GetAllFriendsFromDataBaseFailTestSuccess()
         {
-            List<Profile> expectedProfiles = new List<Profile>();
+            List<UserData> expectedProfiles = new List<UserData>();
             AccessAccount accountTest = new AccessAccount()
             {
                 idAccessAccount = 2
             };
-            Profile profileErrorTest = new Profile()
+            UserData profileErrorTest = new UserData()
             {
                 idProfile = Constants.ERROR_OPERATION
             };
             expectedProfiles.Add(profileErrorTest);
-            List<Profile> profilesObtained = friendshipOperation.GetAllFriendsFromDataBase(accountTest);
+            List<UserData> profilesObtained = friendshipOperation.GetAllFriendsFromDataBase(accountTest);
             Assert.Equal(profilesObtained[0].idProfile, expectedProfiles[0].idProfile);
         }
 
@@ -73,20 +67,36 @@ namespace TestServer
             };
             Profile profileExpected = new Profile()
             {
-                nickname = "chrisss",
-                imagePath = "image2.png",
-                createdDate = DateTime.Parse("2024-10-11"),
+                nickname = "Chris984",
+                imagePath = "/Images/Avatars/Avatar1.png",
+                createdDate = DateTime.Parse("2024-10-23"),
                 idProfile = 1,
                 FK_IdAccount = 1,
-                description = "Si"
+                description = "Hola soy chris :D"
             };
-            string username = "Chris985";
+            string username = "Chris984";
             Profile profileObtained = friendshipOperation.GetFriendByUsername(accountTest, username);
             Assert.Equal(profileExpected.FK_IdAccount, profileObtained.FK_IdAccount);
         }
 
         [Fact]
         public void GetFriendByUsernameFailTestSuccess()
+        {
+            AccessAccount accountTest = new AccessAccount()
+            {
+                idAccessAccount = 2
+            };
+            Profile profileExpected = new Profile()
+            {
+                idProfile = 0
+            };
+            string username = "ElComandante777";
+            Profile profileObtained = friendshipOperation.GetFriendByUsername(accountTest,username);
+            Assert.Equal(profileExpected.FK_IdAccount, profileObtained.FK_IdAccount);
+        }
+
+        [Fact]
+        public void GetFriendByUsernameExceptionTestSuccess()
         {
             AccessAccount accountTest = new AccessAccount()
             {
@@ -106,11 +116,11 @@ namespace TestServer
         {
             AccessAccount accountTest = new AccessAccount()
             {
-                idAccessAccount = 2
+                idAccessAccount = 1
             };
             AccessAccount accountTestTwo = new AccessAccount()
             {
-                idAccessAccount = 3
+                idAccessAccount = 2
             };
             int expectedResult = Constants.SUCCES_OPERATION;
             int obtainedResult = friendshipOperation.DeleteFriendFromDataBase(accountTest, accountTestTwo);

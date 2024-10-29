@@ -22,12 +22,7 @@ namespace HiveGameService.Services
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             int resultSendedEmail = Constants.ERROR_OPERATION;
-            string codeGenerated = GenerateVerificatonCode();
-            if (codeVerificationAccesAccountRegistration.ContainsKey(emailToSend))
-            {
-                codeVerificationAccesAccountRegistration.Remove(emailToSend);
-            }
-            codeVerificationAccesAccountRegistration.Add(emailToSend, codeGenerated);
+            string codeGenerated = GenerateVerificatonCode(emailToSend);
             string templateVerificationMessage = BodyMessageFormat();
             try
             {
@@ -58,14 +53,19 @@ namespace HiveGameService.Services
             }catch (SmtpException smtpException)
             {
                 logger.LogError(smtpException);
-            }catch(InvalidOperationException invalidOperationException)
+            }
+            catch (FormatException formatException)
+            {
+                logger.LogError(formatException);
+            }
+            catch(InvalidOperationException invalidOperationException)
             {
                 logger.LogError(invalidOperationException);
             }
             return resultSendedEmail;
         }
 
-        public string BodyMessageFormat()
+        private string BodyMessageFormat()
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             string bodyMessageFormat;
@@ -85,21 +85,33 @@ namespace HiveGameService.Services
 
         public bool VerifyCodeVerification(UserVerificator userVerificator)
         {
+            LoggerManager logger = new LoggerManager(this.GetType());
             bool verificationResult = false;
-            string codeToCompare = codeVerificationAccesAccountRegistration[userVerificator.email];
-            if (codeToCompare == userVerificator.code)
+            try
             {
+                string codeToCompare = codeVerificationAccesAccountRegistration[userVerificator.email];
+                if (codeToCompare == userVerificator.code)
+                {
                     verificationResult = true;
                     codeVerificationAccesAccountRegistration.Remove(codeToCompare);
+                }
+            }catch(KeyNotFoundException keyNotFoundException){
+                verificationResult = false;
+                logger.LogWarn(keyNotFoundException);
             }
             return verificationResult;
         }
 
-        public string GenerateVerificatonCode()
+        public string GenerateVerificatonCode(string email)
         {
+            if (codeVerificationAccesAccountRegistration.ContainsKey(email))
+            {
+                codeVerificationAccesAccountRegistration.Remove(email);
+            }
             Random random = new Random();
             int codeGenerated = random.Next(100000, 999999);
             string stringCodeGenerated = codeGenerated.ToString();
+            codeVerificationAccesAccountRegistration.Add(email, stringCodeGenerated);
             return stringCodeGenerated;
         }
 

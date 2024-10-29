@@ -88,6 +88,7 @@
     <Compile Include="Operations\FriendRequestOperation.cs" />
     <Compile Include="Operations\FriendshipOperation.cs" />
     <Compile Include="Operations\LeaderBoardOperation.cs" />
+    <Compile Include="Operations\MatchOperation.cs" />
     <Compile Include="Operations\UserOperation.cs" />
     <Compile Include="Profile.cs">
       <DependentUpon>HiveDataModel.tt</DependentUpon>
