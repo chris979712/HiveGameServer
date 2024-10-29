@@ -11,7 +11,7 @@ namespace HiveGameService.Services
 {
     public partial class HiveGameService : IUserSessionManager
     {
-        private static List<string> usersConnected = new List<string>();
+        private static readonly List<string> usersConnected = new List<string>();
         public int ConnectToGame(string username)
         {
             int resultConnection = Constants.ERROR_OPERATION;
