@@ -11,19 +11,19 @@ namespace HiveGameService.Contracts
     public interface IFriendsManager
     {
         [OperationContract(IsOneWay = true)]
-        void GetFriendsList(Profile player);
+        void GetFriendsList(UserSession user);
 
         [OperationContract(IsOneWay = true)]
-        void JoinAsConnectedFriend(string username);
+        void JoinAsConnectedFriend(UserSession user);
 
         [OperationContract]
-        int DeleteUserAsConnectedFriend(string username);
+        int DeleteUserAsConnectedFriend(UserSession username);
     }
 
     [ServiceContract]
     public interface IFriendsManagerCallback
     {
         [OperationContract]
-        void ObtainConnectedFriends(List<string> connectedFriends);
+        void ObtainConnectedFriends(List<UserSession> connectedFriends);
     }
 }
