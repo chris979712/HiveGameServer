@@ -15,9 +15,7 @@ using System.Threading.Tasks;
 namespace HiveGameService.Services
 {
     public partial class HiveGameService : IEmailInvitationManager
-    {
-        private static readonly Dictionary<string, string> lobbyCodes = new Dictionary<string, string>();
-
+    { 
         public int SendEmailInvitation(UserVerificator userVerificator)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
@@ -89,24 +87,6 @@ namespace HiveGameService.Services
             return bodyMessageFormat;
         }
 
-        public bool VerifyExistingCode(string code)
-        {
-            return lobbyCodes.ContainsKey(code);
-        }
-
-        public string GenerateLobbyCode(string email)
-        {
-            Random random = new Random();
-            int codeGenerated = random.Next(100000, 999999);
-            string stringCodeGenerated = codeGenerated.ToString();
-            while (VerifyExistingCode(stringCodeGenerated))
-            {
-                codeGenerated = random.Next(100000, 999999);
-                stringCodeGenerated = codeGenerated.ToString(); 
-            }
-            lobbyCodes.Add(stringCodeGenerated, email);
-            return stringCodeGenerated;
-        }
     }
 }
 
