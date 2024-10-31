@@ -20,6 +20,15 @@ namespace HiveGameService.Contracts
         [OperationContract]
         int VerifyExistingActiveMatch(MatchCreator matchCreator);
 
+        [OperationContract]
+        bool VerifyIfLobbyIsFull(string codeLobby);
+
+        [OperationContract]
+        bool VerifyExistingCode(string code);
+
+        [OperationContract]
+        string GenerateLobbyCode(string email);
+
     }
 
     [DataContract]

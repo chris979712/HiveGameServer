@@ -12,11 +12,5 @@ namespace HiveGameService.Contracts
     {
         [OperationContract]
         int SendEmailInvitation(UserVerificator verificator);
-
-        [OperationContract]
-        bool VerifyExistingCode(string code);
-
-        [OperationContract]
-        string GenerateLobbyCode(string email);
     }
 }
