@@ -30,13 +30,17 @@ namespace HiveGameService.Contracts
         [DataMember]
         public int idAccount { get; set; }
 
+        [DataMember]
+        public string codeMatch { get; set; }
+
         public override bool Equals(object obj)
         {
             bool comparation = false;
             if(obj is UserSession other)
             {
                 comparation = username.Equals(other.username) &&
-                    idAccount.Equals(other.idAccount);
+                    idAccount.Equals(other.idAccount) &&
+                    (codeMatch?.Equals(other.codeMatch) ?? other.codeMatch == null); ;
             }
             return comparation;
         }
@@ -45,7 +49,8 @@ namespace HiveGameService.Contracts
         {
             int hashUsername = username?.GetHashCode() ?? 0;
             int hashIdAccount = idAccount.GetHashCode();
-            return hashUsername ^ hashIdAccount;
+            int hashCodeMatch = codeMatch?.GetHashCode() ?? 0;
+            return hashUsername ^ hashIdAccount ^ hashCodeMatch;
         }
     }
 }

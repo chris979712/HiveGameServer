@@ -36,7 +36,7 @@ namespace HiveGameService.Services
                 };
                 usersConnected.Remove(user);
                 UpdateFriendsListOfConectedFriends(user);
-                DisconectPlayerFromChat(userProfile);
+                DisconectPlayerFromChat(userProfile,user.codeMatch);
                 resultDisconnection = Constants.SUCCES_OPERATION;
             }
             else
