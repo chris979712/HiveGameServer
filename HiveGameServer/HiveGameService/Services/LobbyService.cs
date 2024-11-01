@@ -54,11 +54,7 @@ namespace HiveGameService.Services
            {
                 if (lobbiesCallback.ContainsKey(lobbyPlayer))
                 {
-                    if (!lobbyPlayers.ContainsKey(codeLobby))
-                    {
-                        lobbiesCallback.Remove(lobbyPlayer);
-                    }
-                    else if (lobbyPlayers[codeLobby].Count == 1)
+                    if (lobbyPlayers[codeLobby].Count == 1)
                     {
                         lobbyPlayers.Remove(codeLobby);
                         lobbiesCallback.Remove(lobbyPlayer);

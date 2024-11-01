@@ -19,10 +19,7 @@ namespace HiveGameService.Contracts
         void SendMessages(Message message, string code);
 
         [OperationContract]
-        int DisconectPlayerFromChat(Profile user);
-
-        [OperationContract(IsOneWay = false)]
-        ObservableCollection<Profile> GetConnectedUsers();
+        int DisconectPlayerFromChat(Profile user, string code);
     }
 
     [ServiceContract]
@@ -30,9 +27,6 @@ namespace HiveGameService.Contracts
     {
         [OperationContract]
         void ReceiveMessage(List<Message> messages);
-        [OperationContract]
-
-        void UserConnected(ObservableCollection<Profile> users);
     }
 
     [DataContract]
