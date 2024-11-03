@@ -139,5 +139,47 @@ namespace TestServer.Operation
             int resultObtained = matchToCreateOperationTest.VerifyExistingActiveMatch(matchToCreateTest);
             Assert.Equal(resultExpected, resultObtained);
         }
+
+        [Fact]
+        public void VerifyMatchCreatorTestSuccess()
+        {
+            MatchOperation matchOperation = new MatchOperation();
+            Match matchToFind = new Match()
+            {
+                code = "123456",
+                FK_IdAccount = 1
+            };
+            int resultExpected = Constants.DATA_MATCHES;
+            int resultObtained = matchOperation.VerifyMatchCreator(matchToFind);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void VerifyMatchCreatorFailTestSuccess()
+        {
+            MatchOperation matchOperation = new MatchOperation();
+            Match matchToFind = new Match()
+            {
+                code = "111111",
+                FK_IdAccount = 1
+            };
+            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultObtained = matchOperation.VerifyMatchCreator(matchToFind);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void VerifyMatchCreatorExceptionTestSuccess()
+        {
+            MatchOperation matchOperation = new MatchOperation();
+            Match matchToFind = new Match()
+            {
+                code = "111111",
+                FK_IdAccount = 1
+            };
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = matchOperation.VerifyMatchCreator(matchToFind);
+            Assert.Equal(resultExpected, resultObtained);
+        }
     }
 }

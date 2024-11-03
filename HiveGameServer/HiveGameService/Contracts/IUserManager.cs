@@ -51,6 +51,34 @@ namespace HiveGameService.Contracts
         [DataMember]
         public string description { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            bool comparation = false;
+            if (obj is Profile other)
+            {
+                comparation = (username?.Equals(other.username) ?? other.username == null) &&
+                    (nickname?.Equals(other.nickname) ?? other.nickname == null) &&
+                    idAccesAccount == other.idAccesAccount && idProfile == other.idProfile &&
+                    idAccount == other.idAccount && (description?.Equals(other.description) ?? other.description == null)&&
+                    (email?.Equals(other.email)??other.email==null) && (imagePath?.Equals(other.imagePath) ?? other.imagePath == null);
+            }
+            return comparation;
+        }
+
+        public override int GetHashCode()
+        {
+            int hashUsername = username?.GetHashCode() ?? 0;
+            int hashNickname = nickname?.GetHashCode() ?? 0;
+            int hashIdProfile = idProfile.GetHashCode();
+            int hashIdAccount = idAccount.GetHashCode();
+            int hashIdAccesAccount = idAccesAccount.GetHashCode();
+            int hashDescription = description?.GetHashCode() ?? 0;
+            int hashEmail = email?.GetHashCode() ?? 0;
+            int hashImagePath = imagePath?.GetHashCode() ?? 0;
+            return hashUsername ^ hashNickname ^ hashIdProfile ^ hashIdAccount ^ hashIdAccesAccount ^ hashDescription ^
+                hashEmail ^ hashImagePath;
+        }
+
     }
 
     [DataContract]

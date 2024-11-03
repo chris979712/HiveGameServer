@@ -52,6 +52,41 @@ namespace HiveGameService.Services
             int verificationResult = matchOperation.VerifyExistingActiveMatch(matchToCreate);
             return verificationResult;
         }
+
+        public bool VerifyIfLobbyIsFull(string codeLobby)
+        {
+            bool verificationResult = true;
+            List<UserSession> usersInLobby = lobbyPlayers[codeLobby];
+            if (usersInLobby.Count >= 2)
+            {
+                verificationResult = true;
+            }
+            else
+            {
+                verificationResult = false;
+            }
+            return verificationResult;
+        }
+
+        public bool VerifyExistingCode(string code)
+        {
+            return lobbyCodes.ContainsKey(code);
+        }
+
+        public string GenerateLobbyCode(string email)
+        {
+            Random random = new Random();
+            int codeGenerated = random.Next(100000, 999999);
+            string stringCodeGenerated = codeGenerated.ToString();
+            while (VerifyExistingCode(stringCodeGenerated))
+            {
+                codeGenerated = random.Next(100000, 999999);
+                stringCodeGenerated = codeGenerated.ToString();
+            }
+            lobbyCodes.Add(stringCodeGenerated, email);
+            return stringCodeGenerated;
+        }
+
     }
 
 }

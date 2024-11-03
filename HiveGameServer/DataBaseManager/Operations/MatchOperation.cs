@@ -95,10 +95,6 @@ namespace DataBaseManager.Operations
                     }
                 }
             }
-            catch (DbUpdateException dbUpdateException)
-            {
-                logger.LogError(dbUpdateException);
-            }
             catch (EntityException entityException)
             {
                 logger.LogError(entityException);
@@ -106,6 +102,39 @@ namespace DataBaseManager.Operations
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
+            }
+            return verificationResult;
+        }
+
+        public int VerifyMatchCreator(Match match)
+        {
+            LoggerManager logger = new LoggerManager(this.GetType());
+            int verificationResult = Constants.ERROR_OPERATION;
+            try
+            {
+                using(var dataBaseContext = new HiveEntityDataModel())
+                {
+                    var matchFound = dataBaseContext.Match.Where(dataBaseMatch => dataBaseMatch.FK_IdAccount == match.FK_IdAccount 
+                    && dataBaseMatch.code == match.code).FirstOrDefault();
+                    if(matchFound != null)
+                    {
+                        verificationResult = Constants.SUCCES_OPERATION;
+                    }
+                    else
+                    {
+                        verificationResult= Constants.NO_DATA_MATCHES;
+                    }
+                }
+            }
+            catch (EntityException entityException)
+            {
+                logger.LogError(entityException);
+                verificationResult = Constants.ERROR_OPERATION;
+            }
+            catch (SqlException sqlException)
+            {
+                logger.LogError(sqlException);
+                verificationResult = Constants.ERROR_OPERATION;
             }
             return verificationResult;
         }

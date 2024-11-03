@@ -15,14 +15,14 @@ namespace HiveGameService.Services
     public partial class HiveGameService : IFriendsManager
     {
         private IFriendsManagerCallback friendsManagerCallback;
-        private static readonly Dictionary<string, IFriendsManagerCallback> friendsManagerCallbacks = new Dictionary<string, IFriendsManagerCallback>();
+        private static readonly Dictionary<UserSession, IFriendsManagerCallback> friendsManagerCallbacks = new Dictionary<UserSession, IFriendsManagerCallback>();
 
-        public void GetFriendsList(Profile profile)
+        public void GetFriendsList(UserSession user)
         {
             HostBehaviorManager.ChangeModeToReentrant();
             friendsManagerCallback = OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>();
             LoggerManager logger = new LoggerManager(this.GetType());
-            List<string> friendsConnected = ObtainFriendsList(profile.idAccesAccount);
+            List<UserSession> friendsConnected = ObtainFriendsList(user.idAccount);
             try
             {
                 OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>().ObtainConnectedFriends(friendsConnected);
@@ -35,16 +35,16 @@ namespace HiveGameService.Services
             }
         }
 
-        public void JoinAsConnectedFriend(string username)
+        public void JoinAsConnectedFriend(UserSession user)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             HostBehaviorManager.ChangeModeToReentrant();
             friendsManagerCallback = OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>();
             try
             {
-                if (!friendsManagerCallbacks.ContainsKey(username))
+                if (!friendsManagerCallbacks.ContainsKey(user))
                 {
-                    friendsManagerCallbacks.Add(username, friendsManagerCallback);
+                    friendsManagerCallbacks.Add(user, friendsManagerCallback);
                 }
             }
             catch (CommunicationException comunicationException)
@@ -57,31 +57,39 @@ namespace HiveGameService.Services
             }
         }
 
-        private List<string> ObtainFriendsList(int idAccount)
+        private List<UserSession> ObtainFriendsList(int idAccount)
         {
             Profile profilePlayer = new Profile() 
             {
                 idAccesAccount = idAccount
             };
             List<Profile> listOFAllFriends = GetAllFriends(profilePlayer);
-            List<string> friendsNameConnected = new List<string>();
+            List<UserSession> friendsConnected = new List<UserSession>();
             for (int indexFriendsList = 0; indexFriendsList < listOFAllFriends.Count; indexFriendsList++)
             {
-                if (usersConnected.Contains(listOFAllFriends[indexFriendsList].username))
+                UserSession friendObtained = new UserSession()
                 {
-                    string friendConnected = listOFAllFriends[indexFriendsList].username;
-                    friendsNameConnected.Add(friendConnected);
+                    username = listOFAllFriends[indexFriendsList].username,
+                    idAccount = listOFAllFriends[indexFriendsList].idAccount,
+                };
+                if (usersConnected.Contains(friendObtained))
+                {
+                    UserSession friendConnected = new UserSession(){
+                        username = listOFAllFriends[indexFriendsList].username,
+                        idAccount = listOFAllFriends[indexFriendsList].idAccount,
+                    };
+                    friendsConnected.Add(friendConnected);
                 }
             }
-            return friendsNameConnected;
+            return friendsConnected;
         }
 
-        public int DeleteUserAsConnectedFriend(string username)
+        public int DeleteUserAsConnectedFriend(UserSession user)
         {
             int deleteResult = Constants.ERROR_OPERATION;
-            if (friendsManagerCallbacks.ContainsKey(username))
+            if (friendsManagerCallbacks.ContainsKey(user))
             {
-                friendsManagerCallbacks.Remove(username);
+                friendsManagerCallbacks.Remove(user);
                 deleteResult = Constants.SUCCES_OPERATION;
             }
             else

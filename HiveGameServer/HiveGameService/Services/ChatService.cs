@@ -17,7 +17,7 @@ namespace HiveGameService.Services
         private IChatManagerCallback chatManagerCallback;
         private static readonly Dictionary<string, IChatManagerCallback> chatCallBacks = new Dictionary<string, IChatManagerCallback>();
         private static readonly Dictionary<string, List<Message>> messagesFromLobby = new Dictionary<string, List<Message>>();
-        private static ObservableCollection<Profile> users = new ObservableCollection<Profile>();
+        private static readonly Dictionary<string, List<Profile>> usersByLobby = new Dictionary<string, List<Profile>>();
 
         public void ConnectToChatLobby(Profile user, string code)
         {
@@ -25,21 +25,11 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             chatManagerCallback = OperationContext.Current.GetCallbackChannel<IChatManagerCallback>();
             chatCallBacks.Add(user.username, chatManagerCallback);
-            users.Add(user);
-            var callbackList = chatCallBacks?.ToArray();
-            try
+            if (!usersByLobby.ContainsKey(code))
             {
-                for(int callBackListIndex = 0; callBackListIndex < callbackList.Length; callBackListIndex++)
-                {
-                    callbackList[callBackListIndex].Value.UserConnected(users);
-                }
-            }catch(CommunicationException communicationException)
-            {
-                logger.LogError(communicationException);   
-            }catch(TimeoutException timeoutException)
-            {
-                logger.LogError(timeoutException);
+                usersByLobby[code] = new List<Profile>();
             }
+            usersByLobby[code].Add(user);
             showNewMessageConversation(code);
         }
 
@@ -53,8 +43,8 @@ namespace HiveGameService.Services
         public void showNewMessageConversation(string code)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            var usersList = users?.ToArray();
-            for(int usersIndex = 0; usersIndex < usersList.Length; usersIndex++)
+            List<Profile> usersList = usersByLobby[code];
+            for(int usersIndex = 0; usersIndex < usersList.Count; usersIndex++)
             {
                 if (chatCallBacks.ContainsKey(usersList[usersIndex].username))
                 {
@@ -83,17 +73,14 @@ namespace HiveGameService.Services
             return messagesFromLobby[code];
         }
 
-        public ObservableCollection<Profile> GetConnectedUsers()
-        {
-            return users;
-        }
-
-        public int DisconectPlayerFromChat(Profile user)
+        public int DisconectPlayerFromChat(Profile user, string code)
         {
             int disconectionResult = Constants.ERROR_OPERATION;
             if (chatCallBacks.ContainsKey(user.username))
             {
+
                 chatCallBacks.Remove(user.username);
+                usersByLobby[code].Remove(user);
                 disconectionResult = Constants.SUCCES_OPERATION;
             }
             return disconectionResult;
