@@ -31,6 +31,7 @@ namespace HiveGameService.Services
                     string emailSender = "candcinnovationshivegame@gmail.com";
                     string password = "guyy ihtn sygv daiy";
                     MailMessage messageToSend = new MailMessage();
+                    messageToSend.Subject = "Edit credentials request";
                     messageToSend.From = new MailAddress(emailSender);
                     messageToSend.To.Add(emailToSend);
                     messageToSend.Body = templateVerificationMessage.Replace("{code}", codeGenerated);

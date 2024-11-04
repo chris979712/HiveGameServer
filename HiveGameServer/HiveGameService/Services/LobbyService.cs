@@ -46,7 +46,7 @@ namespace HiveGameService.Services
             }
         }
 
-        public void LeavePlayerFromLobby(UserSession lobbyPlayer, string codeLobby)
+        public void LeavePlayerFromLobby(UserSession lobbyPlayer, string codeLobby, bool isKicked)
         {
            LoggerManager logger = new LoggerManager(this.GetType());
            HostBehaviorManager.ChangeModeToReentrant();
@@ -54,16 +54,26 @@ namespace HiveGameService.Services
            {
                 if (lobbiesCallback.ContainsKey(lobbyPlayer))
                 {
-                    if (lobbyPlayers[codeLobby].Count == 1)
+                    if (isKicked)
                     {
-                        lobbyPlayers.Remove(codeLobby);
-                        lobbiesCallback.Remove(lobbyPlayer);
-                    }
-                    else
-                    {
+                        lobbiesCallback[lobbyPlayer].ReceiveKickedNotification();
                         lobbyPlayers[codeLobby].Remove(lobbyPlayer);
                         lobbiesCallback.Remove(lobbyPlayer);
                         NotifyPlayers(codeLobby);
+                    }
+                    else
+                    {
+                        if (lobbyPlayers[codeLobby].Count == 1)
+                        {
+                            lobbyPlayers.Remove(codeLobby);
+                            lobbiesCallback.Remove(lobbyPlayer);
+                        }
+                        else
+                        {
+                            lobbyPlayers[codeLobby].Remove(lobbyPlayer);
+                            lobbiesCallback.Remove(lobbyPlayer);
+                            NotifyPlayers(codeLobby);
+                        }
                     }
                 }
            }
@@ -78,6 +88,7 @@ namespace HiveGameService.Services
 
         private void NotifyPlayers(string codeLobby)
         {
+            HostBehaviorManager.ChangeModeToReentrant();
             LoggerManager logger = new LoggerManager(this.GetType());
             List<UserSession> usersInLobby = lobbyPlayers[codeLobby];
             List<UserSession> hostHasLeft = new List<UserSession>();
@@ -121,6 +132,7 @@ namespace HiveGameService.Services
 
         public int VerifyCreatorOfTheMatch(GameMatch match)
         {
+            HostBehaviorManager.ChangeModeToMultiple();
             MatchOperation matchOperation = new MatchOperation();
             Match matchToFind = new Match()
             {

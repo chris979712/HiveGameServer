@@ -15,7 +15,7 @@ namespace HiveGameService.Contracts
         void ConnectToLobby(UserSession lobbyPlayer, string codeLobby);
 
         [OperationContract(IsOneWay = true)]
-        void LeavePlayerFromLobby(UserSession lobbyPlayer, string codeLobby);
+        void LeavePlayerFromLobby(UserSession lobbyPlayer, string codeLobby, bool isKicked);
 
         [OperationContract]
         int VerifyCreatorOfTheMatch(GameMatch match);
@@ -27,6 +27,9 @@ namespace HiveGameService.Contracts
     {
         [OperationContract]
         void ReceivePlayersToLobby(List<UserSession> user);
+
+        [OperationContract]
+        void ReceiveKickedNotification();
     }
 
 

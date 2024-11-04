@@ -28,15 +28,16 @@ namespace HiveGameService.Services
         public int Disconnect(UserSession user)
         {
             int resultDisconnection = Constants.ERROR_OPERATION;
-            if (usersConnected.Contains(user))
+            if (usersConnected.Any(userToDisconnect => userToDisconnect.username == user.username))
             {
                 Profile userProfile = new Profile()
                 {
                     username = user.username
                 };
-                usersConnected.Remove(user);
+                usersConnected.RemoveAll(userToDisconnect => userToDisconnect.username == user.username);
                 UpdateFriendsListOfConectedFriends(user);
                 DisconectPlayerFromChat(userProfile,user.codeMatch);
+                LeavePlayerFromLobby(user, user.codeMatch, false);
                 resultDisconnection = Constants.SUCCES_OPERATION;
             }
             else
