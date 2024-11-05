@@ -132,7 +132,7 @@ namespace HiveGameService.Services
 
         public int VerifyCreatorOfTheMatch(GameMatch match)
         {
-            HostBehaviorManager.ChangeModeToMultiple();
+            HostBehaviorManager.ChangeModeToSingle();
             MatchOperation matchOperation = new MatchOperation();
             Match matchToFind = new Match()
             {
