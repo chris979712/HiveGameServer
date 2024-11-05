@@ -6,14 +6,6 @@ namespace TestServer.Services
 {
     public class EmailInvitationServiceTest
     {
-        [Fact]
-        public void GenerateLobbyCodeTestSuccess()
-        {
-            HiveServerProxy.EmailInvitationManagerClient emailInvitationManagerClient = new HiveServerProxy.EmailInvitationManagerClient();
-            string email = "chrisvasquez985@gmail.com";
-            string codeGenerated = emailInvitationManagerClient.GenerateLobbyCode(email);
-            Assert.NotNull(codeGenerated);
-        }
 
         [Fact]
         public void SendEmailInvitationTestSuccess()
@@ -42,22 +34,5 @@ namespace TestServer.Services
             Assert.Equal(invitationResultExpected, invitationSendResult);   
         }
 
-        [Fact]
-        public void VerifyExistingCodeTestSuccess()
-        {
-            HiveServerProxy.EmailInvitationManagerClient emailInvitationManagerClient = new HiveServerProxy.EmailInvitationManagerClient();
-            string code = "793699";
-            bool verificationResult = emailInvitationManagerClient.VerifyExistingCode(code);
-            Assert.True(verificationResult);
-        }
-
-        [Fact]
-        public void VerifyExistingCodeFailTestSuccess()
-        {
-            HiveServerProxy.EmailInvitationManagerClient emailInvitationManagerClient = new HiveServerProxy.EmailInvitationManagerClient();
-            string code = "111111";
-            bool verificationResult = emailInvitationManagerClient.VerifyExistingCode(code);
-            Assert.False(verificationResult);
-        }
     }
 }

@@ -17,10 +17,6 @@ namespace TestServer.Services
             Console.WriteLine("Messages received");
         }
 
-        public void UserConnected(HiveGameService.Contracts.Profile[] users)
-        {
-            Console.WriteLine("User connected");
-        }
     }
     public class ChatServiceTest
     {
@@ -43,7 +39,7 @@ namespace TestServer.Services
             string codeLobby = "123456";
             chatProxy.ConnectToChatLobby(userToAddTest, codeLobby);
             await Task.Delay(5000);
-            chatProxy.DisconectPlayerFromChat(userToAddTest);
+            chatProxy.DisconectPlayerFromChat(userToAddTest, codeLobby);
             Assert.True(ChatManagerClientCallback.messageReceived);
         }
 
@@ -63,7 +59,7 @@ namespace TestServer.Services
             };
             chatProxy.SendMessages(message, codeLobby);
             await Task.Delay(5000);
-            chatProxy.DisconectPlayerFromChat(profileToAdd);
+            chatProxy.DisconectPlayerFromChat(profileToAdd, codeLobby);
             Assert.True(ChatManagerClientCallback.messageReceived);
         }
 
@@ -76,7 +72,7 @@ namespace TestServer.Services
             };
             string codeLobby = "123456";
             chatProxy.ConnectToChatLobby(userTest, codeLobby);
-            int resultObtained = chatProxy.DisconectPlayerFromChat(userTest);
+            int resultObtained = chatProxy.DisconectPlayerFromChat(userTest, codeLobby);
             int resultExpected = Constants.SUCCES_OPERATION;
             Assert.Equal(resultObtained, resultExpected);
         }
@@ -94,10 +90,10 @@ namespace TestServer.Services
             };
             string codeLobby = "123456";
             chatProxy.ConnectToChatLobby(userTestExisted, codeLobby);
-            int resultObtained = chatProxy.DisconectPlayerFromChat(userTestInexisted);
+            int resultObtained = chatProxy.DisconectPlayerFromChat(userTestInexisted, codeLobby);
             int resultExpected = Constants.SUCCES_OPERATION;
             Assert.Equal(resultObtained, resultExpected);
-            chatProxy.DisconectPlayerFromChat(userTestExisted);
+            chatProxy.DisconectPlayerFromChat(userTestExisted, codeLobby);
         }
 
     }

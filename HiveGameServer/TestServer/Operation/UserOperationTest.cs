@@ -210,10 +210,10 @@ namespace TestServer
             {
                 FK_IdAccount = 1,
                 nickname = "chrisss",
-                imagePath = "/Images/Avatars/Avatar1.png",
+                imagePath = "/Images/Avatars/Avatar2.png",
                 description = "Si"
             };
-            string email = "vasquezChris984@gmail.com";
+            string email = "chrisvasquez985@gmail.com";
             int resultExpected = Constants.SUCCES_OPERATION;
             int resultObtained = userOperation.UpdateProfileToDataBase(newUpdatedProfile, email);
             Assert.Equal(resultExpected,resultObtained);
@@ -243,7 +243,7 @@ namespace TestServer
             {
                 FK_IdAccount = 1,
                 nickname = "chrisss",
-                imagePath = "image2.png",
+                imagePath = "/Images/Avatars/Avatar2.png",
                 description = "Si"
             };
             string email = "vasquezchris984@gmail.com";
