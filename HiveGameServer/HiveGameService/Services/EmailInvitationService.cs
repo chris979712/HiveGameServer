@@ -28,6 +28,7 @@ namespace HiveGameService.Services
                     string emailSender = "candcinnovationshivegame@gmail.com";
                     string password = "guyy ihtn sygv daiy";
                     MailMessage messageToSend = new MailMessage();
+                    messageToSend.Subject = "Invitation to join a lobby";
                     messageToSend.From = new MailAddress(emailSender);
                     messageToSend.To.Add(userVerificator.email);
                     messageToSend.Body = templateInvitationMessage.Replace("{code}", userVerificator.code);
@@ -72,7 +73,7 @@ namespace HiveGameService.Services
             {
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 string serverPath = Path.GetFullPath(Path.Combine(baseDirectory, "../../../"));
-                string templatePath = Path.Combine(baseDirectory, "HiveGameService/Utilities/InvitationEmail.html");
+                string templatePath = Path.Combine(serverPath, "HiveGameService/Utilities/InvitationEmail.html");
                 bodyMessageFormat = File.ReadAllText(templatePath);
             }catch(DirectoryNotFoundException directoryNotFoundException)
             {

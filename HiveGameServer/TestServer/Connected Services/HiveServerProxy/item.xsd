@@ -257,6 +257,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q25:Profile" />
+        <xs:element minOccurs="0" name="code" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -267,38 +268,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetConnectedUsers">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetConnectedUsersResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="GetConnectedUsersResult" nillable="true" type="q26:ArrayOfProfile" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="ReceiveMessage">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="messages" nillable="true" type="q27:ArrayOfMessage" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="messages" nillable="true" type="q26:ArrayOfMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ReceiveMessageResponse">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="UserConnected">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="users" nillable="true" type="q28:ArrayOfProfile" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="UserConnectedResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -355,7 +332,7 @@
   <xs:element name="GetPersonalLeaderBoardResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="GetPersonalLeaderBoardResult" nillable="true" type="q29:LeaderBoardPlayer" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="GetPersonalLeaderBoardResult" nillable="true" type="q27:LeaderBoardPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -367,7 +344,7 @@
   <xs:element name="GetAllPlayersLeaderboardsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="GetAllPlayersLeaderboardsResult" nillable="true" type="q30:ArrayOfLeaderBoardPlayer" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="GetAllPlayersLeaderboardsResult" nillable="true" type="q28:ArrayOfLeaderBoardPlayer" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -388,7 +365,7 @@
   <xs:element name="VerifyCodeVerification">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="userVerificator" nillable="true" type="q31:UserVerificator" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="userVerificator" nillable="true" type="q29:UserVerificator" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -416,7 +393,7 @@
   <xs:element name="SendEmailInvitation">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="verificator" nillable="true" type="q32:UserVerificator" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="verificator" nillable="true" type="q30:UserVerificator" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -424,6 +401,104 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="SendEmailInvitationResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConnectToGame">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q31:UserSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConnectToGameResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ConnectToGameResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Disconnect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q32:UserSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DisconnectResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DisconnectResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyConnectivity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q33:UserSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyConnectivityResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerifyConnectivityResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateMatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="matchCreator" nillable="true" type="q34:MatchCreator" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateMatchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CreateMatchResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMatchState">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="matchCreator" nillable="true" type="q35:MatchCreator" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMatchStateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateMatchStateResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyExistingActiveMatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="matchCreator" nillable="true" type="q36:MatchCreator" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyExistingActiveMatchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerifyExistingActiveMatchResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyIfLobbyIsFull">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="codeLobby" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyIfLobbyIsFullResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerifyIfLobbyIsFullResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -455,46 +530,97 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ConnectToGame">
+  <xs:element name="GetFriendsList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q37:UserSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ConnectToGameResponse">
+  <xs:element name="JoinAsConnectedFriend">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ConnectToGameResult" type="xs:int" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q38:UserSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Disconnect">
+  <xs:element name="DeleteUserAsConnectedFriend">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="username" nillable="true" type="q39:UserSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DisconnectResponse">
+  <xs:element name="DeleteUserAsConnectedFriendResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="DisconnectResult" type="xs:int" />
+        <xs:element minOccurs="0" name="DeleteUserAsConnectedFriendResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="VerifyConnectivity">
+  <xs:element name="ObtainConnectedFriends">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="connectedFriends" nillable="true" type="q40:ArrayOfUserSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="VerifyConnectivityResponse">
+  <xs:element name="ObtainConnectedFriendsResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConnectToLobby">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="VerifyConnectivityResult" type="xs:boolean" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="lobbyPlayer" nillable="true" type="q41:UserSession" />
+        <xs:element minOccurs="0" name="codeLobby" nillable="true" type="xs:string" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LeavePlayerFromLobby">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="lobbyPlayer" nillable="true" type="q42:UserSession" />
+        <xs:element minOccurs="0" name="codeLobby" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="isKicked" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyCreatorOfTheMatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="match" nillable="true" type="q43:GameMatch" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerifyCreatorOfTheMatchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerifyCreatorOfTheMatchResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceivePlayersToLobby">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="user" nillable="true" type="q44:ArrayOfUserSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceivePlayersToLobbyResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiveKickedNotification">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiveKickedNotificationResponse">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
 </xs:schema>

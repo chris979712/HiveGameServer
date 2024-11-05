@@ -68,6 +68,8 @@
     <Compile Include="Services\ChatServiceTest.cs" />
     <Compile Include="Services\EmailInvitationServiceTest.cs" />
     <Compile Include="Services\EmailVerificationServiceTest.cs" />
+    <Compile Include="Services\LobbyServiceTest.cs" />
+    <Compile Include="Services\MatchCreatorServiceTest.cs" />
     <Compile Include="Services\UserSessionServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

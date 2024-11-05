@@ -36,6 +36,10 @@ namespace HiveGameService.Services
         public void SendMessages(Message message, string code)
         {
             HostBehaviorManager.ChangeModeToReentrant();
+            if (!messagesFromLobby.ContainsKey(code))
+            {
+                messagesFromLobby[code] = new List<Message>();
+            }
             messagesFromLobby[code].Add(message);
             showNewMessageConversation(code);
         }
@@ -80,7 +84,10 @@ namespace HiveGameService.Services
             {
 
                 chatCallBacks.Remove(user.username);
-                usersByLobby[code].Remove(user);
+                if (usersByLobby.ContainsKey(code))
+                {
+                    usersByLobby[code].RemoveAll(userToDisconnect => userToDisconnect.username == user.username);
+                }
                 disconectionResult = Constants.SUCCES_OPERATION;
             }
             return disconectionResult;
