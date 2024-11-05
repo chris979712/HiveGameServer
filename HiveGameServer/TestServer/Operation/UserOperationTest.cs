@@ -74,7 +74,9 @@ namespace TestServer
                 FK_IdAccount = 1,
                 imagePath = "images/Avatars/Avatar1.png",
                 username = "Chris985",
-                nickname = "christolin"
+                nickname = "christolin",
+                email = "chrisvasquez985@gmail.com",
+                reputation = 100
             };
             UserData userDataObtained = operation.GetUserProfileByUsername(username);
             Assert.Equal(userDataExpected, userDataObtained);

@@ -101,6 +101,8 @@ namespace DataBaseManager.Operations
                             FK_IdAccount = profile.FK_IdAccount,
                             nickname = profile.nickname,
                             imagePath = profile.imagePath,
+                            email = account.email,
+                            reputation = account.reputation
                         }).FirstOrDefault();
                     if (userData != null)
                     {
@@ -269,7 +271,7 @@ namespace DataBaseManager.Operations
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
                 {
-                    var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email || accessAccount.username == username);
+                    var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email && accessAccount.username == username);
                     if (existingAccount != null)
                     {
                         verificationResult = Constants.DATA_MATCHES;
