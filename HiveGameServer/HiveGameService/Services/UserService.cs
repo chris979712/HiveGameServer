@@ -44,7 +44,9 @@ namespace HiveGameService.Services
                 idProfile = userObtained.idProfile,
                 idAccount = userObtained.FK_IdAccount,
                 nickname = userObtained.nickname,
-                imagePath = userObtained.imagePath
+                imagePath = userObtained.imagePath,
+                reputation = userObtained.reputation,
+                email = userObtained.email
             };
             return profileObtained;
         }
