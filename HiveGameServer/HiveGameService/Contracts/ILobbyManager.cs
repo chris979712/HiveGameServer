@@ -17,6 +17,9 @@ namespace HiveGameService.Contracts
         [OperationContract(IsOneWay = true)]
         void LeavePlayerFromLobby(UserSession lobbyPlayer, string codeLobby, bool isKicked);
 
+        [OperationContract(IsOneWay = true)]
+        void StartMatch(string code);
+
         [OperationContract]
         int VerifyCreatorOfTheMatch(GameMatch match);
 
@@ -30,6 +33,9 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         void ReceiveKickedNotification();
+
+        [OperationContract]
+        void ReceiveStartMatchNotification();
     }
 
 
