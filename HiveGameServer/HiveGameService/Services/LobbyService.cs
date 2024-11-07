@@ -143,5 +143,30 @@ namespace HiveGameService.Services
             return verificationResult;
         }
 
+        public void StartMatch(string code)
+        {
+            HostBehaviorManager.ChangeModeToReentrant();
+            LoggerManager logger = new LoggerManager(this.GetType());
+            if (lobbyPlayers.ContainsKey(code))
+            {
+                List<UserSession> userInLobby = lobbyPlayers[code];
+                try
+                {
+                    UserSession userToNotify = userInLobby[1];
+                    if (lobbiesCallback.ContainsKey(userToNotify))
+                    {
+                        lobbiesCallback[userToNotify].ReceiveStartMatchNotification();
+                    }
+                }
+                catch (CommunicationException communicationException)
+                {
+                    logger.LogError(communicationException);
+                }
+                catch (TimeoutException timeoutException)
+                {
+                    logger.LogError(timeoutException);
+                }
+            }  
+        }
     }
 }
