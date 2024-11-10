@@ -940,6 +940,12 @@ namespace TestServer.HiveServerProxy {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/LeavePlayerFromLobby")]
         System.Threading.Tasks.Task LeavePlayerFromLobbyAsync(HiveGameService.Contracts.UserSession lobbyPlayer, string codeLobby, bool isKicked);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/StartMatch")]
+        void StartMatch(string code);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ILobbyManager/StartMatch")]
+        System.Threading.Tasks.Task StartMatchAsync(string code);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/VerifyCreatorOfTheMatch", ReplyAction="http://tempuri.org/ILobbyManager/VerifyCreatorOfTheMatchResponse")]
         int VerifyCreatorOfTheMatch(HiveGameService.Contracts.GameMatch match);
         
@@ -955,6 +961,9 @@ namespace TestServer.HiveServerProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/ReceiveKickedNotification", ReplyAction="http://tempuri.org/ILobbyManager/ReceiveKickedNotificationResponse")]
         void ReceiveKickedNotification();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILobbyManager/ReceiveStartMatchNotification", ReplyAction="http://tempuri.org/ILobbyManager/ReceiveStartMatchNotificationResponse")]
+        void ReceiveStartMatchNotification();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -999,6 +1008,14 @@ namespace TestServer.HiveServerProxy {
         
         public System.Threading.Tasks.Task LeavePlayerFromLobbyAsync(HiveGameService.Contracts.UserSession lobbyPlayer, string codeLobby, bool isKicked) {
             return base.Channel.LeavePlayerFromLobbyAsync(lobbyPlayer, codeLobby, isKicked);
+        }
+        
+        public void StartMatch(string code) {
+            base.Channel.StartMatch(code);
+        }
+        
+        public System.Threading.Tasks.Task StartMatchAsync(string code) {
+            return base.Channel.StartMatchAsync(code);
         }
         
         public int VerifyCreatorOfTheMatch(HiveGameService.Contracts.GameMatch match) {
