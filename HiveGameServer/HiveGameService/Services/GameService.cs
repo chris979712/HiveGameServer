@@ -16,6 +16,7 @@ namespace HiveGameService.Services
         private static readonly Dictionary<UserSession, IGameManagerCallback> gameCallbacks = new Dictionary<UserSession, IGameManagerCallback>();
         private static readonly Dictionary<string, List<UserSession>> gamePlayers = new Dictionary<string, List<UserSession>>();
         private static readonly Dictionary<string, List<PlayerSide>> playersSide = new Dictionary<string, List<PlayerSide>>();
+        private static readonly Dictionary<string, string> turnsInMatch = new Dictionary<string, string>(); 
 
         public void ConnectToGameBoard(UserSession session, string codeMatch)
         {
@@ -35,6 +36,33 @@ namespace HiveGameService.Services
                     gamePlayers[codeMatch].Add(session);
                     SetPlayersSide(session);
                     NotifyPlayersMatchJoin(codeMatch);
+                    SetInitialTurn(session,codeMatch);
+                }
+            }
+            catch (CommunicationException communicationException)
+            {
+                logger.LogError(communicationException);
+            }
+            catch (TimeoutException timeoutException)
+            {
+                logger.LogError(timeoutException);
+            }
+        }
+
+        private void SetInitialTurn(UserSession userSession, string codeMatch)
+        {
+            LoggerManager logger = new LoggerManager(this.GetType());
+            HostBehaviorManager.ChangeModeToReentrant();
+            try
+            {
+                if (!turnsInMatch.ContainsKey(codeMatch))
+                {
+                    turnsInMatch[codeMatch] = userSession.username;
+                    gameCallbacks[userSession].ReceiveTurns(true);
+                }
+                else
+                {
+                    gameCallbacks[userSession].ReceiveTurns(false);
                 }
             }
             catch (CommunicationException communicationException)
@@ -132,7 +160,7 @@ namespace HiveGameService.Services
                     UserSession userToNotify = usersInMatch[gamePlayersIndex];
                     if (gameCallbacks.ContainsKey(userToNotify))
                     {
-                        gameCallbacks[userToNotify].ReceivePlayers(usersInMatch);
+                        gameCallbacks[userToNotify].ReceivePlayersToMatch(usersInMatch);
                     }
                 }
                 catch (CommunicationException communicationException)
