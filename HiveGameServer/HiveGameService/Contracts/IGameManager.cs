@@ -38,7 +38,7 @@ namespace HiveGameService.Contracts
         void ReceiveTurns(bool isTurn);
 
         [OperationContract]
-        void ReceivePlayers(List<UserSession> usersInLobby);
+        void ReceivePlayersToMatch(List<UserSession> userSession);
     }
 
     [DataContract]
