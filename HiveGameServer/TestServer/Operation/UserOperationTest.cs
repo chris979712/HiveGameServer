@@ -205,6 +205,66 @@ namespace TestServer
         }
 
         [Fact]
+        public void UpdatePlayerPlusReputationToDataBaseTestSuccess()
+        {
+            string username = "Chris985";
+            int reputation = 50;
+            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultObtained = operation.UpdatePlusPlayerReputationToDataBase(username, reputation);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void UpdatePlayerPlusReputationToDataBaseFailTestSuccess()
+        {
+            string username = "ElComandante00007";
+            int reputation = 50;
+            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultObtained = operation.UpdatePlusPlayerReputationToDataBase(username, reputation);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void UpdatePlayerMinusReputationToDataBaseExceptionTestSuccess()
+        {
+            string username = "Chris985";
+            int reputation = 50;
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.UpdateMinusPlayerReputationToDataBase(username, reputation);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void UpdatePlayerMinusReputationToDataBaseTestSuccess()
+        {
+            string username = "Chris985";
+            int reputation = 50;
+            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultObtained = operation.UpdateMinusPlayerReputationToDataBase(username, reputation);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void UpdatePlayerMinusReputationToDataBaseFailTestSuccess()
+        {
+            string username = "ElComandante00007";
+            int reputation = 50;
+            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultObtained = operation.UpdateMinusPlayerReputationToDataBase(username, reputation);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
+        public void UpdatePlayerPlusReputationToDataBaseExceptionTestSuccess()
+        {
+            string username = "Chris985";
+            int reputation = 50;
+            int resultExpected = Constants.ERROR_OPERATION;
+            int resultObtained = operation.UpdatePlusPlayerReputationToDataBase(username, reputation);
+            Assert.Equal(resultExpected, resultObtained);
+        }
+
+        [Fact]
         public void UpdateProfileToDataBaseTestSuccess()
         {
             UserOperation userOperation = new UserOperation();
