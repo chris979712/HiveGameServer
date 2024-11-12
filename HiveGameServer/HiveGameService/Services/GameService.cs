@@ -24,6 +24,12 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             try
             {
+                if (lobbiesCallback.ContainsKey(session))
+                {
+                    lobbiesCallback.Remove(session);
+                    chatCallBacks.Remove(session.username);
+                    lobbyPlayers[codeMatch].Remove(session);
+                }
                 gameManagerCallback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
                 if (!gameCallbacks.ContainsKey(session))
                 {
@@ -92,7 +98,7 @@ namespace HiveGameService.Services
                     {
                         gamePlayers[codeMatch].Remove(session);
                         gameCallbacks.Remove(session);
-                        NotifyPlayers(codeMatch);
+                        NotifyPlayerUserLeftTheGame(codeMatch);
                     }
                 }
             }
@@ -101,6 +107,29 @@ namespace HiveGameService.Services
                 logger.LogError(communicationException);
             }
             catch (TimeoutException timeoutException)
+            {
+                logger.LogError(timeoutException);
+            }
+        }
+
+        private void NotifyPlayerUserLeftTheGame(string codeMatch)
+        {
+            LoggerManager logger = new LoggerManager(this.GetType());
+            HostBehaviorManager.ChangeModeToReentrant();
+            try
+            {
+                List<UserSession> usersInMatch = gamePlayers[codeMatch];
+                for(int indexUsersInGame  = 0; indexUsersInGame < usersInMatch.Count; indexUsersInGame++)
+                {
+                    UserSession userToNotify = usersInMatch[indexUsersInGame];
+                    gameCallbacks[userToNotify].ReceivePlayerHasLeftNotification(true);
+                }
+            }
+            catch(CommunicationException communicationException)
+            {
+                logger.LogError(communicationException);
+            }
+            catch(TimeoutException timeoutException)
             {
                 logger.LogError(timeoutException);
             }

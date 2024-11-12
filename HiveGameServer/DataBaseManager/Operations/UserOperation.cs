@@ -171,9 +171,87 @@ namespace DataBaseManager.Operations
             return dataObtained;
         }
 
+        public int UpdatePlusPlayerReputationToDataBase(string username, int reputation)
+        {
+            int updateResult = Constants.ERROR_OPERATION;
+            LoggerManager logger = new LoggerManager(this.GetType());
+            try
+            {
+                using(var databaseContext = new HiveEntityDataModel())
+                {
+                    var existinAccount = databaseContext.AccessAccount.FirstOrDefault(user => user.username == username);
+                    if (existinAccount != null)
+                    {
+                        existinAccount.reputation += reputation;
+                        databaseContext.SaveChanges();
+                        updateResult = Constants.SUCCES_OPERATION;
+                    }
+                    else
+                    {
+                        updateResult = Constants.NO_DATA_MATCHES; ;
+                    }
+                }
+            }
+            catch (DbUpdateException updateException)
+            {
+                logger.LogError(updateException);
+                updateResult = Constants.ERROR_OPERATION;
+            }
+            catch (SqlException sqlException)
+            {
+                logger.LogError(sqlException);
+                updateResult = Constants.ERROR_OPERATION;
+            }
+            catch (EntityException entityException)
+            {
+                logger.LogError(entityException);
+                updateResult = Constants.ERROR_OPERATION;
+            }
+            return updateResult;
+        }
+
+        public int UpdateMinusPlayerReputationToDataBase(string username, int reputation)
+        {
+            int updateResult = Constants.ERROR_OPERATION;
+            LoggerManager logger = new LoggerManager(this.GetType());
+            try
+            {
+                using (var databaseContext = new HiveEntityDataModel())
+                {
+                    var existinAccount = databaseContext.AccessAccount.FirstOrDefault(user => user.username == username);
+                    if (existinAccount != null)
+                    {
+                        existinAccount.reputation -= reputation;
+                        databaseContext.SaveChanges();
+                        updateResult = Constants.SUCCES_OPERATION;
+                    }
+                    else
+                    {
+                        updateResult = Constants.NO_DATA_MATCHES; ;
+                    }
+                }
+            }
+            catch (DbUpdateException updateException)
+            {
+                logger.LogError(updateException);
+                updateResult = Constants.ERROR_OPERATION;
+            }
+            catch (SqlException sqlException)
+            {
+                logger.LogError(sqlException);
+                updateResult = Constants.ERROR_OPERATION;
+            }
+            catch (EntityException entityException)
+            {
+                logger.LogError(entityException);
+                updateResult = Constants.ERROR_OPERATION;
+            }
+            return updateResult;
+        }
+
         public int UpdateLoginCredentialsToDataBase(AccessAccount oldAccessAccount, AccessAccount updatedAccessAccount)
         {
-            int updatedResult = -1;
+            int updatedResult = Constants.ERROR_OPERATION;
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {

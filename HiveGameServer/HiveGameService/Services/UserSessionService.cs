@@ -25,7 +25,7 @@ namespace HiveGameService.Services
             return resultConnection;
         }
 
-        public int Disconnect(UserSession user)
+        public int Disconnect(UserSession user, bool isInMatch)
         {
             int resultDisconnection = Constants.ERROR_OPERATION;
             if (usersConnected.Any(userToDisconnect => userToDisconnect.username == user.username))
@@ -38,6 +38,12 @@ namespace HiveGameService.Services
                 UpdateFriendsListOfConectedFriends(user);
                 DisconectPlayerFromChat(userProfile,user.codeMatch);
                 LeavePlayerFromLobby(user, user.codeMatch, false);
+                LeaveTheGame(user, user.codeMatch);
+                if (isInMatch)
+                {
+                    UpdateMinusUserReputation(user.username, 100);
+                    UpdateLoserResultToPlayerLeaderBoard(user.idAccount);
+                }
                 resultDisconnection = Constants.SUCCES_OPERATION;
             }
             else
