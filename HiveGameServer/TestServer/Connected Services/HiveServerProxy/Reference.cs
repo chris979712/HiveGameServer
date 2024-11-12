@@ -9,7 +9,67 @@
 //------------------------------------------------------------------------------
 
 namespace TestServer.HiveServerProxy {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Point", Namespace="http://schemas.datacontract.org/2004/07/System.Windows")]
+    [System.SerializableAttribute()]
+    public partial struct Point : System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private double _xField;
+        
+        private double _yField;
+        
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public double _x {
+            get {
+                return this._xField;
+            }
+            set {
+                if ((this._xField.Equals(value) != true)) {
+                    this._xField = value;
+                    this.RaisePropertyChanged("_x");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public double _y {
+            get {
+                return this._yField;
+            }
+            set {
+                if ((this._yField.Equals(value) != true)) {
+                    this._yField = value;
+                    this.RaisePropertyChanged("_y");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HiveServerProxy.IUserManager")]
@@ -39,6 +99,18 @@ namespace TestServer.HiveServerProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateLoginCredentials", ReplyAction="http://tempuri.org/IUserManager/UpdateLoginCredentialsResponse")]
         System.Threading.Tasks.Task<int> UpdateLoginCredentialsAsync(HiveGameService.Contracts.AccessAccount profile, HiveGameService.Contracts.AccessAccount updatedProfile);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdatePlusUserReputation", ReplyAction="http://tempuri.org/IUserManager/UpdatePlusUserReputationResponse")]
+        int UpdatePlusUserReputation(string username, int reputation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdatePlusUserReputation", ReplyAction="http://tempuri.org/IUserManager/UpdatePlusUserReputationResponse")]
+        System.Threading.Tasks.Task<int> UpdatePlusUserReputationAsync(string username, int reputation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateMinusUserReputation", ReplyAction="http://tempuri.org/IUserManager/UpdateMinusUserReputationResponse")]
+        int UpdateMinusUserReputation(string username, int reputation);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateMinusUserReputation", ReplyAction="http://tempuri.org/IUserManager/UpdateMinusUserReputationResponse")]
+        System.Threading.Tasks.Task<int> UpdateMinusUserReputationAsync(string username, int reputation);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateProfile", ReplyAction="http://tempuri.org/IUserManager/UpdateProfileResponse")]
         int UpdateProfile(HiveGameService.Contracts.Profile profile, string email);
@@ -122,6 +194,22 @@ namespace TestServer.HiveServerProxy {
         
         public System.Threading.Tasks.Task<int> UpdateLoginCredentialsAsync(HiveGameService.Contracts.AccessAccount profile, HiveGameService.Contracts.AccessAccount updatedProfile) {
             return base.Channel.UpdateLoginCredentialsAsync(profile, updatedProfile);
+        }
+        
+        public int UpdatePlusUserReputation(string username, int reputation) {
+            return base.Channel.UpdatePlusUserReputation(username, reputation);
+        }
+        
+        public System.Threading.Tasks.Task<int> UpdatePlusUserReputationAsync(string username, int reputation) {
+            return base.Channel.UpdatePlusUserReputationAsync(username, reputation);
+        }
+        
+        public int UpdateMinusUserReputation(string username, int reputation) {
+            return base.Channel.UpdateMinusUserReputation(username, reputation);
+        }
+        
+        public System.Threading.Tasks.Task<int> UpdateMinusUserReputationAsync(string username, int reputation) {
+            return base.Channel.UpdateMinusUserReputationAsync(username, reputation);
         }
         
         public int UpdateProfile(HiveGameService.Contracts.Profile profile, string email) {
@@ -660,10 +748,10 @@ namespace TestServer.HiveServerProxy {
         System.Threading.Tasks.Task<int> ConnectToGameAsync(HiveGameService.Contracts.UserSession user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserSessionManager/Disconnect", ReplyAction="http://tempuri.org/IUserSessionManager/DisconnectResponse")]
-        int Disconnect(HiveGameService.Contracts.UserSession user);
+        int Disconnect(HiveGameService.Contracts.UserSession user, bool isInMatch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserSessionManager/Disconnect", ReplyAction="http://tempuri.org/IUserSessionManager/DisconnectResponse")]
-        System.Threading.Tasks.Task<int> DisconnectAsync(HiveGameService.Contracts.UserSession user);
+        System.Threading.Tasks.Task<int> DisconnectAsync(HiveGameService.Contracts.UserSession user, bool isInMatch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserSessionManager/VerifyConnectivity", ReplyAction="http://tempuri.org/IUserSessionManager/VerifyConnectivityResponse")]
         bool VerifyConnectivity(HiveGameService.Contracts.UserSession user);
@@ -707,12 +795,12 @@ namespace TestServer.HiveServerProxy {
             return base.Channel.ConnectToGameAsync(user);
         }
         
-        public int Disconnect(HiveGameService.Contracts.UserSession user) {
-            return base.Channel.Disconnect(user);
+        public int Disconnect(HiveGameService.Contracts.UserSession user, bool isInMatch) {
+            return base.Channel.Disconnect(user, isInMatch);
         }
         
-        public System.Threading.Tasks.Task<int> DisconnectAsync(HiveGameService.Contracts.UserSession user) {
-            return base.Channel.DisconnectAsync(user);
+        public System.Threading.Tasks.Task<int> DisconnectAsync(HiveGameService.Contracts.UserSession user, bool isInMatch) {
+            return base.Channel.DisconnectAsync(user, isInMatch);
         }
         
         public bool VerifyConnectivity(HiveGameService.Contracts.UserSession user) {
@@ -1024,6 +1112,115 @@ namespace TestServer.HiveServerProxy {
         
         public System.Threading.Tasks.Task<int> VerifyCreatorOfTheMatchAsync(HiveGameService.Contracts.GameMatch match) {
             return base.Channel.VerifyCreatorOfTheMatchAsync(match);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="HiveServerProxy.IGameManager", CallbackContract=typeof(TestServer.HiveServerProxy.IGameManagerCallback))]
+    public interface IGameManager {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/ConnectToGameBoard")]
+        void ConnectToGameBoard(HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/ConnectToGameBoard")]
+        System.Threading.Tasks.Task ConnectToGameBoardAsync(HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/MovePiece")]
+        void MovePiece(HiveGameService.Contracts.GamePice piece, HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/MovePiece")]
+        System.Threading.Tasks.Task MovePieceAsync(HiveGameService.Contracts.GamePice piece, HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/SetTurns")]
+        void SetTurns(HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/SetTurns")]
+        System.Threading.Tasks.Task SetTurnsAsync(HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/LeaveTheGame")]
+        void LeaveTheGame(HiveGameService.Contracts.UserSession session, string codeMatch);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IGameManager/LeaveTheGame")]
+        System.Threading.Tasks.Task LeaveTheGameAsync(HiveGameService.Contracts.UserSession session, string codeMatch);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IGameManagerCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/ChargePlayerGameBoard", ReplyAction="http://tempuri.org/IGameManager/ChargePlayerGameBoardResponse")]
+        void ChargePlayerGameBoard(HiveGameService.Contracts.PlayerSide side);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/ReceivePieceMoved", ReplyAction="http://tempuri.org/IGameManager/ReceivePieceMovedResponse")]
+        void ReceivePieceMoved(HiveGameService.Contracts.GamePice piece);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/ReceiveTurns", ReplyAction="http://tempuri.org/IGameManager/ReceiveTurnsResponse")]
+        void ReceiveTurns(bool isTurn);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/ReceivePlayersToMatch", ReplyAction="http://tempuri.org/IGameManager/ReceivePlayersToMatchResponse")]
+        void ReceivePlayersToMatch(HiveGameService.Contracts.UserSession[] userSession);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotification", ReplyAction="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotificationResponse")]
+        void ReceivePlayerHasLeftNotification(bool doPlayerLeftTheGame);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IGameManagerChannel : TestServer.HiveServerProxy.IGameManager, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GameManagerClient : System.ServiceModel.DuplexClientBase<TestServer.HiveServerProxy.IGameManager>, TestServer.HiveServerProxy.IGameManager {
+        
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public GameManagerClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void ConnectToGameBoard(HiveGameService.Contracts.UserSession session, string codeMatch) {
+            base.Channel.ConnectToGameBoard(session, codeMatch);
+        }
+        
+        public System.Threading.Tasks.Task ConnectToGameBoardAsync(HiveGameService.Contracts.UserSession session, string codeMatch) {
+            return base.Channel.ConnectToGameBoardAsync(session, codeMatch);
+        }
+        
+        public void MovePiece(HiveGameService.Contracts.GamePice piece, HiveGameService.Contracts.UserSession session, string codeMatch) {
+            base.Channel.MovePiece(piece, session, codeMatch);
+        }
+        
+        public System.Threading.Tasks.Task MovePieceAsync(HiveGameService.Contracts.GamePice piece, HiveGameService.Contracts.UserSession session, string codeMatch) {
+            return base.Channel.MovePieceAsync(piece, session, codeMatch);
+        }
+        
+        public void SetTurns(HiveGameService.Contracts.UserSession session, string codeMatch) {
+            base.Channel.SetTurns(session, codeMatch);
+        }
+        
+        public System.Threading.Tasks.Task SetTurnsAsync(HiveGameService.Contracts.UserSession session, string codeMatch) {
+            return base.Channel.SetTurnsAsync(session, codeMatch);
+        }
+        
+        public void LeaveTheGame(HiveGameService.Contracts.UserSession session, string codeMatch) {
+            base.Channel.LeaveTheGame(session, codeMatch);
+        }
+        
+        public System.Threading.Tasks.Task LeaveTheGameAsync(HiveGameService.Contracts.UserSession session, string codeMatch) {
+            return base.Channel.LeaveTheGameAsync(session, codeMatch);
         }
     }
 }

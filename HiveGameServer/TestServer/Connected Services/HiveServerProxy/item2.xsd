@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:1442/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
   <xs:complexType name="Profile">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:AccessAccount">
@@ -99,4 +100,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="GameMatch" nillable="true" type="tns:GameMatch" />
+  <xs:complexType name="GamePice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="imagePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="piece" nillable="true" type="tns:Piece" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Windows" minOccurs="0" name="position" type="q1:Point" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="GamePice" nillable="true" type="tns:GamePice" />
+  <xs:complexType name="Piece">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="count" type="xs:int" />
+      <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Windows" minOccurs="0" name="position" type="q2:Point" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Piece" nillable="true" type="tns:Piece" />
+  <xs:complexType name="PlayerSide">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="playerOne" type="xs:boolean" />
+      <xs:element minOccurs="0" name="playerTwo" type="xs:boolean" />
+      <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlayerSide" nillable="true" type="tns:PlayerSide" />
 </xs:schema>

@@ -22,11 +22,12 @@
     <MetadataSource Address="http://localhost:1442" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="1ef35fef-017b-4d93-92e6-fee2509d8ba4" SourceId="1" SourceUrl="http://localhost:1442/?disco" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="93827846-0749-4599-aea8-42ab45c382f0" SourceId="1" SourceUrl="http://localhost:1442/?xsd=xsd0" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="d6b1e15a-4758-43e7-b02d-a7fc58254f7c" SourceId="1" SourceUrl="http://localhost:1442/?xsd=xsd1" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="c96cf024-09ad-4dc2-9cc2-ccd347fdd0b1" SourceId="1" SourceUrl="http://localhost:1442/?xsd=xsd3" />
     <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="10d284d5-85e1-436a-9c82-e1c0b99e8842" SourceId="1" SourceUrl="http://localhost:1442/?xsd=xsd2" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="1ef35fef-017b-4d93-92e6-fee2509d8ba4" SourceId="1" SourceUrl="http://localhost:1442/?disco" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="d6b1e15a-4758-43e7-b02d-a7fc58254f7c" SourceId="1" SourceUrl="http://localhost:1442/?xsd=xsd1" />
     <MetadataFile FileName="HiveGameService.wsdl" MetadataType="Wsdl" ID="09706c3a-a746-48d7-8c76-dda8983910dd" SourceId="1" SourceUrl="http://localhost:1442/?wsdl" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="93827846-0749-4599-aea8-42ab45c382f0" SourceId="1" SourceUrl="http://localhost:1442/?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
