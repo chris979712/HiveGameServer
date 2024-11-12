@@ -93,6 +93,7 @@ namespace HiveGameService.Services
                     {
                         gamePlayers.Remove(codeMatch);
                         gameCallbacks.Remove(session);
+                        turnsInMatch.Remove(codeMatch);
                     }
                     else
                     {
