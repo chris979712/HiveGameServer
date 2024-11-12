@@ -25,7 +25,7 @@ namespace TestServer.Services
             int resultExpected = Constants.SUCCES_OPERATION;
             int resultObtained = userSessionManagerClient.ConnectToGame(userSessionTest);
             Assert.Equal(resultExpected, resultObtained);
-            userSessionManagerClient.Disconnect(userSessionTest);
+            userSessionManagerClient.Disconnect(userSessionTest, false);
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace TestServer.Services
             int resultExpected = Constants.ERROR_OPERATION;
             int resultObtained = userSessionManagerClient.ConnectToGame(userSessionTest);
             Assert.Equal(resultExpected, resultObtained);
-            userSessionManagerClient.Disconnect(userSessionTest);
+            userSessionManagerClient.Disconnect(userSessionTest, false);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace TestServer.Services
             };
             userSessionManagerClient.ConnectToGame(userSessionTest);
             int resultExpected = Constants.SUCCES_OPERATION;
-            int resultObtained = userSessionManagerClient.Disconnect(userSessionTest);
+            int resultObtained = userSessionManagerClient.Disconnect(userSessionTest, false);
             Assert.Equal(resultExpected , resultObtained);
         }
 
@@ -72,7 +72,7 @@ namespace TestServer.Services
                 codeMatch = "000000"
             };
             int resultExpected = Constants.NO_DATA_MATCHES;
-            int resultObtained = userSessionManagerClient.Disconnect(userSessionTest);
+            int resultObtained = userSessionManagerClient.Disconnect(userSessionTest, false);
             Assert.Equal(resultExpected, resultObtained);
         }
 
@@ -89,7 +89,7 @@ namespace TestServer.Services
             userSessionManagerClient.ConnectToGame(userSessionTest);
             bool resultObtained = userSessionManagerClient.VerifyConnectivity(userSessionTest);
             Assert.True(resultObtained);
-            userSessionManagerClient.Disconnect(userSessionTest);
+            userSessionManagerClient.Disconnect(userSessionTest, false);
         }
 
         [Fact]

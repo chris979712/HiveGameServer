@@ -132,11 +132,24 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IGameManager_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000" />
+          <wsrm:AcknowledgementInterval Milliseconds="200" />
+        </wsrm:RMAssertion>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" />
+      <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserManager_AddUser_InputMessage">
@@ -162,6 +175,18 @@
   </wsdl:message>
   <wsdl:message name="IUserManager_UpdateLoginCredentials_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateLoginCredentialsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UpdatePlusUserReputation_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlusUserReputation" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UpdatePlusUserReputation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatePlusUserReputationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UpdateMinusUserReputation_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMinusUserReputation" />
+  </wsdl:message>
+  <wsdl:message name="IUserManager_UpdateMinusUserReputation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMinusUserReputationResponse" />
   </wsdl:message>
   <wsdl:message name="IUserManager_UpdateProfile_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateProfile" />
@@ -412,6 +437,48 @@
   <wsdl:message name="ILobbyManager_ReceiveStartMatchNotification_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveStartMatchNotificationResponse" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_ConnectToGameBoard_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConnectToGameBoard" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_MovePiece_InputMessage">
+    <wsdl:part name="parameters" element="tns:MovePiece" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_SetTurns_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetTurns" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_LeaveTheGame_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveTheGame" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ChargePlayerGameBoard_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ChargePlayerGameBoard" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ChargePlayerGameBoard_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ChargePlayerGameBoardResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceivePieceMoved_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePieceMoved" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceivePieceMoved_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePieceMovedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceiveTurns_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveTurns" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceiveTurns_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveTurnsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceivePlayersToMatch_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePlayersToMatch" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceivePlayersToMatch_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePlayersToMatchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceivePlayerHasLeftNotification_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePlayerHasLeftNotification" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceivePlayerHasLeftNotification_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceivePlayerHasLeftNotificationResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserManager">
     <wsdl:operation name="AddUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/AddUser" message="tns:IUserManager_AddUser_InputMessage" />
@@ -428,6 +495,14 @@
     <wsdl:operation name="UpdateLoginCredentials">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UpdateLoginCredentials" message="tns:IUserManager_UpdateLoginCredentials_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/UpdateLoginCredentialsResponse" message="tns:IUserManager_UpdateLoginCredentials_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlusUserReputation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UpdatePlusUserReputation" message="tns:IUserManager_UpdatePlusUserReputation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/UpdatePlusUserReputationResponse" message="tns:IUserManager_UpdatePlusUserReputation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMinusUserReputation">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UpdateMinusUserReputation" message="tns:IUserManager_UpdateMinusUserReputation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserManager/UpdateMinusUserReputationResponse" message="tns:IUserManager_UpdateMinusUserReputation_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdateProfile">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserManager/UpdateProfile" message="tns:IUserManager_UpdateProfile_InputMessage" />
@@ -623,6 +698,40 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ILobbyManager/ReceiveStartMatchNotificationResponse" message="tns:ILobbyManager_ReceiveStartMatchNotification_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
+  <wsdl:portType name="IGameManager">
+    <wsdl:operation name="ConnectToGameBoard">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ConnectToGameBoard" message="tns:IGameManager_ConnectToGameBoard_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MovePiece">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/MovePiece" message="tns:IGameManager_MovePiece_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetTurns">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/SetTurns" message="tns:IGameManager_SetTurns_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LeaveTheGame">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/LeaveTheGame" message="tns:IGameManager_LeaveTheGame_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChargePlayerGameBoard">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ChargePlayerGameBoard" message="tns:IGameManager_ChargePlayerGameBoard_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ChargePlayerGameBoardResponse" message="tns:IGameManager_ChargePlayerGameBoard_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePieceMoved">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceivePieceMoved" message="tns:IGameManager_ReceivePieceMoved_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceivePieceMovedResponse" message="tns:IGameManager_ReceivePieceMoved_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveTurns">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceiveTurns" message="tns:IGameManager_ReceiveTurns_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceiveTurnsResponse" message="tns:IGameManager_ReceiveTurns_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePlayersToMatch">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceivePlayersToMatch" message="tns:IGameManager_ReceivePlayersToMatch_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceivePlayersToMatchResponse" message="tns:IGameManager_ReceivePlayersToMatch_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePlayerHasLeftNotification">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotification" message="tns:IGameManager_ReceivePlayerHasLeftNotification_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotificationResponse" message="tns:IGameManager_ReceivePlayerHasLeftNotification_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserManager" type="tns:IUserManager">
     <wsp:PolicyReference URI="#NetTcpBinding_IUserManager_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
@@ -655,6 +764,24 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateLoginCredentials">
       <soap12:operation soapAction="http://tempuri.org/IUserManager/UpdateLoginCredentials" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatePlusUserReputation">
+      <soap12:operation soapAction="http://tempuri.org/IUserManager/UpdatePlusUserReputation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMinusUserReputation">
+      <soap12:operation soapAction="http://tempuri.org/IUserManager/UpdateMinusUserReputation" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1087,6 +1214,79 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IGameManager" type="tns:IGameManager">
+    <wsp:PolicyReference URI="#NetTcpBinding_IGameManager_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ConnectToGameBoard">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ConnectToGameBoard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="MovePiece">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/MovePiece" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SetTurns">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/SetTurns" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="LeaveTheGame">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/LeaveTheGame" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ChargePlayerGameBoard">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ChargePlayerGameBoard" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePieceMoved">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ReceivePieceMoved" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveTurns">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ReceiveTurns" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePlayersToMatch">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ReceivePlayersToMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceivePlayerHasLeftNotification">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotification" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="HiveGameService">
     <wsdl:port name="NetTcpBinding_IUserManager" binding="tns:NetTcpBinding_IUserManager">
       <soap12:address location="net.tcp://localhost:1441/UserService" />
@@ -1152,6 +1352,12 @@
       <soap12:address location="net.tcp://localhost:1441/LobbyService" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:1441/LobbyService</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IGameManager" binding="tns:NetTcpBinding_IGameManager">
+      <soap12:address location="net.tcp://localhost:1441/GameService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:1441/GameService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>
