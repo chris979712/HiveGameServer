@@ -158,7 +158,8 @@ namespace HiveGameService.Services
             };
             try
             {
-                if (playersSide.Count == 1)
+                List<UserSession> firstUserToJoin = gamePlayers[session.codeMatch];
+                if (firstUserToJoin[0] == session)
                 {
                     playerSide.playerOne = true;
                 }
