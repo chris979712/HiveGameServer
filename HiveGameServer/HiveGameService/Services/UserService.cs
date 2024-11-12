@@ -123,5 +123,19 @@ namespace HiveGameService.Services
             int verificationResult = operations.VerifyCredentialsFromDataBase(username, email);
             return verificationResult;
         }
+
+        public int UpdatePlusUserReputation(string username, int reputation)
+        {
+            UserOperation operation = new UserOperation();
+            int modificationResult = operation.UpdatePlusPlayerReputationToDataBase(username, reputation);
+            return modificationResult;
+        }
+
+        public int UpdateMinusUserReputation(string username, int reputation)
+        {
+            UserOperation operation= new UserOperation();
+            int modificationResult = operation.UpdateMinusPlayerReputationToDataBase(username,reputation);
+            return modificationResult;
+        }
     }
 }

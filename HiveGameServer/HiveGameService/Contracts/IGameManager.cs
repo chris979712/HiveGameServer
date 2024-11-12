@@ -39,6 +39,9 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         void ReceivePlayersToMatch(List<UserSession> userSession);
+
+        [OperationContract]
+        void ReceivePlayerHasLeftNotification(bool doPlayerLeftTheGame);
     }
 
     [DataContract]

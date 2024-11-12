@@ -15,7 +15,7 @@ namespace HiveGameService.Contracts
         int ConnectToGame(UserSession user);
 
         [OperationContract]
-        int Disconnect(UserSession user);
+        int Disconnect(UserSession user, bool isInMatch);
 
         [OperationContract]
         bool VerifyConnectivity(UserSession user);
