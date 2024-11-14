@@ -69,6 +69,9 @@ namespace HiveGameService.Contracts
 
         [DataMember]
         public Point position {  get; set; }
+
+        [DataMember]
+        public string playerName {  get; set; }
     }
 
     [DataContract]
