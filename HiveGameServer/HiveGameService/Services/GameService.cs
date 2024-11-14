@@ -1,5 +1,6 @@
 ﻿using HiveGameService.Contracts;
 using HiveGameService.Utilities;
+using log4net.Repository.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,12 +139,69 @@ namespace HiveGameService.Services
 
         public void MovePiece(GamePice piece, UserSession session, string codeMatch)
         {
-            throw new NotImplementedException();
+            HostBehaviorManager.ChangeModeToReentrant();
+            LoggerManager logger = new LoggerManager(this.GetType());
+            try
+            {
+                List<UserSession> usersInMatch = gamePlayers[codeMatch].ToList();
+                for(int indexLobbyCallbacks = 0; indexLobbyCallbacks < usersInMatch.Count; indexLobbyCallbacks++)
+                {
+                    if (!usersInMatch[indexLobbyCallbacks].Equals(session))
+                    {
+                        gameCallbacks[usersInMatch[indexLobbyCallbacks]].ReceivePieceMoved(piece);
+                    }
+
+                }
+            }
+            catch (CommunicationException communicationException)
+            {
+                logger.LogError(communicationException);
+            }
+            catch (TimeoutException timeoutException)
+            {
+                logger.LogError(timeoutException);
+            }
         }
 
         public void SetTurns(UserSession session, string codeMatch)
         {
-            throw new NotImplementedException();
+            HostBehaviorManager.ChangeModeToReentrant();
+            LoggerManager logger = new LoggerManager(this.GetType());
+            try
+            {
+                if (turnsInMatch[codeMatch].Contains(session.username))
+                {
+                    string userTurnUsername = session.username;
+                    List<UserSession> usersInMatch = gamePlayers[codeMatch];
+                    for (int indexPlayersInLobby = 0; indexPlayersInLobby < usersInMatch.Count; indexPlayersInLobby++)
+                    {
+                        if (!turnsInMatch[codeMatch].Contains(usersInMatch[indexPlayersInLobby].username))
+                        {
+                            userTurnUsername = usersInMatch[indexPlayersInLobby].username;
+                        }
+                    }
+                    turnsInMatch[codeMatch] = userTurnUsername;
+                    for (int indexPlayerLobbyCallbacks = 0; indexPlayerLobbyCallbacks < usersInMatch.Count; ++indexPlayerLobbyCallbacks)
+                    {
+                        if (turnsInMatch[codeMatch].Contains(usersInMatch[indexPlayerLobbyCallbacks].username))
+                        {
+                            gameCallbacks[usersInMatch[indexPlayerLobbyCallbacks]].ReceiveTurns(true);
+                        }
+                        else
+                        {
+                            gameCallbacks[usersInMatch[indexPlayerLobbyCallbacks]].ReceiveTurns(false);
+                        }  
+                    }
+                }
+            }
+            catch (CommunicationException communicationException)
+            {
+                logger.LogError(communicationException);
+            }
+            catch (TimeoutException timeoutException)
+            {
+                logger.LogError(timeoutException);
+            } 
         }
 
         private void SetPlayersSide(UserSession session)
