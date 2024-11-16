@@ -81,7 +81,7 @@ namespace HiveGameService.Contracts
         public string name { get; set; }
 
         [DataMember]
-        public int count { get; set; }
+        public string playerName { get; set; }
 
         [DataMember]
         public Point position { get; set; }
