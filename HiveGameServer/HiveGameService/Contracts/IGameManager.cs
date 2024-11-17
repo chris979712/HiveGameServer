@@ -68,6 +68,9 @@ namespace HiveGameService.Contracts
         public string imagePath { get; set; }
 
         [DataMember]
+        public int numberOfPiece {  get; set; }
+
+        [DataMember]
         public Point position {  get; set; }
 
         [DataMember]
