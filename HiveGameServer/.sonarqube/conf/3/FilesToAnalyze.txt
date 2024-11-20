@@ -1,0 +1,29 @@
+﻿C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\FriendRequestOperationTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\FriendshipOperationTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\LeaderBoardOperationTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\MatchOperationTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\UserOperationTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Properties\AssemblyInfo.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\ChatServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\EmailInvitationServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\EmailVerificationServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\GameServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\LobbyServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\MatchCreatorServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\UserSessionServiceTest.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\App.config
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\HiveGameService.wsdl
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item.xsd
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item1.xsd
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item2.xsd
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item3.xsd
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Properties\DataSources\HiveGameService.Contracts.LeaderBoardPlayer.datasource
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Properties\DataSources\HiveGameService.Contracts.Profile.datasource
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item.disco
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\configuration91.svcinfo
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\configuration.svcinfo
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\Reference.svcmap
+C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.visualstudio.testadapter.dll
+C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.reporters.net452.dll
+C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.utility.net452.dll
+C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.abstractions.dll
