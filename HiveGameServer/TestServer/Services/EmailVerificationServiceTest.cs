@@ -12,7 +12,7 @@ namespace TestServer.Services
         public void SendVerificationEmailTestSuccess()
         {
             HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
-            string emailToSend = "chrisvasquez985@gmail.com";
+            string emailToSend = "cumplidonegrete14@gmail.com";
             int resultExpected = Constants.SUCCES_OPERATION;
             int resultObtained = emailVerificationManagerClient.SendVerificationEmail(emailToSend);
             Assert.Equal(resultExpected, resultObtained);
@@ -42,7 +42,7 @@ namespace TestServer.Services
             HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
             UserVerificator userVerificatorTest = new UserVerificator()
             {
-                email = "chrisvasquez985@gmail.com",
+                email = "cumplidonegrete14@gmail.com",
                 code = "267208"
             };
             bool resultObtained = emailVerificationManagerClient.VerifyCodeVerification(userVerificatorTest);
@@ -55,7 +55,7 @@ namespace TestServer.Services
             HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
             UserVerificator userVerificatorTest = new UserVerificator()
             {
-                email = "chrisvasquez985@gmail.com",
+                email = "cumplidonegrete14@gmail.com",
                 code = "111111"
             };
             bool resultObtained = emailVerificationManagerClient.VerifyCodeVerification(userVerificatorTest);

@@ -4,6 +4,7 @@ using log4net.Repository.Hierarchy;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,27 +16,31 @@ using System.Threading.Tasks;
 namespace HiveGameService.Services
 {
     public partial class HiveGameService : IEmailInvitationManager
-    { 
+    {
         public int SendEmailInvitation(UserVerificator userVerificator)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             int resultSendedEmail = Constants.ERROR_OPERATION;
             string templateInvitationMessage = BodyMessageInvitationFormat();
-            if(templateInvitationMessage!="Not found template file")
+            string emailSender = ConfigurationManager.AppSettings["EmailSender"];
+            string password = ConfigurationManager.AppSettings["EmailPassword"];
+            string smtpServer = ConfigurationManager.AppSettings["SmtpServer"];
+            int port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]);
+
+            if (templateInvitationMessage != "Not found template file")
             {
                 try
                 {
-                    string emailSender = "candcinnovationshivegame@gmail.com";
-                    string password = "guyy ihtn sygv daiy";
+                    
                     MailMessage messageToSend = new MailMessage();
                     messageToSend.Subject = "Invitation to join a lobby";
                     messageToSend.From = new MailAddress(emailSender);
                     messageToSend.To.Add(userVerificator.email);
                     messageToSend.Body = templateInvitationMessage.Replace("{code}", userVerificator.code);
                     messageToSend.IsBodyHtml = true;
-                    var smtpClient = new SmtpClient("smtp.gmail.com")
+                    var smtpClient = new SmtpClient(smtpServer)
                     {
-                        Port = 587,
+                        Port = port,
                         Credentials = new NetworkCredential(emailSender, password),
                         EnableSsl = true
                     };
@@ -53,7 +58,8 @@ namespace HiveGameService.Services
                 catch (SmtpException smtpException)
                 {
                     logger.LogError(smtpException);
-                }catch(FormatException formatException)
+                }
+                catch (FormatException formatException)
                 {
                     logger.LogError(formatException);
                 }

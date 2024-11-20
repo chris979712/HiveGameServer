@@ -13,7 +13,7 @@ namespace TestServer.Services
             HiveServerProxy.EmailInvitationManagerClient emailInvitationManagerClient = new HiveServerProxy.EmailInvitationManagerClient();
             UserVerificator userVerificator = new UserVerificator()
             {
-                email = "chrivasquez2500@gmail.com",
+                email = "cumplidonegrete14@gmail.com",
                 code = "793699"
             };
             int invitationSendResult = emailInvitationManagerClient.SendEmailInvitation(userVerificator);

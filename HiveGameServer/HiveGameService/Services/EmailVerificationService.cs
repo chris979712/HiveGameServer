@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Configuration;
 
 
 namespace HiveGameService.Services
@@ -24,34 +25,41 @@ namespace HiveGameService.Services
             int resultSendedEmail = Constants.ERROR_OPERATION;
             string codeGenerated = GenerateVerificatonCode(emailToSend);
             string templateVerificationMessage = BodyMessageFormat();
+            string emailSender = ConfigurationManager.AppSettings["EmailSender"];
+            string password = ConfigurationManager.AppSettings["EmailPassword"];
+            string smtpServer = ConfigurationManager.AppSettings["SmtpServer"];
+            int port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]);
+
             try
             {
-                if(templateVerificationMessage!="Not found template file")
+                if (templateVerificationMessage != "Not found template file")
                 {
-                    string emailSender = "candcinnovationshivegame@gmail.com";
-                    string password = "guyy ihtn sygv daiy";
+                    
                     MailMessage messageToSend = new MailMessage();
                     messageToSend.Subject = "Edit credentials request";
                     messageToSend.From = new MailAddress(emailSender);
                     messageToSend.To.Add(emailToSend);
                     messageToSend.Body = templateVerificationMessage.Replace("{code}", codeGenerated);
                     messageToSend.IsBodyHtml = true;
-                    var smtpClient = new SmtpClient("smtp.gmail.com")
+                    var smtpClient = new SmtpClient(smtpServer)
                     {
-                        Port = 587,
+                        Port = port,
                         Credentials = new NetworkCredential(emailSender, password),
                         EnableSsl = true
                     };
                     smtpClient.Send(messageToSend);
                     resultSendedEmail = Constants.SUCCES_OPERATION;
                 }
-            }catch (FileNotFoundException fileNotFoundException)
+            }
+            catch (FileNotFoundException fileNotFoundException)
             {
                 logger.LogError(fileNotFoundException);
-            }catch(SmtpFailedRecipientException smtpFailedRecipientException)
+            }
+            catch (SmtpFailedRecipientException smtpFailedRecipientException)
             {
                 logger.LogError(smtpFailedRecipientException);
-            }catch (SmtpException smtpException)
+            }
+            catch (SmtpException smtpException)
             {
                 logger.LogError(smtpException);
             }
@@ -59,7 +67,7 @@ namespace HiveGameService.Services
             {
                 logger.LogError(formatException);
             }
-            catch(InvalidOperationException invalidOperationException)
+            catch (InvalidOperationException invalidOperationException)
             {
                 logger.LogError(invalidOperationException);
             }
