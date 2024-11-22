@@ -1,4 +1,0 @@
-﻿C:\Users\cumpl\Downloads\PROYECTO-HIVE\HiveGameServer\HiveGameServer\HiveGameServerCLI\Program.cs
-C:\Users\cumpl\Downloads\PROYECTO-HIVE\HiveGameServer\HiveGameServer\HiveGameServerCLI\Properties\AssemblyInfo.cs
-C:\Users\cumpl\Downloads\PROYECTO-HIVE\HiveGameServer\HiveGameServer\HiveGameServerCLI\App.config
-C:\Users\cumpl\Downloads\PROYECTO-HIVE\HiveGameServer\HiveGameServer\HiveGameServerCLI\packages.config

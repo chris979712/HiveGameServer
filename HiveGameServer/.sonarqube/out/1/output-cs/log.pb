@@ -1,1 +1,0 @@
-Roslyn version: 4.11.0.0Language version: CSharp7_3!Concurrent execution: enabled·²File 'C:\Users\cumpl\Downloads\PROYECTO-HIVE\HiveGameServer\HiveGameServer\HiveGameService\obj\Debug\.NETFramework,Version=v4.8.AssemblyAttributes.cs' was recognized as generated
