@@ -1,0 +1,6 @@
+projectKey=HiveServer
+serverUrl=http://localhost:9000
+serverVersion=10.7.0.96327
+dashboardUrl=http://localhost:9000/dashboard?id=HiveServer
+ceTaskId=aebc3554-b28a-464e-96cf-8bbc4976aeeb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=aebc3554-b28a-464e-96cf-8bbc4976aeeb
