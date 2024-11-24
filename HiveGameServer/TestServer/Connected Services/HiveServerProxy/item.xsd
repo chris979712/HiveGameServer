@@ -679,6 +679,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="FinishOfTheMatch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="codeMatch" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="winner" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="MovePiece">
     <xs:complexType>
       <xs:sequence>
@@ -704,10 +712,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="LeaveMatchFinished">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="codeMatch" nillable="true" type="xs:string" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="session" nillable="true" type="q50:UserSession" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LeaveMatchFinishedResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LeaveMatchFinishedResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ChargePlayerGameBoard">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="side" nillable="true" type="q50:PlayerSide" />
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="side" nillable="true" type="q51:PlayerSide" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -719,7 +742,7 @@
   <xs:element name="ReceivePieceMoved">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="piece" nillable="true" type="q51:GamePice" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="piece" nillable="true" type="q52:GamePice" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -743,7 +766,7 @@
   <xs:element name="ReceivePlayersToMatch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="userSession" nillable="true" type="q52:ArrayOfUserSession" />
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" minOccurs="0" name="userSession" nillable="true" type="q53:ArrayOfUserSession" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -760,6 +783,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="ReceivePlayerHasLeftNotificationResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiveFinalMatchResult">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="winner" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReceiveFinalMatchResultResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>

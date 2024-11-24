@@ -22,7 +22,6 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         int VerifyCreatorOfTheMatch(GameMatch match);
-
     }
 
     [ServiceContract]

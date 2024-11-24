@@ -263,5 +263,68 @@ namespace HiveGameService.Services
             }
         }
 
+        public void FinishOfTheMatch(string codeMatch, string winner)
+        {
+            HostBehaviorManager.ChangeModeToReentrant();
+            LoggerManager logger = new LoggerManager(this.GetType());
+            List<UserSession> usersInMatch = gamePlayers[codeMatch];
+            for(int gamePlayersIndex = 0;gamePlayersIndex < usersInMatch.Count;gamePlayersIndex++)
+            {
+                try
+                {
+                    UserSession userToNotify = usersInMatch[gamePlayersIndex];
+                    if (gameCallbacks.ContainsKey(userToNotify))
+                    {
+                        gameCallbacks[userToNotify].ReceiveFinalMatchResult(winner);
+                    }
+                }
+                catch (CommunicationException communicationException)
+                {
+                    logger.LogError(communicationException);
+                }
+                catch (TimeoutException timeoutException)
+                {
+                    logger.LogError(timeoutException);
+                }
+            }
+        }
+
+        public int LeaveMatchFinished(string codeMatch, UserSession session)
+        {
+            HostBehaviorManager.ChangeModeToReentrant();
+            LoggerManager logger = new LoggerManager(this.GetType());
+            int disconnectionResult = Constants.ERROR_OPERATION;
+            try
+            {
+                if (gameCallbacks.ContainsKey(session))
+                {
+                    if(gamePlayers.Count == 1)
+                    {
+                        gameCallbacks.Remove(session);
+                        gamePlayers.Remove(codeMatch);
+                        disconnectionResult = Constants.SUCCES_OPERATION;
+                    }
+                    else
+                    {
+                        gameCallbacks.Remove(session);
+                        gamePlayers[codeMatch].Remove(session);
+                        disconnectionResult = Constants.SUCCES_OPERATION;
+                    }
+                }
+                else
+                {
+                    disconnectionResult = Constants.NO_DATA_MATCHES;
+                }
+            }
+            catch (CommunicationException communicationException)
+            {
+                logger.LogError(communicationException);
+            }
+            catch (TimeoutException timeoutException)
+            {
+                logger.LogError(timeoutException);
+            }
+            return disconnectionResult;
+        }
     }
 }
