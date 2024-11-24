@@ -16,6 +16,9 @@ namespace HiveGameService.Contracts
         void ConnectToGameBoard(UserSession session, string codeMatch);
 
         [OperationContract(IsOneWay = true)]
+        void FinishOfTheMatch(string codeMatch, string winner);
+
+        [OperationContract(IsOneWay = true)]
         void MovePiece(GamePice piece, UserSession session, string codeMatch);
 
         [OperationContract(IsOneWay = true)]
@@ -23,6 +26,9 @@ namespace HiveGameService.Contracts
 
         [OperationContract(IsOneWay = true)]
         void LeaveTheGame(UserSession session, string codeMatch);
+
+        [OperationContract]
+        int LeaveMatchFinished(string codeMatch, UserSession session);
     }
 
     [ServiceContract]
@@ -42,6 +48,9 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         void ReceivePlayerHasLeftNotification(bool doPlayerLeftTheGame);
+
+        [OperationContract]
+        void ReceiveFinalMatchResult(string winner);
     }
 
     [DataContract]

@@ -440,6 +440,9 @@
   <wsdl:message name="IGameManager_ConnectToGameBoard_InputMessage">
     <wsdl:part name="parameters" element="tns:ConnectToGameBoard" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_FinishOfTheMatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:FinishOfTheMatch" />
+  </wsdl:message>
   <wsdl:message name="IGameManager_MovePiece_InputMessage">
     <wsdl:part name="parameters" element="tns:MovePiece" />
   </wsdl:message>
@@ -448,6 +451,12 @@
   </wsdl:message>
   <wsdl:message name="IGameManager_LeaveTheGame_InputMessage">
     <wsdl:part name="parameters" element="tns:LeaveTheGame" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_LeaveMatchFinished_InputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveMatchFinished" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_LeaveMatchFinished_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LeaveMatchFinishedResponse" />
   </wsdl:message>
   <wsdl:message name="IGameManager_ChargePlayerGameBoard_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ChargePlayerGameBoard" />
@@ -478,6 +487,12 @@
   </wsdl:message>
   <wsdl:message name="IGameManager_ReceivePlayerHasLeftNotification_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceivePlayerHasLeftNotificationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceiveFinalMatchResult_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveFinalMatchResult" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_ReceiveFinalMatchResult_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReceiveFinalMatchResultResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserManager">
     <wsdl:operation name="AddUser">
@@ -702,6 +717,9 @@
     <wsdl:operation name="ConnectToGameBoard">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ConnectToGameBoard" message="tns:IGameManager_ConnectToGameBoard_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="FinishOfTheMatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/FinishOfTheMatch" message="tns:IGameManager_FinishOfTheMatch_InputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="MovePiece">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/MovePiece" message="tns:IGameManager_MovePiece_InputMessage" />
     </wsdl:operation>
@@ -710,6 +728,10 @@
     </wsdl:operation>
     <wsdl:operation name="LeaveTheGame">
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/LeaveTheGame" message="tns:IGameManager_LeaveTheGame_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LeaveMatchFinished">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/LeaveMatchFinished" message="tns:IGameManager_LeaveMatchFinished_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/LeaveMatchFinishedResponse" message="tns:IGameManager_LeaveMatchFinished_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ChargePlayerGameBoard">
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ChargePlayerGameBoard" message="tns:IGameManager_ChargePlayerGameBoard_OutputCallbackMessage" />
@@ -730,6 +752,10 @@
     <wsdl:operation name="ReceivePlayerHasLeftNotification">
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotification" message="tns:IGameManager_ReceivePlayerHasLeftNotification_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotificationResponse" message="tns:IGameManager_ReceivePlayerHasLeftNotification_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveFinalMatchResult">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceiveFinalMatchResult" message="tns:IGameManager_ReceiveFinalMatchResult_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceiveFinalMatchResultResponse" message="tns:IGameManager_ReceiveFinalMatchResult_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserManager" type="tns:IUserManager">
@@ -1223,6 +1249,12 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
+    <wsdl:operation name="FinishOfTheMatch">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/FinishOfTheMatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="MovePiece">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/MovePiece" style="document" />
       <wsdl:input>
@@ -1240,6 +1272,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="LeaveMatchFinished">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/LeaveMatchFinished" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ChargePlayerGameBoard">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/ChargePlayerGameBoard" style="document" />
@@ -1279,6 +1320,15 @@
     </wsdl:operation>
     <wsdl:operation name="ReceivePlayerHasLeftNotification">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/ReceivePlayerHasLeftNotification" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveFinalMatchResult">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/ReceiveFinalMatchResult" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
