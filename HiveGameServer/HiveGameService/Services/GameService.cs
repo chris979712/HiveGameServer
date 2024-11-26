@@ -295,7 +295,7 @@ namespace HiveGameService.Services
             {
                 if (_gameCallbacks.ContainsKey(session))
                 {
-                    if(_gamePlayers.Count == 1)
+                    if (_gamePlayers[codeMatch].Count == 1)
                     {
                         _gameCallbacks.Remove(session);
                         _gamePlayers.Remove(codeMatch);
