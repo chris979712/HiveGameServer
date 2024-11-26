@@ -1,15 +1,10 @@
 ﻿using HiveGameService.Contracts;
 using HiveGameService.Utilities;
-using log4net.Repository.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Mail;
 using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Configuration;
 
 
@@ -17,7 +12,7 @@ namespace HiveGameService.Services
 {
     public partial class HiveGameService : IEmailVerificationManager
     {
-        private static readonly Dictionary<string, string> codeVerificationAccesAccountRegistration = new Dictionary<string, string>();
+        private static readonly Dictionary<string, string> _codeVerificationAccesAccountRegistration = new Dictionary<string, string>();
 
         public int SendVerificationEmail(string emailToSend)
         {
@@ -97,11 +92,11 @@ namespace HiveGameService.Services
             bool verificationResult = false;
             try
             {
-                string codeToCompare = codeVerificationAccesAccountRegistration[verificator.email];
+                string codeToCompare = _codeVerificationAccesAccountRegistration[verificator.email];
                 if (codeToCompare == verificator.code)
                 {
                     verificationResult = true;
-                    codeVerificationAccesAccountRegistration.Remove(codeToCompare);
+                    _codeVerificationAccesAccountRegistration.Remove(codeToCompare);
                 }
             }catch(KeyNotFoundException keyNotFoundException){
                 verificationResult = false;
@@ -112,14 +107,14 @@ namespace HiveGameService.Services
 
         public string GenerateVerificatonCode(string email)
         {
-            if (codeVerificationAccesAccountRegistration.ContainsKey(email))
+            if (_codeVerificationAccesAccountRegistration.ContainsKey(email))
             {
-                codeVerificationAccesAccountRegistration.Remove(email);
+                _codeVerificationAccesAccountRegistration.Remove(email);
             }
             Random random = new Random();
             int codeGenerated = random.Next(100000, 999999);
             string stringCodeGenerated = codeGenerated.ToString();
-            codeVerificationAccesAccountRegistration.Add(email, stringCodeGenerated);
+            _codeVerificationAccesAccountRegistration.Add(email, stringCodeGenerated);
             return stringCodeGenerated;
         }
 

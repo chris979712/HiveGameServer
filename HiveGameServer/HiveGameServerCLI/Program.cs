@@ -15,12 +15,13 @@ namespace HiveGameServer
     {
         static void Main(string[] args)
         {
-                using (ServiceHost host = new ServiceHost(typeof(HiveGameService.Services.HiveGameService)))
-                {
-                    host.Open();
-                    Console.WriteLine("Service connected");
-                    Console.ReadLine();
-                }
+            using (ServiceHost host = new ServiceHost(typeof(HiveGameService.Services.HiveGameService)))
+            {
+                host.Open();
+                Console.WriteLine("Service connected");
+                Console.ReadLine();
+            }
         }
+
     }
 }

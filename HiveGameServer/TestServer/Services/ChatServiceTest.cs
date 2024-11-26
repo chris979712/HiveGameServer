@@ -18,6 +18,7 @@ namespace TestServer.Services
         }
 
     }
+
     public class ChatServiceTest
     {
         private static ChatManagerClient chatProxy;

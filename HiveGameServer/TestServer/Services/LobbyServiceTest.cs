@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using HiveGameService.Contracts;
 using TestServer.HiveServerProxy;
 using Xunit;
-using HiveGameService.Utilities;
-using System.Linq;
 
 namespace TestServer.Services
 {
@@ -13,7 +11,6 @@ namespace TestServer.Services
     {
         public bool receivedKickNotificationVerificator {get; set;}
         public bool receivePlayersToLobbyVerificator {get; set;}
-
         public bool receiveStartMatchNotificationVerificator { get; set;}
         public int receiveNumberOfLobbyPlayersToLobby { get; set;}
 

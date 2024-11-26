@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.UtilitiesService
 {
@@ -18,6 +14,7 @@ namespace HiveGameService.UtilitiesService
         public string nickname { get; set; }
         public string imagePath { get; set; }
         public DateTime createdDate { get; set; }
+
 
     }
 

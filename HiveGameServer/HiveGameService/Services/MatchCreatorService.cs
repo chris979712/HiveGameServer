@@ -3,9 +3,6 @@ using DataBaseManager.Operations;
 using HiveGameService.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {
@@ -56,7 +53,7 @@ namespace HiveGameService.Services
         public bool VerifyIfLobbyIsFull(string codeLobby)
         {
             bool verificationResult = true;
-            List<UserSession> usersInLobby = lobbyPlayers[codeLobby];
+            List<UserSession> usersInLobby = _lobbyPlayers[codeLobby];
             if (usersInLobby.Count >= 2)
             {
                 verificationResult = true;
@@ -70,7 +67,7 @@ namespace HiveGameService.Services
 
         public bool VerifyExistingCode(string code)
         {
-            return lobbyCodes.ContainsKey(code);
+            return _lobbyCodes.ContainsKey(code);
         }
 
         public string GenerateLobbyCode(string email)
@@ -83,7 +80,7 @@ namespace HiveGameService.Services
                 codeGenerated = random.Next(100000, 999999);
                 stringCodeGenerated = codeGenerated.ToString();
             }
-            lobbyCodes.Add(stringCodeGenerated, email);
+            _lobbyCodes.Add(stringCodeGenerated, email);
             return stringCodeGenerated;
         }
 

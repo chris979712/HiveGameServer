@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(ILobbyManagerCallback))]
     interface ILobbyManager
     {
@@ -47,4 +44,5 @@ namespace HiveGameService.Contracts
         [DataMember]
         public int idAccount { get; set; }
     }
+
 }

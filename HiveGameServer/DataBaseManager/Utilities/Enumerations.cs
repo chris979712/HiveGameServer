@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HiveGameService.Utilities
+﻿namespace HiveGameService.Utilities
 {
     public class Enumerations
     {

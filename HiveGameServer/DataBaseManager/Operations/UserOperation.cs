@@ -1,15 +1,8 @@
 ﻿using HiveGameService.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity.Core;
-using System.Security.Cryptography;
-using System.Security.Principal;
 
 namespace DataBaseManager.Operations
 {

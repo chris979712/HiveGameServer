@@ -1,17 +1,10 @@
 ﻿using HiveGameService.Contracts;
 using HiveGameService.Utilities;
-using log4net.Repository.Hierarchy;
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {

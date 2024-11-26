@@ -1,12 +1,6 @@
 ﻿using HiveGameService.Contracts;
 using HiveGameService.UtilitiesService;
-using System.Linq;
-using System.Data.SqlClient;
-using DataBaseManager;
-using System.Text;
-using System.Data.Entity.Infrastructure;
 using DataBaseManager.Operations;
-using System;
 
 namespace HiveGameService.Services
 {
