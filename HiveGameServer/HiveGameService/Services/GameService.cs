@@ -13,11 +13,11 @@ namespace HiveGameService.Services
     public partial class HiveGameService : IGameManager
     {
 
-        private IGameManagerCallback gameManagerCallback;
-        private static readonly Dictionary<UserSession, IGameManagerCallback> gameCallbacks = new Dictionary<UserSession, IGameManagerCallback>();
-        private static readonly Dictionary<string, List<UserSession>> gamePlayers = new Dictionary<string, List<UserSession>>();
-        private static readonly Dictionary<string, List<PlayerSide>> playersSide = new Dictionary<string, List<PlayerSide>>();
-        private static readonly Dictionary<string, string> turnsInMatch = new Dictionary<string, string>(); 
+        private IGameManagerCallback _gameManagerCallback;
+        private static readonly Dictionary<UserSession, IGameManagerCallback> _gameCallbacks = new Dictionary<UserSession, IGameManagerCallback>();
+        private static readonly Dictionary<string, List<UserSession>> _gamePlayers = new Dictionary<string, List<UserSession>>();
+        private static readonly Dictionary<string, List<PlayerSide>> _playersSide = new Dictionary<string, List<PlayerSide>>();
+        private static readonly Dictionary<string, string> _turnsInMatch = new Dictionary<string, string>(); 
 
         public void ConnectToGameBoard(UserSession session, string codeMatch)
         {
@@ -25,22 +25,22 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             try
             {
-                if (lobbiesCallback.ContainsKey(session))
+                if (_lobbiesCallback.ContainsKey(session))
                 {
-                    lobbiesCallback.Remove(session);
-                    chatCallBacks.Remove(session.username);
-                    lobbyPlayers[codeMatch].Remove(session);
+                    _lobbiesCallback.Remove(session);
+                    _chatCallBacks.Remove(session.username);
+                    _lobbyPlayers[codeMatch].Remove(session);
                 }
-                gameManagerCallback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
-                if (!gameCallbacks.ContainsKey(session))
+                _gameManagerCallback = OperationContext.Current.GetCallbackChannel<IGameManagerCallback>();
+                if (!_gameCallbacks.ContainsKey(session))
                 {
-                    gameCallbacks.Add(session,gameManagerCallback);
-                    if (!gamePlayers.ContainsKey(codeMatch))
+                    _gameCallbacks.Add(session, _gameManagerCallback);
+                    if (!_gamePlayers.ContainsKey(codeMatch))
                     {
-                        gamePlayers[codeMatch] = new List<UserSession>();
-                        playersSide[codeMatch] = new List<PlayerSide>();
+                        _gamePlayers[codeMatch] = new List<UserSession>();
+                        _playersSide[codeMatch] = new List<PlayerSide>();
                     }
-                    gamePlayers[codeMatch].Add(session);
+                    _gamePlayers[codeMatch].Add(session);
                     SetPlayersSide(session);
                     NotifyPlayersMatchJoin(codeMatch);
                     SetInitialTurn(session,codeMatch);
@@ -62,14 +62,14 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             try
             {
-                if (!turnsInMatch.ContainsKey(codeMatch))
+                if (!_turnsInMatch.ContainsKey(codeMatch))
                 {
-                    turnsInMatch[codeMatch] = userSession.username;
-                    gameCallbacks[userSession].ReceiveTurns(true);
+                    _turnsInMatch[codeMatch] = userSession.username;
+                    _gameCallbacks[userSession].ReceiveTurns(true);
                 }
                 else
                 {
-                    gameCallbacks[userSession].ReceiveTurns(false);
+                    _gameCallbacks[userSession].ReceiveTurns(false);
                 }
             }
             catch (CommunicationException communicationException)
@@ -88,18 +88,18 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             try
             {
-                if (gameCallbacks.ContainsKey(session))
+                if (_gameCallbacks.ContainsKey(session))
                 {
-                    if (gamePlayers[codeMatch].Count==1)
+                    if (_gamePlayers[codeMatch].Count==1)
                     {
-                        gamePlayers.Remove(codeMatch);
-                        gameCallbacks.Remove(session);
-                        turnsInMatch.Remove(codeMatch);
+                        _gamePlayers.Remove(codeMatch);
+                        _gameCallbacks.Remove(session);
+                        _turnsInMatch.Remove(codeMatch);
                     }
                     else
                     {
-                        gamePlayers[codeMatch].Remove(session);
-                        gameCallbacks.Remove(session);
+                        _gamePlayers[codeMatch].Remove(session);
+                        _gameCallbacks.Remove(session);
                         NotifyPlayerUserLeftTheGame(codeMatch);
                     }
                 }
@@ -120,11 +120,11 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             try
             {
-                List<UserSession> usersInMatch = gamePlayers[codeMatch];
+                List<UserSession> usersInMatch = _gamePlayers[codeMatch];
                 for(int indexUsersInGame  = 0; indexUsersInGame < usersInMatch.Count; indexUsersInGame++)
                 {
                     UserSession userToNotify = usersInMatch[indexUsersInGame];
-                    gameCallbacks[userToNotify].ReceivePlayerHasLeftNotification(true);
+                    _gameCallbacks[userToNotify].ReceivePlayerHasLeftNotification(true);
                 }
             }
             catch(CommunicationException communicationException)
@@ -143,12 +143,12 @@ namespace HiveGameService.Services
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {
-                List<UserSession> usersInMatch = gamePlayers[codeMatch].ToList();
+                List<UserSession> usersInMatch = _gamePlayers[codeMatch].ToList();
                 for(int indexLobbyCallbacks = 0; indexLobbyCallbacks < usersInMatch.Count; indexLobbyCallbacks++)
                 {
                     if (!usersInMatch[indexLobbyCallbacks].Equals(session))
                     {
-                        gameCallbacks[usersInMatch[indexLobbyCallbacks]].ReceivePieceMoved(piece);
+                        _gameCallbacks[usersInMatch[indexLobbyCallbacks]].ReceivePieceMoved(piece);
                     }
 
                 }
@@ -169,27 +169,27 @@ namespace HiveGameService.Services
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {
-                if (turnsInMatch[codeMatch].Contains(session.username))
+                if (_turnsInMatch[codeMatch].Contains(session.username))
                 {
                     string userTurnUsername = session.username;
-                    List<UserSession> usersInMatch = gamePlayers[codeMatch];
+                    List<UserSession> usersInMatch = _gamePlayers[codeMatch];
                     for (int indexPlayersInLobby = 0; indexPlayersInLobby < usersInMatch.Count; indexPlayersInLobby++)
                     {
-                        if (!turnsInMatch[codeMatch].Contains(usersInMatch[indexPlayersInLobby].username))
+                        if (!_turnsInMatch[codeMatch].Contains(usersInMatch[indexPlayersInLobby].username))
                         {
                             userTurnUsername = usersInMatch[indexPlayersInLobby].username;
                         }
                     }
-                    turnsInMatch[codeMatch] = userTurnUsername;
+                    _turnsInMatch[codeMatch] = userTurnUsername;
                     for (int indexPlayerLobbyCallbacks = 0; indexPlayerLobbyCallbacks < usersInMatch.Count; ++indexPlayerLobbyCallbacks)
                     {
-                        if (turnsInMatch[codeMatch].Contains(usersInMatch[indexPlayerLobbyCallbacks].username))
+                        if (_turnsInMatch[codeMatch].Contains(usersInMatch[indexPlayerLobbyCallbacks].username))
                         {
-                            gameCallbacks[usersInMatch[indexPlayerLobbyCallbacks]].ReceiveTurns(true);
+                            _gameCallbacks[usersInMatch[indexPlayerLobbyCallbacks]].ReceiveTurns(true);
                         }
                         else
                         {
-                            gameCallbacks[usersInMatch[indexPlayerLobbyCallbacks]].ReceiveTurns(false);
+                            _gameCallbacks[usersInMatch[indexPlayerLobbyCallbacks]].ReceiveTurns(false);
                         }  
                     }
                 }
@@ -216,7 +216,7 @@ namespace HiveGameService.Services
             };
             try
             {
-                List<UserSession> firstUserToJoin = gamePlayers[session.codeMatch];
+                List<UserSession> firstUserToJoin = _gamePlayers[session.codeMatch];
                 if (firstUserToJoin[0] == session)
                 {
                     playerSide.playerOne = true;
@@ -225,7 +225,7 @@ namespace HiveGameService.Services
                 {
                     playerSide.playerTwo = true;
                 }
-                gameCallbacks[session].ChargePlayerGameBoard(playerSide);
+                _gameCallbacks[session].ChargePlayerGameBoard(playerSide);
             }
             catch(CommunicationException communicationException)
             {
@@ -241,15 +241,15 @@ namespace HiveGameService.Services
         {
             HostBehaviorManager.ChangeModeToReentrant();
             LoggerManager logger = new LoggerManager(this.GetType());
-            List<UserSession> usersInMatch = gamePlayers[codeMatch];
+            List<UserSession> usersInMatch = _gamePlayers[codeMatch];
             for(int gamePlayersIndex = 0; gamePlayersIndex < usersInMatch.Count; gamePlayersIndex++)
             {
                 try
                 {
                     UserSession userToNotify = usersInMatch[gamePlayersIndex];
-                    if (gameCallbacks.ContainsKey(userToNotify))
+                    if (_gameCallbacks.ContainsKey(userToNotify))
                     {
-                        gameCallbacks[userToNotify].ReceivePlayersToMatch(usersInMatch);
+                        _gameCallbacks[userToNotify].ReceivePlayersToMatch(usersInMatch);
                     }
                 }
                 catch (CommunicationException communicationException)
@@ -267,15 +267,15 @@ namespace HiveGameService.Services
         {
             HostBehaviorManager.ChangeModeToReentrant();
             LoggerManager logger = new LoggerManager(this.GetType());
-            List<UserSession> usersInMatch = gamePlayers[codeMatch];
+            List<UserSession> usersInMatch = _gamePlayers[codeMatch];
             for(int gamePlayersIndex = 0;gamePlayersIndex < usersInMatch.Count;gamePlayersIndex++)
             {
                 try
                 {
                     UserSession userToNotify = usersInMatch[gamePlayersIndex];
-                    if (gameCallbacks.ContainsKey(userToNotify))
+                    if (_gameCallbacks.ContainsKey(userToNotify))
                     {
-                        gameCallbacks[userToNotify].ReceiveFinalMatchResult(winner);
+                        _gameCallbacks[userToNotify].ReceiveFinalMatchResult(winner);
                     }
                 }
                 catch (CommunicationException communicationException)
@@ -296,18 +296,18 @@ namespace HiveGameService.Services
             int disconnectionResult = Constants.ERROR_OPERATION;
             try
             {
-                if (gameCallbacks.ContainsKey(session))
+                if (_gameCallbacks.ContainsKey(session))
                 {
-                    if(gamePlayers.Count == 1)
+                    if(_gamePlayers.Count == 1)
                     {
-                        gameCallbacks.Remove(session);
-                        gamePlayers.Remove(codeMatch);
+                        _gameCallbacks.Remove(session);
+                        _gamePlayers.Remove(codeMatch);
                         disconnectionResult = Constants.SUCCES_OPERATION;
                     }
                     else
                     {
-                        gameCallbacks.Remove(session);
-                        gamePlayers[codeMatch].Remove(session);
+                        _gameCallbacks.Remove(session);
+                        _gamePlayers[codeMatch].Remove(session);
                         disconnectionResult = Constants.SUCCES_OPERATION;
                     }
                 }

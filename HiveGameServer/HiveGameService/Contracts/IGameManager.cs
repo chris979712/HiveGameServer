@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(IGameManagerCallback))]
     interface IGameManager
     {
@@ -64,7 +65,6 @@ namespace HiveGameService.Contracts
 
         [DataMember]
         public bool playerTwo { get; set; }
-
     }
 
     [DataContract]
@@ -97,6 +97,6 @@ namespace HiveGameService.Contracts
 
         [DataMember]
         public Point position { get; set; }
-
     }
+
 }

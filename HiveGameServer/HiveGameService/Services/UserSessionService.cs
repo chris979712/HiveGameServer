@@ -12,13 +12,13 @@ namespace HiveGameService.Services
 {
     public partial class HiveGameService : IUserSessionManager
     {
-        private static readonly List<UserSession> usersConnected = new List<UserSession>();
+        private static readonly List<UserSession> _usersConnected = new List<UserSession>();
         public int ConnectToGame(UserSession user)
         {
             int resultConnection = Constants.ERROR_OPERATION;
-            if (!usersConnected.Contains(user))
+            if (!_usersConnected.Contains(user))
             {
-                usersConnected.Add(user);
+                _usersConnected.Add(user);
                 UpdateFriendsListOfConectedFriends(user);
                 resultConnection = Constants.SUCCES_OPERATION;
             }
@@ -28,13 +28,13 @@ namespace HiveGameService.Services
         public int Disconnect(UserSession user, bool isInMatch)
         {
             int resultDisconnection;
-            if (usersConnected.Exists(userToDisconnect => userToDisconnect.username == user.username))
+            if (_usersConnected.Exists(userToDisconnect => userToDisconnect.username == user.username))
             {
                 Profile userProfile = new Profile()
                 {
                     username = user.username
                 };
-                usersConnected.RemoveAll(userToDisconnect => userToDisconnect.username == user.username);
+                _usersConnected.RemoveAll(userToDisconnect => userToDisconnect.username == user.username);
                 UpdateFriendsListOfConectedFriends(user);
                 DisconectPlayerFromChat(userProfile,user.codeMatch);
                 LeavePlayerFromLobby(user, user.codeMatch, false);
@@ -56,7 +56,7 @@ namespace HiveGameService.Services
         public bool VerifyConnectivity(UserSession user)
         {
             bool resultVerification = false;
-            if (usersConnected.Contains(user))
+            if (_usersConnected.Contains(user))
             {
                 resultVerification = true;
             }
@@ -71,9 +71,9 @@ namespace HiveGameService.Services
             {
                 try
                 {
-                    if (friendsManagerCallbacks.ContainsKey(connnectedFriends[connectedFriendsListIndex]))
+                    if (_friendsManagerCallbacks.ContainsKey(connnectedFriends[connectedFriendsListIndex]))
                     {
-                        friendsManagerCallbacks[connnectedFriends[connectedFriendsListIndex]].ObtainConnectedFriends(ObtainFriendsList(connnectedFriends[connectedFriendsListIndex].idAccount));
+                        _friendsManagerCallbacks[connnectedFriends[connectedFriendsListIndex]].ObtainConnectedFriends(ObtainFriendsList(connnectedFriends[connectedFriendsListIndex].idAccount));
                     }
                 }catch(CommunicationException communicationException)
                 {

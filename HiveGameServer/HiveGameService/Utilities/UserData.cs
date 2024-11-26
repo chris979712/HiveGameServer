@@ -19,6 +19,7 @@ namespace HiveGameService.UtilitiesService
         public string imagePath { get; set; }
         public DateTime createdDate { get; set; }
 
+
     }
 
 }

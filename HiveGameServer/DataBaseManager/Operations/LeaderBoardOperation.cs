@@ -5,12 +5,8 @@ using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity.Core;
-using System.Web.UI.WebControls.WebParts;
 using DataBaseManager.Utilities;
-using System.Security.Principal;
 
 namespace DataBaseManager.Operations
 {

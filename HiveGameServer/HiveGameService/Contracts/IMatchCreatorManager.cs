@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract]
     public interface IMatchCreatorManager
     {
@@ -28,7 +29,6 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         string GenerateLobbyCode(string email);
-
     }
 
     [DataContract]

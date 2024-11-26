@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract]
     public interface IEmailInvitationManager
     {
         [OperationContract]
         int SendEmailInvitation(UserVerificator verificator);
     }
+
 }

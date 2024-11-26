@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(ILobbyManagerCallback))]
     interface ILobbyManager
     {
@@ -47,4 +48,5 @@ namespace HiveGameService.Contracts
         [DataMember]
         public int idAccount { get; set; }
     }
+
 }

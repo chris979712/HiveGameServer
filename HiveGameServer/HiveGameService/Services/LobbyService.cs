@@ -14,10 +14,10 @@ namespace HiveGameService.Services
 {
     public partial class HiveGameService : ILobbyManager
     {
-        private ILobbyManagerCallback lobbyManager;
-        private static readonly Dictionary<string, string> lobbyCodes = new Dictionary<string, string>();
-        private static readonly Dictionary<string, List<UserSession>> lobbyPlayers = new Dictionary<string, List<UserSession>>();
-        private static readonly Dictionary<UserSession, ILobbyManagerCallback> lobbiesCallback = new Dictionary<UserSession, ILobbyManagerCallback>();
+        private ILobbyManagerCallback _lobbyManager;
+        private static readonly Dictionary<string, string> _lobbyCodes = new Dictionary<string, string>();
+        private static readonly Dictionary<string, List<UserSession>> _lobbyPlayers = new Dictionary<string, List<UserSession>>();
+        private static readonly Dictionary<UserSession, ILobbyManagerCallback> _lobbiesCallback = new Dictionary<UserSession, ILobbyManagerCallback>();
 
         public void ConnectToLobby(UserSession lobbyPlayer, string codeLobby)
         {
@@ -25,15 +25,15 @@ namespace HiveGameService.Services
             HostBehaviorManager.ChangeModeToReentrant();
             try
             {
-                if (!lobbiesCallback.ContainsKey(lobbyPlayer))
+                if (!_lobbiesCallback.ContainsKey(lobbyPlayer))
                 {
-                    lobbyManager = OperationContext.Current.GetCallbackChannel<ILobbyManagerCallback>();
-                    lobbiesCallback.Add(lobbyPlayer, lobbyManager);
-                    if (!lobbyPlayers.ContainsKey(codeLobby))
+                    _lobbyManager = OperationContext.Current.GetCallbackChannel<ILobbyManagerCallback>();
+                    _lobbiesCallback.Add(lobbyPlayer, _lobbyManager);
+                    if (!_lobbyPlayers.ContainsKey(codeLobby))
                     {
-                        lobbyPlayers[codeLobby] = new List<UserSession>();
+                        _lobbyPlayers[codeLobby] = new List<UserSession>();
                     }
-                    lobbyPlayers[codeLobby].Add(lobbyPlayer);
+                    _lobbyPlayers[codeLobby].Add(lobbyPlayer);
                     NotifyPlayers(codeLobby);
                 }
             }
@@ -52,26 +52,26 @@ namespace HiveGameService.Services
            HostBehaviorManager.ChangeModeToReentrant();
            try
            {
-                if (lobbiesCallback.ContainsKey(lobbyPlayer))
+                if (_lobbiesCallback.ContainsKey(lobbyPlayer))
                 {
                     if (isKicked)
                     {
-                        lobbiesCallback[lobbyPlayer].ReceiveKickedNotification();
-                        lobbyPlayers[codeLobby].Remove(lobbyPlayer);
-                        lobbiesCallback.Remove(lobbyPlayer);
+                        _lobbiesCallback[lobbyPlayer].ReceiveKickedNotification();
+                        _lobbyPlayers[codeLobby].Remove(lobbyPlayer);
+                        _lobbiesCallback.Remove(lobbyPlayer);
                         NotifyPlayers(codeLobby);
                     }
                     else
                     {
-                        if (lobbyPlayers[codeLobby].Count == 1)
+                        if (_lobbyPlayers[codeLobby].Count == 1)
                         {
-                            lobbyPlayers.Remove(codeLobby);
-                            lobbiesCallback.Remove(lobbyPlayer);
+                            _lobbyPlayers.Remove(codeLobby);
+                            _lobbiesCallback.Remove(lobbyPlayer);
                         }
                         else
                         {
-                            lobbyPlayers[codeLobby].Remove(lobbyPlayer);
-                            lobbiesCallback.Remove(lobbyPlayer);
+                            _lobbyPlayers[codeLobby].Remove(lobbyPlayer);
+                            _lobbiesCallback.Remove(lobbyPlayer);
                             NotifyPlayers(codeLobby);
                         }
                     }
@@ -90,7 +90,7 @@ namespace HiveGameService.Services
         {
             HostBehaviorManager.ChangeModeToReentrant();
             LoggerManager logger = new LoggerManager(this.GetType());
-            List<UserSession> usersInLobby = lobbyPlayers[codeLobby];
+            List<UserSession> usersInLobby = _lobbyPlayers[codeLobby];
             List<UserSession> hostHasLeft = new List<UserSession>();
             UserSession hostLeft = new UserSession()
             {
@@ -102,20 +102,20 @@ namespace HiveGameService.Services
                 try
                 {
                     UserSession userToNotify = usersInLobby[usersInLobbyIndex];
-                    if (lobbiesCallback.ContainsKey(userToNotify))
+                    if (_lobbiesCallback.ContainsKey(userToNotify))
                     {
                         GameMatch gameMatch = new GameMatch(){
                             idAccount = userToNotify.idAccount,
                             code = codeLobby
                         };
                         int verifyIfHostleft = VerifyCreatorOfTheMatch(gameMatch);
-                        if (verifyIfHostleft==Constants.NO_DATA_MATCHES && lobbyPlayers[codeLobby].Count==1)
+                        if (verifyIfHostleft==Constants.NO_DATA_MATCHES && _lobbyPlayers[codeLobby].Count==1)
                         {
-                            lobbiesCallback[userToNotify].ReceivePlayersToLobby(hostHasLeft);
+                            _lobbiesCallback[userToNotify].ReceivePlayersToLobby(hostHasLeft);
                         }
                         else
                         {
-                            lobbiesCallback[userToNotify].ReceivePlayersToLobby(usersInLobby);
+                            _lobbiesCallback[userToNotify].ReceivePlayersToLobby(usersInLobby);
                         }
                     }
                 }
@@ -147,15 +147,15 @@ namespace HiveGameService.Services
         {
             HostBehaviorManager.ChangeModeToReentrant();
             LoggerManager logger = new LoggerManager(this.GetType());
-            if (lobbyPlayers.ContainsKey(code))
+            if (_lobbyPlayers.ContainsKey(code))
             {
-                List<UserSession> userInLobby = lobbyPlayers[code];
+                List<UserSession> userInLobby = _lobbyPlayers[code];
                 try
                 {
                     UserSession userToNotify = userInLobby[1];
-                    if (lobbiesCallback.ContainsKey(userToNotify))
+                    if (_lobbiesCallback.ContainsKey(userToNotify))
                     {
-                        lobbiesCallback[userToNotify].ReceiveStartMatchNotification();
+                        _lobbiesCallback[userToNotify].ReceiveStartMatchNotification();
                     }
                 }
                 catch (CommunicationException communicationException)

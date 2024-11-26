@@ -53,7 +53,6 @@ namespace HiveGameService.Services
             return updateResult;
         }
 
-
         public int UpdateLoserResultToPlayerLeaderBoard(int idAccount)
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();

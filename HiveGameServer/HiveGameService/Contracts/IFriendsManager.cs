@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(IFriendsManagerCallback))]
     public interface IFriendsManager
     {
@@ -26,4 +27,5 @@ namespace HiveGameService.Contracts
         [OperationContract]
         void ObtainConnectedFriends(List<UserSession> connectedFriends);
     }
+
 }

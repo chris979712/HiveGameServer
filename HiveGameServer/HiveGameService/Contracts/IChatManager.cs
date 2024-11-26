@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(IChatManagerCallback))]
     public interface IChatManager
     {
@@ -37,4 +38,5 @@ namespace HiveGameService.Contracts
         [DataMember(IsRequired = true)]
         public string text { get; set; }
     }
+
 }

@@ -14,13 +14,13 @@ namespace HiveGameService.Services
     
     public partial class HiveGameService : IFriendsManager
     {
-        private IFriendsManagerCallback friendsManagerCallback;
-        private static readonly Dictionary<UserSession, IFriendsManagerCallback> friendsManagerCallbacks = new Dictionary<UserSession, IFriendsManagerCallback>();
+        private IFriendsManagerCallback _friendsManagerCallback;
+        private static readonly Dictionary<UserSession, IFriendsManagerCallback> _friendsManagerCallbacks = new Dictionary<UserSession, IFriendsManagerCallback>();
 
         public void GetFriendsList(UserSession user)
         {
             HostBehaviorManager.ChangeModeToReentrant();
-            friendsManagerCallback = OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>();
+            _friendsManagerCallback = OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>();
             LoggerManager logger = new LoggerManager(this.GetType());
             List<UserSession> friendsConnected = ObtainFriendsList(user.idAccount);
             try
@@ -39,12 +39,12 @@ namespace HiveGameService.Services
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             HostBehaviorManager.ChangeModeToReentrant();
-            friendsManagerCallback = OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>();
+            _friendsManagerCallback = OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>();
             try
             {
-                if (!friendsManagerCallbacks.ContainsKey(user))
+                if (!_friendsManagerCallbacks.ContainsKey(user))
                 {
-                    friendsManagerCallbacks.Add(user, friendsManagerCallback);
+                    _friendsManagerCallbacks.Add(user, _friendsManagerCallback);
                 }
             }
             catch (CommunicationException comunicationException)
@@ -72,7 +72,7 @@ namespace HiveGameService.Services
                     username = listOFAllFriends[indexFriendsList].username,
                     idAccount = listOFAllFriends[indexFriendsList].idAccount,
                 };
-                if (usersConnected.Contains(friendObtained))
+                if (_usersConnected.Contains(friendObtained))
                 {
                     UserSession friendConnected = new UserSession(){
                         username = listOFAllFriends[indexFriendsList].username,
@@ -87,9 +87,9 @@ namespace HiveGameService.Services
         public int DeleteUserAsConnectedFriend(UserSession user)
         {
             int deleteResult = Constants.ERROR_OPERATION;
-            if (friendsManagerCallbacks.ContainsKey(user))
+            if (_friendsManagerCallbacks.ContainsKey(user))
             {
-                friendsManagerCallbacks.Remove(user);
+                _friendsManagerCallbacks.Remove(user);
                 deleteResult = Constants.SUCCES_OPERATION;
             }
             else

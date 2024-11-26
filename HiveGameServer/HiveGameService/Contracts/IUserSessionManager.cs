@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract]
     public interface IUserSessionManager
     {
@@ -26,10 +27,8 @@ namespace HiveGameService.Contracts
     {
         [DataMember]
         public string username { get; set; }
-
         [DataMember]
         public int idAccount { get; set; }
-
         [DataMember]
         public string codeMatch { get; set; }
 
@@ -53,4 +52,5 @@ namespace HiveGameService.Contracts
             return hashUsername ^ hashIdAccount ^ hashCodeMatch;
         }
     }
+
 }
