@@ -1,13 +1,5 @@
-﻿using DataBaseManager;
-using HiveGameService.Contracts;
-using HiveGameService.Utilities;
+﻿using HiveGameService.Contracts;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataBaseManager.Operations;
 
 namespace HiveGameService.Services
