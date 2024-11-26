@@ -1,14 +1,9 @@
 ﻿using HiveGameService.Utilities;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataBaseManager.Operations
 {
@@ -57,7 +52,6 @@ namespace DataBaseManager.Operations
         public List<UserData> GetAllFriendsFromDataBase(AccessAccount searcherPlayer)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            List<Friendship> friendShipsListFounded = new List<Friendship>();
             List<UserData> friendsData = new List<UserData>();
             List<int> idFoundAccounts = new List<int>();
             UserData failedSearching = new UserData();
@@ -66,7 +60,7 @@ namespace DataBaseManager.Operations
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
                 {
-                    friendShipsListFounded = dataBaseContext.Friendship.Where(FriendShip => (FriendShip.FK_idPlayerOne == searcherPlayer.idAccessAccount ||
+                    List<Friendship> friendShipsListFounded = dataBaseContext.Friendship.Where(FriendShip => (FriendShip.FK_idPlayerOne == searcherPlayer.idAccessAccount ||
                     FriendShip.idPlayerTwo == searcherPlayer.idAccessAccount) && FriendShip.state == Enumerations.FriendshipStates.Accepted.ToString()).ToList();
                     for (int counterFriendshipListIndex = 0; counterFriendshipListIndex < friendShipsListFounded.Count; counterFriendshipListIndex++)
                     {
@@ -95,7 +89,7 @@ namespace DataBaseManager.Operations
                                 reputation = userAccount.reputation,
                                 createdDate = userProfile.createdDate
                             }).FirstOrDefault();
-                        friendsData.Add((UserData)userDataFound);
+                        friendsData.Add(userDataFound);
                     }
                 }
             }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using DataBaseManager.Operations;
 using DataBaseManager.Utilities;
 using HiveGameService.Utilities;

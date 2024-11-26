@@ -18,7 +18,6 @@ namespace TestServer.Services
         public bool receivePlayerSide {  get; set; }
         public bool receiveMatchResult { get; set; }
 
-
         public void ChargePlayerGameBoard(PlayerSide side)
         {
             receivedMatchStartNotification = true;

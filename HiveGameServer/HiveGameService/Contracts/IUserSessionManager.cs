@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract]
     public interface IUserSessionManager
     {
@@ -26,10 +22,8 @@ namespace HiveGameService.Contracts
     {
         [DataMember]
         public string username { get; set; }
-
         [DataMember]
         public int idAccount { get; set; }
-
         [DataMember]
         public string codeMatch { get; set; }
 
@@ -40,7 +34,7 @@ namespace HiveGameService.Contracts
             {
                 comparation = username.Equals(other.username) &&
                     idAccount.Equals(other.idAccount) &&
-                    (codeMatch?.Equals(other.codeMatch) ?? other.codeMatch == null); ;
+                    (codeMatch?.Equals(other.codeMatch) ?? other.codeMatch == null); 
             }
             return comparation;
         }
@@ -53,4 +47,5 @@ namespace HiveGameService.Contracts
             return hashUsername ^ hashIdAccount ^ hashCodeMatch;
         }
     }
+
 }

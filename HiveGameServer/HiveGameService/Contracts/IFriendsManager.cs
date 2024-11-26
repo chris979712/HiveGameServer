@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(IFriendsManagerCallback))]
     public interface IFriendsManager
     {
@@ -26,4 +23,5 @@ namespace HiveGameService.Contracts
         [OperationContract]
         void ObtainConnectedFriends(List<UserSession> connectedFriends);
     }
+
 }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.Runtime.Serialization;
-using System.Collections.ObjectModel;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(IChatManagerCallback))]
     public interface IChatManager
     {
@@ -37,4 +33,5 @@ namespace HiveGameService.Contracts
         [DataMember(IsRequired = true)]
         public string text { get; set; }
     }
+
 }

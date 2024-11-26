@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Windows;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract(CallbackContract = typeof(IGameManagerCallback))]
     interface IGameManager
     {
@@ -64,7 +62,6 @@ namespace HiveGameService.Contracts
 
         [DataMember]
         public bool playerTwo { get; set; }
-
     }
 
     [DataContract]
@@ -97,6 +94,6 @@ namespace HiveGameService.Contracts
 
         [DataMember]
         public Point position { get; set; }
-
     }
+
 }

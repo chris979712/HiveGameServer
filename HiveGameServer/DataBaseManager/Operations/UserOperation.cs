@@ -1,15 +1,8 @@
 ﻿using HiveGameService.Utilities;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.Entity.Core;
-using System.Security.Cryptography;
-using System.Security.Principal;
 
 namespace DataBaseManager.Operations
 {
@@ -188,7 +181,7 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        updateResult = Constants.NO_DATA_MATCHES; ;
+                        updateResult = Constants.NO_DATA_MATCHES;
                     }
                 }
             }
@@ -227,7 +220,7 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        updateResult = Constants.NO_DATA_MATCHES; ;
+                        updateResult = Constants.NO_DATA_MATCHES;
                     }
                 }
             }
@@ -307,12 +300,19 @@ namespace DataBaseManager.Operations
                             if (existingAccessAccount != null)
                             {
                                 var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
-                                existingProfile.nickname = profile.nickname;
-                                existingProfile.imagePath = profile.imagePath;
-                                existingProfile.description = profile.description;
-                                dataBaseContext.SaveChanges();
-                                dataBaseContextTransaction.Commit();
-                                updateResult = Constants.SUCCES_OPERATION;
+                                if (existingProfile != null)
+                                {
+                                    existingProfile.nickname = profile.nickname;
+                                    existingProfile.imagePath = profile.imagePath;
+                                    existingProfile.description = profile.description;
+                                    dataBaseContext.SaveChanges();
+                                    dataBaseContextTransaction.Commit();
+                                    updateResult = Constants.SUCCES_OPERATION;
+                                }
+                                else
+                                {
+                                    updateResult = Constants.NO_DATA_MATCHES;
+                                }
                             }
                             else
                             { 

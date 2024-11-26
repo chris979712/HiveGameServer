@@ -1,12 +1,6 @@
-﻿using DataBaseManager;
-using DataBaseManager.Operations;
-using DataBaseManager.Utilities;
+﻿using DataBaseManager.Operations;
 using HiveGameService.Contracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HiveGameService.Services
 {
@@ -52,7 +46,6 @@ namespace HiveGameService.Services
             int updateResult = leaderBoardOperation.UpdateDrawResultToPlayerLeaderBoardToDataBase(idAccount);
             return updateResult;
         }
-
 
         public int UpdateLoserResultToPlayerLeaderBoard(int idAccount)
         {

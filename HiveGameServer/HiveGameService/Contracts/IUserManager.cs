@@ -4,10 +4,10 @@ using System.Runtime.Serialization;
 
 namespace HiveGameService.Contracts
 {
+
     [ServiceContract]
     public interface IUserManager
     {
-
         [OperationContract]
         int AddUser(Profile profile);
 
@@ -18,7 +18,7 @@ namespace HiveGameService.Contracts
         Profile GetUserProfile(string username, string password);
 
         [OperationContract]
-        int UpdateLoginCredentials(AccessAccount profile, AccessAccount updatedProfile);
+        int UpdateLoginCredentials(AccessAccount oldAccessProfile, AccessAccount newAccessProfile);
 
         [OperationContract]
         int UpdatePlusUserReputation(string username, int reputation);
@@ -37,13 +37,11 @@ namespace HiveGameService.Contracts
 
         [OperationContract]
         int VerifyPasswordCredentials(string email, string password);
-
     }
 
     [DataContract]
     public class Profile : AccessAccount
     {
-
         [DataMember]
         public int idProfile {  get; set; }
         [DataMember]
@@ -84,13 +82,11 @@ namespace HiveGameService.Contracts
             return hashUsername ^ hashNickname ^ hashIdProfile ^ hashIdAccount ^ hashIdAccesAccount ^ hashDescription ^
                 hashEmail ^ hashImagePath;
         }
-
     }
 
     [DataContract]
     public class AccessAccount
     {
-
         [DataMember]
         public int idAccesAccount {  get; set; }
         [DataMember]
@@ -101,6 +97,6 @@ namespace HiveGameService.Contracts
         public string email {  get; set; }
         [DataMember]
         public int reputation {  get; set; }
-
     }
+
 }

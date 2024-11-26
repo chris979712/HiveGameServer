@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace HiveGameServer
 {
-    internal class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
-                using (ServiceHost host = new ServiceHost(typeof(HiveGameService.Services.HiveGameService)))
-                {
-                    host.Open();
-                    Console.WriteLine("Service connected");
-                    Console.ReadLine();
-                }
+            using (ServiceHost host = new ServiceHost(typeof(HiveGameService.Services.HiveGameService)))
+            {
+                host.Open();
+                Console.WriteLine("Service connected");
+                Console.ReadLine();
+            }
         }
+
     }
 }

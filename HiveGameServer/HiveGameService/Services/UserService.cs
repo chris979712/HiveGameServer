@@ -1,12 +1,6 @@
 ﻿using HiveGameService.Contracts;
 using HiveGameService.UtilitiesService;
-using System.Linq;
-using System.Data.SqlClient;
-using DataBaseManager;
-using System.Text;
-using System.Data.Entity.Infrastructure;
 using DataBaseManager.Operations;
-using System;
 
 namespace HiveGameService.Services
 {
@@ -55,8 +49,8 @@ namespace HiveGameService.Services
         {
             UserOperation operations = new UserOperation();
             Contracts.Profile profileObtained = new Contracts.Profile();
-            Utilities.UserData profileFromDataBase = (Utilities.UserData)operations.GetUserDataFromDataBase(username, password);
-            if(profileFromDataBase.idAccessAccount!=Constants.ERROR_OPERATION&& profileFromDataBase.idAccessAccount != Constants.ERROR_OPERATION)
+            Utilities.UserData profileFromDataBase = operations.GetUserDataFromDataBase(username, password);
+            if(profileFromDataBase.idAccessAccount!=Constants.ERROR_OPERATION && profileFromDataBase.idAccessAccount != Constants.NO_DATA_MATCHES)
             {
                 profileObtained.idAccesAccount = profileFromDataBase.idAccessAccount;
                 profileObtained.imagePath = profileFromDataBase.imagePath;
@@ -72,20 +66,20 @@ namespace HiveGameService.Services
             return profileObtained;
         }
 
-        public int UpdateLoginCredentials(Contracts.AccessAccount oldCredentials, Contracts.AccessAccount newCredentials)
+        public int UpdateLoginCredentials(Contracts.AccessAccount oldAccessProfile, Contracts.AccessAccount newAccessProfile)
         {
             UserOperation operations = new UserOperation();
             DataBaseManager.AccessAccount oldUpdatedAccessAccount = new DataBaseManager.AccessAccount()
             {
-                idAccessAccount = oldCredentials.idAccesAccount,
-                password = oldCredentials.password,
-                email = oldCredentials.email
+                idAccessAccount = oldAccessProfile.idAccesAccount,
+                password = oldAccessProfile.password,
+                email = oldAccessProfile.email
             };
             DataBaseManager.AccessAccount updatedAccesAccount = new DataBaseManager.AccessAccount() 
             { 
-                idAccessAccount = newCredentials.idAccesAccount,
-                password = newCredentials.password,
-                email = newCredentials.email
+                idAccessAccount = newAccessProfile.idAccesAccount,
+                password = newAccessProfile.password,
+                email = newAccessProfile.email
             };
             int updatedResult = operations.UpdateLoginCredentialsToDataBase(oldUpdatedAccessAccount, updatedAccesAccount);
             return updatedResult;
