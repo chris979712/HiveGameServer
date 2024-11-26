@@ -188,7 +188,7 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        updateResult = Constants.NO_DATA_MATCHES; ;
+                        updateResult = Constants.NO_DATA_MATCHES;
                     }
                 }
             }
@@ -227,7 +227,7 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        updateResult = Constants.NO_DATA_MATCHES; ;
+                        updateResult = Constants.NO_DATA_MATCHES;
                     }
                 }
             }
@@ -307,12 +307,19 @@ namespace DataBaseManager.Operations
                             if (existingAccessAccount != null)
                             {
                                 var existingProfile = dataBaseContext.Profile.FirstOrDefault(profileDataBase => profileDataBase.FK_IdAccount == existingAccessAccount.idAccessAccount);
-                                existingProfile.nickname = profile.nickname;
-                                existingProfile.imagePath = profile.imagePath;
-                                existingProfile.description = profile.description;
-                                dataBaseContext.SaveChanges();
-                                dataBaseContextTransaction.Commit();
-                                updateResult = Constants.SUCCES_OPERATION;
+                                if (existingProfile != null)
+                                {
+                                    existingProfile.nickname = profile.nickname;
+                                    existingProfile.imagePath = profile.imagePath;
+                                    existingProfile.description = profile.description;
+                                    dataBaseContext.SaveChanges();
+                                    dataBaseContextTransaction.Commit();
+                                    updateResult = Constants.SUCCES_OPERATION;
+                                }
+                                else
+                                {
+                                    updateResult = Constants.NO_DATA_MATCHES;
+                                }
                             }
                             else
                             { 

@@ -27,8 +27,8 @@ namespace HiveGameService.Services
 
         public int Disconnect(UserSession user, bool isInMatch)
         {
-            int resultDisconnection = Constants.ERROR_OPERATION;
-            if (usersConnected.Any(userToDisconnect => userToDisconnect.username == user.username))
+            int resultDisconnection;
+            if (usersConnected.Exists(userToDisconnect => userToDisconnect.username == user.username))
             {
                 Profile userProfile = new Profile()
                 {
