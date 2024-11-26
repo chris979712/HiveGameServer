@@ -1,29 +1,34 @@
-﻿C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\FriendRequestOperationTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\FriendshipOperationTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\LeaderBoardOperationTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\MatchOperationTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Operation\UserOperationTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Properties\AssemblyInfo.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\ChatServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\EmailInvitationServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\EmailVerificationServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\GameServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\LobbyServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\MatchCreatorServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Services\UserSessionServiceTest.cs
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\App.config
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\HiveGameService.wsdl
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item.xsd
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item1.xsd
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item2.xsd
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item3.xsd
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Properties\DataSources\HiveGameService.Contracts.LeaderBoardPlayer.datasource
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Properties\DataSources\HiveGameService.Contracts.Profile.datasource
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\item.disco
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\configuration91.svcinfo
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\configuration.svcinfo
-C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\TestServer\Connected Services\HiveServerProxy\Reference.svcmap
-C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.visualstudio.testadapter.dll
-C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.reporters.net452.dll
-C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.runner.utility.net452.dll
-C:\Users\chris\.nuget\packages\xunit.runner.visualstudio\2.4.1\build\_common\xunit.abstractions.dll
+﻿C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IChatManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IEmailInvitationManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IEmailVerificationManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IFriendRequestManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IFriendshipManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IFriendsManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IGameManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\ILeaderBoardManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\ILobbyManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IMatchCreatorManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IUserManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Contracts\IUserSessionManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Properties\AssemblyInfo.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\ChatService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\EmailInvitationService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\EmailVerificationService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\FriendRequestService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\FriendshipService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\FriendsService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\GameService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\LeaderBoardService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\LobbyService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\MatchCreatorService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\UserService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Services\UserSessionService.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\Constants.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\Enumerations.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\LoggerManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\HostBehaviorManager.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\UserData.cs
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\InvitationEmail.html
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\Utilities\VerificationEmail.html
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\App.config
+C:\Users\chris\OneDrive\Escritorio\HiveServer\HiveGameServer\HiveGameService\packages.config
