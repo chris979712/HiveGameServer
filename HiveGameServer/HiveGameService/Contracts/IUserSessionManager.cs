@@ -40,7 +40,7 @@ namespace HiveGameService.Contracts
             {
                 comparation = username.Equals(other.username) &&
                     idAccount.Equals(other.idAccount) &&
-                    (codeMatch?.Equals(other.codeMatch) ?? other.codeMatch == null); ;
+                    (codeMatch?.Equals(other.codeMatch) ?? other.codeMatch == null); 
             }
             return comparation;
         }

@@ -21,7 +21,6 @@ namespace HiveGameService.Services
 
         public void ConnectToChatLobby(Profile user, string code)
         {
-            LoggerManager logger = new LoggerManager(this.GetType());
             HostBehaviorManager.ChangeModeToReentrant();
             chatManagerCallback = OperationContext.Current.GetCallbackChannel<IChatManagerCallback>();
             chatCallBacks.Add(user.username, chatManagerCallback);

@@ -29,7 +29,6 @@ namespace HiveGameService.Services
             string password = ConfigurationManager.AppSettings["EmailPassword"];
             string smtpServer = ConfigurationManager.AppSettings["SmtpServer"];
             int port = int.Parse(ConfigurationManager.AppSettings["SmtpPort"]);
-
             try
             {
                 if (templateVerificationMessage != "Not found template file")
@@ -92,14 +91,14 @@ namespace HiveGameService.Services
             return bodyMessageFormat;
         }
 
-        public bool VerifyCodeVerification(UserVerificator userVerificator)
+        public bool VerifyCodeVerification(UserVerificator verificator)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             bool verificationResult = false;
             try
             {
-                string codeToCompare = codeVerificationAccesAccountRegistration[userVerificator.email];
-                if (codeToCompare == userVerificator.code)
+                string codeToCompare = codeVerificationAccesAccountRegistration[verificator.email];
+                if (codeToCompare == verificator.code)
                 {
                     verificationResult = true;
                     codeVerificationAccesAccountRegistration.Remove(codeToCompare);

@@ -17,7 +17,7 @@ namespace HiveGameService.Services
 {
     public partial class HiveGameService : IEmailInvitationManager
     {
-        public int SendEmailInvitation(UserVerificator userVerificator)
+        public int SendEmailInvitation(UserVerificator verificator)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             int resultSendedEmail = Constants.ERROR_OPERATION;
@@ -30,13 +30,12 @@ namespace HiveGameService.Services
             if (templateInvitationMessage != "Not found template file")
             {
                 try
-                {
-                    
+                {   
                     MailMessage messageToSend = new MailMessage();
                     messageToSend.Subject = "Invitation to join a lobby";
                     messageToSend.From = new MailAddress(emailSender);
-                    messageToSend.To.Add(userVerificator.email);
-                    messageToSend.Body = templateInvitationMessage.Replace("{code}", userVerificator.code);
+                    messageToSend.To.Add(verificator.email);
+                    messageToSend.Body = templateInvitationMessage.Replace("{code}", verificator.code);
                     messageToSend.IsBodyHtml = true;
                     var smtpClient = new SmtpClient(smtpServer)
                     {

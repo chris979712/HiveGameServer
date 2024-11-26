@@ -18,7 +18,7 @@ namespace HiveGameService.Contracts
         Profile GetUserProfile(string username, string password);
 
         [OperationContract]
-        int UpdateLoginCredentials(AccessAccount profile, AccessAccount updatedProfile);
+        int UpdateLoginCredentials(AccessAccount oldAccessProfile, AccessAccount newAccessProfile);
 
         [OperationContract]
         int UpdatePlusUserReputation(string username, int reputation);
