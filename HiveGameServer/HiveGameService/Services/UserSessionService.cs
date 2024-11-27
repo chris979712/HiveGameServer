@@ -35,11 +35,15 @@ namespace HiveGameService.Services
                 UpdateFriendsListOfConectedFriends(user);
                 DisconectPlayerFromChat(userProfile,user.codeMatch);
                 LeavePlayerFromLobby(user, user.codeMatch, false);
-                LeaveTheGame(user, user.codeMatch);
                 if (isInMatch)
                 {
+                    LeaveTheGame(user, user.codeMatch);
                     UpdateMinusUserReputation(user.username, 100);
                     UpdateLoserResultToPlayerLeaderBoard(user.idAccount);
+                }
+                else
+                {
+                    LeaveMatchFinished(user.codeMatch, user);
                 }
                 resultDisconnection = Constants.SUCCES_OPERATION;
             }
