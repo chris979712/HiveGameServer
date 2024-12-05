@@ -14,7 +14,8 @@ namespace HiveGameService.Services
         private static readonly Dictionary<UserSession, IGameManagerCallback> _gameCallbacks = new Dictionary<UserSession, IGameManagerCallback>();
         private static readonly Dictionary<string, List<UserSession>> _gamePlayers = new Dictionary<string, List<UserSession>>();
         private static readonly Dictionary<string, List<PlayerSide>> _playersSide = new Dictionary<string, List<PlayerSide>>();
-        private static readonly Dictionary<string, string> _turnsInMatch = new Dictionary<string, string>(); 
+        private static readonly Dictionary<string, string> _turnsInMatch = new Dictionary<string, string>();
+        private readonly Dictionary<string, IGameManagerCallback> _connectedPlayers = new Dictionary<string, IGameManagerCallback>();
 
         public void ConnectToGameBoard(UserSession session, string codeMatch)
         {
@@ -324,7 +325,7 @@ namespace HiveGameService.Services
             return disconnectionResult;
         }
 
-        public bool CheckConnection()
+        public bool CheckConnection(string username)
         {
             bool connection;
             try
@@ -333,10 +334,28 @@ namespace HiveGameService.Services
             }
             catch
             {
+                NotifyPlayerDisconnected(username);
                 connection = false;
             }
 
             return connection;
         }
-    }
+        public void NotifyPlayerDisconnected(string disconnectedUsername)
+        {
+            foreach (var callback in _connectedPlayers)
+            {
+                if (callback.Key != disconnectedUsername)
+                    try
+                    {
+                        callback.Value.PlayerDisconnected(disconnectedUsername);
+                    }
+                    catch (Exception)
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+    
 }
