@@ -324,5 +324,20 @@ namespace HiveGameService.Services
             }
             return disconnectionResult;
         }
+
+        public bool CheckConnection()
+        {
+            bool connection;
+            try
+            {
+                connection = true;
+            }
+            catch
+            {
+                connection = false;
+            }
+
+            return connection;
+        }
     }
 }

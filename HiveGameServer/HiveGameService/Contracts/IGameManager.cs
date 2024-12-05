@@ -62,6 +62,20 @@ namespace HiveGameService.Contracts
         /// <returns></returns>
         [OperationContract]
         int LeaveMatchFinished(string codeMatch, UserSession session);
+
+        /// <summary>
+        /// Checks if the connection between the client and the server is active.
+        /// </summary>
+        /// <returns>
+        /// Returns `true` if the server connection is successful.
+        /// Returns `false` if any communication issue occurs.
+        /// </returns>
+        /// <remarks>
+        /// This method is used by clients to "ping" the server and ensure the connection is still active. 
+        /// It is particularly useful in real-time games to detect unexpected disconnections.
+        /// </remarks>
+        [OperationContract]
+        bool CheckConnection();
     }
 
     [ServiceContract]
@@ -108,6 +122,7 @@ namespace HiveGameService.Contracts
         /// <param name="winner">Contains the name of the winner</param>
         [OperationContract]
         void ReceiveFinalMatchResult(string winner);
+
     }
 
     [DataContract]
