@@ -75,7 +75,9 @@ namespace HiveGameService.Contracts
         /// It is particularly useful in real-time games to detect unexpected disconnections.
         /// </remarks>
         [OperationContract]
-        bool CheckConnection();
+        bool CheckConnection(string username);
+
+
     }
 
     [ServiceContract]
@@ -122,6 +124,11 @@ namespace HiveGameService.Contracts
         /// <param name="winner">Contains the name of the winner</param>
         [OperationContract]
         void ReceiveFinalMatchResult(string winner);
+
+        
+        [OperationContract(IsOneWay = true)] 
+        void PlayerDisconnected(string disconnectedUsername);
+        
 
     }
 
