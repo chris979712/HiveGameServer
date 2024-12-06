@@ -22,7 +22,7 @@ namespace TestServer.Services
                 idAccount = 1,
                 codeMatch = "000000"
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = userSessionManagerClient.ConnectToGame(userSessionTest);
             Assert.Equal(resultExpected, resultObtained);
             userSessionManagerClient.Disconnect(userSessionTest, false);
@@ -39,7 +39,7 @@ namespace TestServer.Services
                 codeMatch = "000000"
             };
             userSessionManagerClient.ConnectToGame(userSessionTest);
-            int resultExpected = Constants.ERROR_OPERATION;
+            int resultExpected = Constants.ErrorOperation;
             int resultObtained = userSessionManagerClient.ConnectToGame(userSessionTest);
             Assert.Equal(resultExpected, resultObtained);
             userSessionManagerClient.Disconnect(userSessionTest, false);
@@ -56,7 +56,7 @@ namespace TestServer.Services
                 codeMatch = "000000"
             };
             userSessionManagerClient.ConnectToGame(userSessionTest);
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = userSessionManagerClient.Disconnect(userSessionTest, false);
             Assert.Equal(resultExpected , resultObtained);
         }
@@ -71,7 +71,7 @@ namespace TestServer.Services
                 idAccount = 1,
                 codeMatch = "000000"
             };
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = userSessionManagerClient.Disconnect(userSessionTest, false);
             Assert.Equal(resultExpected, resultObtained);
         }

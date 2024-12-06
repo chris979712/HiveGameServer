@@ -12,12 +12,12 @@ namespace HiveGameService.Services
         private static readonly List<UserSession> _usersConnected = new List<UserSession>();
         public int ConnectToGame(UserSession user)
         {
-            int resultConnection = Constants.ERROR_OPERATION;
+            int resultConnection = Constants.ErrorOperation;
             if (!_usersConnected.Contains(user))
             {
                 _usersConnected.Add(user);
                 UpdateFriendsListOfConectedFriends(user);
-                resultConnection = Constants.SUCCES_OPERATION;
+                resultConnection = Constants.SuccessOperation;
             }
             return resultConnection;
         }
@@ -45,11 +45,11 @@ namespace HiveGameService.Services
                 {
                     LeaveMatchFinished(user.codeMatch, user);
                 }
-                resultDisconnection = Constants.SUCCES_OPERATION;
+                resultDisconnection = Constants.SuccessOperation;
             }
             else
             {
-                resultDisconnection = Constants.NO_DATA_MATCHES;
+                resultDisconnection = Constants.NoDataMatches;
             }
             return resultDisconnection;
         }
@@ -78,11 +78,11 @@ namespace HiveGameService.Services
                     }
                 }catch(CommunicationException communicationException)
                 {
-                    logger.LogError(communicationException);
+                    logger.LogFatal(communicationException);
                 }
                 catch(TimeoutException timeOutException)
                 {
-                    logger.LogError(timeOutException);  
+                    logger.LogWarn(timeOutException);  
                 }
             }
         }

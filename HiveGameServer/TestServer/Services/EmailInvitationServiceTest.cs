@@ -17,7 +17,7 @@ namespace TestServer.Services
                 code = "793699"
             };
             int invitationSendResult = emailInvitationManagerClient.SendEmailInvitation(userVerificator);
-            int invitationResultExpected = Constants.ERROR_OPERATION;
+            int invitationResultExpected = Constants.ErrorOperation;
             Assert.Equal(invitationResultExpected, invitationSendResult);
         }
 
@@ -30,7 +30,7 @@ namespace TestServer.Services
                 email = " "
             };
             int invitationSendResult = emailInvitationManagerClient.SendEmailInvitation(userVerificator);
-            int invitationResultExpected = Constants.ERROR_OPERATION;
+            int invitationResultExpected = Constants.ErrorOperation;
             Assert.Equal(invitationResultExpected, invitationSendResult);   
         }
 

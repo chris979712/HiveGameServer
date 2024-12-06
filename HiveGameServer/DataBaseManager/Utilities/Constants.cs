@@ -2,17 +2,11 @@
 {
     public static class Constants
     {
-        public const int ERROR_OPERATION = -1;
-
-        public const int SUCCES_OPERATION = 1;
-
-        public const int NO_DATA_MATCHES = 0;
-
-        public const int DATA_MATCHES = 1;
-
-        public const string DEFAULT_IMAGE_PLAYER = " ";
-
-        public const string DEFAULT_IMAGE_GUEST = " ";
-
+        public const int ErrorOperation = -1;
+        public const int SuccessOperation = 1;
+        public const int NoDataMatches = 0;
+        public const int DataMatches = 1;
+        public const string DefaultImagePlayer = " ";
+        public const string DefaultImageGuest = " ";
     }
 }

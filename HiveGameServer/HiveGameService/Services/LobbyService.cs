@@ -35,10 +35,10 @@ namespace HiveGameService.Services
             }
             catch(CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }catch(TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -73,12 +73,13 @@ namespace HiveGameService.Services
                     }
                 }
            }
-           catch(CommunicationException communicationException)
+           catch (CommunicationException communicationException)
            {
-                logger.LogError(communicationException);
-           }catch(TimeoutException timeoutException)
+               logger.LogFatal(communicationException);
+           }
+           catch (TimeoutException timeoutException)
            {
-                logger.LogError(timeoutException);
+               logger.LogWarn(timeoutException);
            }
         }
 
@@ -105,7 +106,7 @@ namespace HiveGameService.Services
                             code = codeLobby
                         };
                         int verifyIfHostleft = VerifyCreatorOfTheMatch(gameMatch);
-                        if (verifyIfHostleft==Constants.NO_DATA_MATCHES && _lobbyPlayers[codeLobby].Count==1)
+                        if (verifyIfHostleft==Constants.NoDataMatches && _lobbyPlayers[codeLobby].Count==1)
                         {
                             _lobbiesCallback[userToNotify].ReceivePlayersToLobby(hostHasLeft);
                         }
@@ -117,11 +118,11 @@ namespace HiveGameService.Services
                 }
                 catch (CommunicationException communicationException)
                 {
-                    logger.LogError(communicationException);
+                    logger.LogFatal(communicationException);
                 }
                 catch (TimeoutException timeoutException)
                 {
-                    logger.LogError(timeoutException);
+                    logger.LogWarn(timeoutException);
                 }
             }
         }
@@ -156,11 +157,11 @@ namespace HiveGameService.Services
                 }
                 catch (CommunicationException communicationException)
                 {
-                    logger.LogError(communicationException);
+                    logger.LogFatal(communicationException);
                 }
                 catch (TimeoutException timeoutException)
                 {
-                    logger.LogError(timeoutException);
+                    logger.LogWarn(timeoutException);
                 }
             }  
         }

@@ -23,7 +23,7 @@ namespace TestServer.Operation
                 FK_IdAccount = 1,
                 state = Enumerations.Match.Active.ToString(),
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = matchToCreateOperationTest.RegisterMatchToDataBase(matchToCreateTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -39,7 +39,7 @@ namespace TestServer.Operation
             {
                 idAccessAccount = 2
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = operation.CreateFriendRequestToDataBase(accountPlayerTest, receiverPlaterTest);
             Assert.Equal(resultExpected, resultObtained);
         }

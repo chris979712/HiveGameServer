@@ -12,25 +12,25 @@ namespace DataBaseManager.Operations
         public int RegisterMatchToDataBase(Match match)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int insertionResult = Constants.ERROR_OPERATION;
+            int insertionResult = Constants.ErrorOperation;
             try
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
                 {
                     dataBaseContext.Match.Add(match);
                     dataBaseContext.SaveChanges();
-                    insertionResult = Constants.SUCCES_OPERATION;
+                    insertionResult = Constants.SuccessOperation;
                 }
             }
             catch(DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
+                logger.LogWarn(dbUpdateException);
             }catch (EntityException entityException)
             {
                 logger.LogError(entityException);
             }catch(SqlException sqlException)
             {
-                logger.LogError(sqlException);
+                logger.LogFatal(sqlException);
             }
             return insertionResult;
         }
@@ -38,7 +38,7 @@ namespace DataBaseManager.Operations
         public int ModifyMatchState(Match match)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int modificationResult = Constants.ERROR_OPERATION;
+            int modificationResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -48,17 +48,17 @@ namespace DataBaseManager.Operations
                     {
                         matchToChange.state = match.state;
                         dataBaseContext.SaveChanges();
-                        modificationResult = Constants.SUCCES_OPERATION;
+                        modificationResult = Constants.SuccessOperation;
                     }
                     else
                     {
-                        modificationResult = Constants.NO_DATA_MATCHES;
+                        modificationResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
+                logger.LogWarn(dbUpdateException);
             }
             catch (EntityException entityException)
             {
@@ -66,7 +66,7 @@ namespace DataBaseManager.Operations
             }
             catch (SqlException sqlException)
             {
-                logger.LogError(sqlException);
+                logger.LogFatal(sqlException);
             }
             return modificationResult;
         }
@@ -74,7 +74,7 @@ namespace DataBaseManager.Operations
         public int VerifyExistingActiveMatch(Match match)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int verificationResult = Constants.ERROR_OPERATION;
+            int verificationResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -82,11 +82,11 @@ namespace DataBaseManager.Operations
                     var matchToChange = dataBaseContext.Match.Where(matchFound => matchFound.state == Enumerations.Match.Active.ToString() && matchFound.code == match.code).FirstOrDefault();
                     if (matchToChange != null)
                     {
-                        verificationResult = Constants.SUCCES_OPERATION;
+                        verificationResult = Constants.SuccessOperation;
                     }
                     else
                     {
-                        verificationResult = Constants.NO_DATA_MATCHES;
+                        verificationResult = Constants.NoDataMatches;
                     }
                 }
             }
@@ -96,7 +96,7 @@ namespace DataBaseManager.Operations
             }
             catch (SqlException sqlException)
             {
-                logger.LogError(sqlException);
+                logger.LogFatal(sqlException);
             }
             return verificationResult;
         }
@@ -104,7 +104,7 @@ namespace DataBaseManager.Operations
         public int VerifyMatchCreator(Match match)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int verificationResult = Constants.ERROR_OPERATION;
+            int verificationResult = Constants.ErrorOperation;
             try
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
@@ -113,23 +113,23 @@ namespace DataBaseManager.Operations
                     && dataBaseMatch.code == match.code).FirstOrDefault();
                     if(matchFound != null)
                     {
-                        verificationResult = Constants.SUCCES_OPERATION;
+                        verificationResult = Constants.SuccessOperation;
                     }
                     else
                     {
-                        verificationResult= Constants.NO_DATA_MATCHES;
+                        verificationResult= Constants.NoDataMatches;
                     }
                 }
             }
             catch (EntityException entityException)
             {
                 logger.LogError(entityException);
-                verificationResult = Constants.ERROR_OPERATION;
+                verificationResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
-                logger.LogError(sqlException);
-                verificationResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(sqlException);
+                verificationResult = Constants.ErrorOperation;
             }
             return verificationResult;
         }

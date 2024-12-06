@@ -12,7 +12,7 @@ namespace DataBaseManager.Operations
         public int CreateFriendRequestToDataBase(AccessAccount senderPlayer, AccessAccount receiverPlayer)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int creationResult = Constants.ERROR_OPERATION;
+            int creationResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -25,23 +25,23 @@ namespace DataBaseManager.Operations
                     };
                     dataBaseContext.Friendship.Add(newFriendRequest);
                     dataBaseContext.SaveChanges();
-                    creationResult = Constants.SUCCES_OPERATION;
+                    creationResult = Constants.SuccessOperation;
                 }
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                creationResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                creationResult = Constants.ErrorOperation;
             }
             catch (SqlException dbSqlException)
             {
                 logger.LogError(dbSqlException);
-                creationResult = Constants.ERROR_OPERATION;
+                creationResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                creationResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                creationResult = Constants.ErrorOperation;
             }
             return creationResult;
         }
@@ -51,7 +51,7 @@ namespace DataBaseManager.Operations
             List<Profile> friendRequestsList = new List<Profile>();
             LoggerManager logger = new LoggerManager(this.GetType());
             Profile errorAtDoingSearching = new Profile();
-            errorAtDoingSearching.idProfile = Constants.ERROR_OPERATION;
+            errorAtDoingSearching.idProfile = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -80,7 +80,7 @@ namespace DataBaseManager.Operations
             }
             catch (EntityException exception)
             {
-                logger.LogError(exception);
+                logger.LogFatal(exception);
                 friendRequestsList.Insert(0, errorAtDoingSearching);
             }
             return friendRequestsList;
@@ -89,7 +89,7 @@ namespace DataBaseManager.Operations
         public int AcceptFriendRequestInToDataBase(AccessAccount responderPlayer, AccessAccount answererPlayer)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int responseResult = Constants.ERROR_OPERATION;
+            int responseResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -104,18 +104,18 @@ namespace DataBaseManager.Operations
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                responseResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                responseResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                responseResult = Constants.ERROR_OPERATION;
+                responseResult = Constants.ErrorOperation;
             }
             catch (EntityException exception)
             {
-                logger.LogError(exception);
-                responseResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(exception);
+                responseResult = Constants.ErrorOperation;
             }
             return responseResult;
         }
@@ -123,7 +123,7 @@ namespace DataBaseManager.Operations
         public int DeclineFriendRequestToDataBase(AccessAccount responderPlayer, AccessAccount answererPlayer)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int responseResult = Constants.ERROR_OPERATION;
+            int responseResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -138,18 +138,18 @@ namespace DataBaseManager.Operations
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                responseResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                responseResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                responseResult = Constants.ERROR_OPERATION;
+                responseResult = Constants.ErrorOperation;
             }
             catch (EntityException exception)
             {
-                logger.LogError(exception);
-                responseResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(exception);
+                responseResult = Constants.ErrorOperation;
             }
             return responseResult;
         }
@@ -157,7 +157,7 @@ namespace DataBaseManager.Operations
         public int VerifyExistingFriendRequestInToDataBase(AccessAccount playerOne, AccessAccount playerTwo)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int verifyResult = Constants.ERROR_OPERATION;
+            int verifyResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -166,28 +166,28 @@ namespace DataBaseManager.Operations
                     friendRequest.idPlayerTwo == playerTwo.idAccessAccount) || (friendRequest.FK_idPlayerOne == playerTwo.idAccessAccount && friendRequest.idPlayerTwo == playerOne.idAccessAccount));
                     if (existingFriendRequestRegistered != null)
                     {
-                        verifyResult = Constants.DATA_MATCHES;
+                        verifyResult = Constants.DataMatches;
                     }
                     else
                     {
-                        verifyResult = Constants.NO_DATA_MATCHES;
+                        verifyResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                verifyResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                verifyResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                verifyResult = Constants.ERROR_OPERATION;
+                verifyResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                verifyResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                verifyResult = Constants.ErrorOperation;
             }
             return verifyResult;
         }
