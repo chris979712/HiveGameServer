@@ -48,7 +48,7 @@ namespace TestServer
                 imagePath = "/Images/Avatars/Avatar1.png",
                 description = "Hola soy chris :D"
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = operation.addUserToDataBase(newProfileTest, newAccessAccountTest);
             Assert.Equal(resultExpected, resultObtained);
         }

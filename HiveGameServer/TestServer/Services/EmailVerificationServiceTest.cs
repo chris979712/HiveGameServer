@@ -13,7 +13,7 @@ namespace TestServer.Services
         {
             HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
             string emailToSend = "cumplidonegrete14@gmail.com";
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = emailVerificationManagerClient.SendVerificationEmail(emailToSend);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -23,7 +23,7 @@ namespace TestServer.Services
         {
             HiveServerProxy.EmailVerificationManagerClient emailVerificationManagerClient = new HiveServerProxy.EmailVerificationManagerClient();
             string emailToSend = " ";
-            int resultExpected = Constants.ERROR_OPERATION;
+            int resultExpected = Constants.ErrorOperation;
             int resultObtained = emailVerificationManagerClient.SendVerificationEmail(emailToSend);
             Assert.Equal(resultExpected, resultObtained);
         }

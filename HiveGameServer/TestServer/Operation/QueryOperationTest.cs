@@ -104,7 +104,7 @@ namespace TestServer.Operation
         {
             string email = "vasquezChris984@gmail.com";
             string username = "Chris985";
-            int resultExpected = Constants.DATA_MATCHES;
+            int resultExpected = Constants.DataMatches;
             int resultObtained = operation.VerifyExistingAccessAccountIntoDataBase(email, username);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -114,7 +114,7 @@ namespace TestServer.Operation
         {
             string email = "elcomandantesiu777@gmail.com";
             string username = "ElComandante777";
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = operation.VerifyExistingAccessAccountIntoDataBase(email, username);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -125,7 +125,7 @@ namespace TestServer.Operation
         {
             string username = "Christo9999";
             string email = "vasquezChris984@gmail.com";
-            int resultExpected = Constants.DATA_MATCHES;
+            int resultExpected = Constants.DataMatches;
             int resultObtained = operation.VerifyCredentialsFromDataBase(username, email);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -135,7 +135,7 @@ namespace TestServer.Operation
         {
             string email = "elcomandantesiu777@gmail.com";
             string username = "ElComandante777";
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = operation.VerifyCredentialsFromDataBase(username, email);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -145,7 +145,7 @@ namespace TestServer.Operation
         {
             string username = "Chris985";
             string password = hashToSHA2("chrisSiu12*");
-            int resultExpected = Constants.DATA_MATCHES;
+            int resultExpected = Constants.DataMatches;
             int resultObtained = operation.VerifyPasswordCredentialsFromDataBase(username, password);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -155,7 +155,7 @@ namespace TestServer.Operation
         {
             string username = "ElComandante777";
             string password = hashToSHA2("chrisSiu13*");
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = operation.VerifyPasswordCredentialsFromDataBase(username, password);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -171,7 +171,7 @@ namespace TestServer.Operation
                 FK_IdAccount = 1,
                 state = Enumerations.Match.Active.ToString(),
             };
-            int resultExpected = Constants.DATA_MATCHES;
+            int resultExpected = Constants.DataMatches;
             int resultObtained = matchToCreateOperationTest.VerifyExistingActiveMatch(matchToCreateTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -187,7 +187,7 @@ namespace TestServer.Operation
                 FK_IdAccount = 1,
                 state = Enumerations.Match.Active.ToString(),
             };
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = matchToCreateOperationTest.VerifyExistingActiveMatch(matchToCreateTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -201,7 +201,7 @@ namespace TestServer.Operation
                 code = "123456",
                 FK_IdAccount = 1
             };
-            int resultExpected = Constants.DATA_MATCHES;
+            int resultExpected = Constants.DataMatches;
             int resultObtained = matchOperation.VerifyMatchCreator(matchToFind);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -215,7 +215,7 @@ namespace TestServer.Operation
                 code = "111111",
                 FK_IdAccount = 1
             };
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = matchOperation.VerifyMatchCreator(matchToFind);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -288,7 +288,7 @@ namespace TestServer.Operation
             int idAccount = 20;
             PlayerLeaderBoard leaderBoardExpected = new PlayerLeaderBoard()
             {
-                idAccount = Constants.NO_DATA_MATCHES
+                idAccount = Constants.NoDataMatches
             };
             PlayerLeaderBoard leaderBoardObtained = leaderBoardOperation.GetPersonalLeaderBoard(idAccount);
             Assert.Equal(leaderBoardExpected.idAccount, leaderBoardObtained.idAccount);
@@ -328,7 +328,7 @@ namespace TestServer.Operation
             };
             UserData profileErrorTest = new UserData()
             {
-                idProfile = Constants.ERROR_OPERATION
+                idProfile = Constants.ErrorOperation
             };
             expectedProfiles.Add(profileErrorTest);
             List<UserData> profilesObtained = friendshipOperation.GetAllFriendsFromDataBase(accountTest);
@@ -413,7 +413,7 @@ namespace TestServer.Operation
             {
                 idAccessAccount = 3
             };
-            int resultExpected = Constants.DATA_MATCHES;
+            int resultExpected = Constants.DataMatches;
             int resultObtained = friendRequestOperation.VerifyExistingFriendRequestInToDataBase(playerOne, playerTwo);
             Assert.Equal(resultExpected, resultObtained);
         }

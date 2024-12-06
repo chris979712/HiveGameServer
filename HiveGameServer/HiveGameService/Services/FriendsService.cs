@@ -24,10 +24,10 @@ namespace HiveGameService.Services
                 OperationContext.Current.GetCallbackChannel<IFriendsManagerCallback>().ObtainConnectedFriends(friendsConnected);
             }catch(CommunicationException comunicationException)
             {
-                logger.LogError(comunicationException);
+                logger.LogFatal(comunicationException);
             }catch(TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -45,11 +45,11 @@ namespace HiveGameService.Services
             }
             catch (CommunicationException comunicationException)
             {
-                logger.LogError(comunicationException);
+                logger.LogFatal(comunicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -82,15 +82,15 @@ namespace HiveGameService.Services
 
         public int DeleteUserAsConnectedFriend(UserSession user)
         {
-            int deleteResult = Constants.ERROR_OPERATION;
+            int deleteResult = Constants.ErrorOperation;
             if (_friendsManagerCallbacks.ContainsKey(user))
             {
                 _friendsManagerCallbacks.Remove(user);
-                deleteResult = Constants.SUCCES_OPERATION;
+                deleteResult = Constants.SuccessOperation;
             }
             else
             {
-                deleteResult = Constants.NO_DATA_MATCHES;
+                deleteResult = Constants.NoDataMatches;
             }
             return deleteResult;
         }

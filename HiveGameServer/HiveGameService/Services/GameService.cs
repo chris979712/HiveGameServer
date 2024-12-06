@@ -46,11 +46,11 @@ namespace HiveGameService.Services
             }
             catch (CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -72,11 +72,11 @@ namespace HiveGameService.Services
             }
             catch (CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -104,11 +104,11 @@ namespace HiveGameService.Services
             }
             catch (CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -127,11 +127,11 @@ namespace HiveGameService.Services
             }
             catch(CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch(TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -153,11 +153,11 @@ namespace HiveGameService.Services
             }
             catch (CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -194,11 +194,11 @@ namespace HiveGameService.Services
             }
             catch (CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             } 
         }
 
@@ -227,11 +227,11 @@ namespace HiveGameService.Services
             }
             catch(CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
         }
 
@@ -252,11 +252,11 @@ namespace HiveGameService.Services
                 }
                 catch (CommunicationException communicationException)
                 {
-                    logger.LogError(communicationException);
+                    logger.LogFatal(communicationException);
                 }
                 catch (TimeoutException timeoutException)
                 {
-                    logger.LogError(timeoutException);
+                    logger.LogWarn(timeoutException);
                 }
             }
         }
@@ -278,11 +278,11 @@ namespace HiveGameService.Services
                 }
                 catch (CommunicationException communicationException)
                 {
-                    logger.LogError(communicationException);
+                    logger.LogFatal(communicationException);
                 }
                 catch (TimeoutException timeoutException)
                 {
-                    logger.LogError(timeoutException);
+                    logger.LogWarn(timeoutException);
                 }
             }
         }
@@ -291,7 +291,7 @@ namespace HiveGameService.Services
         {
             HostBehaviorManager.ChangeModeToReentrant();
             LoggerManager logger = new LoggerManager(this.GetType());
-            int disconnectionResult = Constants.ERROR_OPERATION;
+            int disconnectionResult = Constants.ErrorOperation;
             try
             {
                 if (_gameCallbacks.ContainsKey(session))
@@ -300,27 +300,27 @@ namespace HiveGameService.Services
                     {
                         _gameCallbacks.Remove(session);
                         _gamePlayers.Remove(codeMatch);
-                        disconnectionResult = Constants.SUCCES_OPERATION;
+                        disconnectionResult = Constants.SuccessOperation;
                     }
                     else
                     {
                         _gameCallbacks.Remove(session);
                         _gamePlayers[codeMatch].Remove(session);
-                        disconnectionResult = Constants.SUCCES_OPERATION;
+                        disconnectionResult = Constants.SuccessOperation;
                     }
                 }
                 else
                 {
-                    disconnectionResult = Constants.NO_DATA_MATCHES;
+                    disconnectionResult = Constants.NoDataMatches;
                 }
             }
             catch (CommunicationException communicationException)
             {
-                logger.LogError(communicationException);
+                logger.LogFatal(communicationException);
             }
             catch (TimeoutException timeoutException)
             {
-                logger.LogError(timeoutException);
+                logger.LogWarn(timeoutException);
             }
             return disconnectionResult;
         }

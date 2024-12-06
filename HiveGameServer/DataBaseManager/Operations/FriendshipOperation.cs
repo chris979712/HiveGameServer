@@ -12,7 +12,7 @@ namespace DataBaseManager.Operations
         public int DeleteFriendFromDataBase(AccessAccount removingPlayer, AccessAccount friendToRemove)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int deleteResult = Constants.ERROR_OPERATION;
+            int deleteResult = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -23,28 +23,28 @@ namespace DataBaseManager.Operations
                     {
                         dataBaseContext.Friendship.Remove(existingFriendship);
                         dataBaseContext.SaveChanges();
-                        deleteResult = Constants.SUCCES_OPERATION;
+                        deleteResult = Constants.SuccessOperation;
                     }
                     else
                     {
-                        deleteResult = Constants.NO_DATA_MATCHES;
+                        deleteResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (DbUpdateException dbException)
             {
-                logger.LogError(dbException);
-                deleteResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbException);
+                deleteResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                deleteResult = Constants.ERROR_OPERATION;
+                deleteResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                deleteResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                deleteResult = Constants.ErrorOperation;
             }
             return deleteResult;
         }
@@ -55,7 +55,7 @@ namespace DataBaseManager.Operations
             List<UserData> friendsData = new List<UserData>();
             List<int> idFoundAccounts = new List<int>();
             UserData failedSearching = new UserData();
-            failedSearching.idProfile = Constants.ERROR_OPERATION;
+            failedSearching.idProfile = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -100,7 +100,7 @@ namespace DataBaseManager.Operations
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
+                logger.LogFatal(entityException);
                 friendsData.Insert(0, failedSearching);
             }
             return friendsData;
@@ -110,7 +110,7 @@ namespace DataBaseManager.Operations
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             Profile foundFriend = new Profile();
-            foundFriend.idProfile = Constants.ERROR_OPERATION;
+            foundFriend.idProfile = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -127,19 +127,19 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        foundFriend.idProfile = Constants.NO_DATA_MATCHES;
+                        foundFriend.idProfile = Constants.NoDataMatches;
                     }
                 }
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                foundFriend.idProfile = Constants.ERROR_OPERATION;
+                foundFriend.idProfile = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                foundFriend.idProfile = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                foundFriend.idProfile = Constants.ErrorOperation;
             }
             return foundFriend;
         }

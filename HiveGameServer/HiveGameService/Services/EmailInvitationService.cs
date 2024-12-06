@@ -13,7 +13,7 @@ namespace HiveGameService.Services
         public int SendEmailInvitation(UserVerificator verificator)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int resultSendedEmail = Constants.ERROR_OPERATION;
+            int resultSendedEmail = Constants.ErrorOperation;
             string templateInvitationMessage = BodyMessageInvitationFormat();
             string emailSender = ConfigurationManager.AppSettings["EmailSender"];
             string password = ConfigurationManager.AppSettings["EmailPassword"];
@@ -37,7 +37,7 @@ namespace HiveGameService.Services
                         EnableSsl = true
                     };
                     smtpClient.Send(messageToSend);
-                    resultSendedEmail = Constants.SUCCES_OPERATION;
+                    resultSendedEmail = Constants.SuccessOperation;
                 }
                 catch (FileNotFoundException fileNotFoundException)
                 {

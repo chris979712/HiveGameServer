@@ -21,7 +21,7 @@ namespace TestServer.Operation
             {
                 idAccessAccount = 3
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = operation.DeclineFriendRequestToDataBase(playerOne, playerTwo);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -37,7 +37,7 @@ namespace TestServer.Operation
             {
                 idAccessAccount = 2
             };
-            int expectedResult = Constants.SUCCES_OPERATION;
+            int expectedResult = Constants.SuccessOperation;
             int obtainedResult = friendshipOperation.DeleteFriendFromDataBase(accountTest, accountTestTwo);
             Assert.Equal(expectedResult, obtainedResult);
 
@@ -54,7 +54,7 @@ namespace TestServer.Operation
             {
                 idAccessAccount = 3
             };
-            int expectedResult = Constants.NO_DATA_MATCHES;
+            int expectedResult = Constants.NoDataMatches;
             int obtainedResult = friendshipOperation.DeleteFriendFromDataBase(accountTest, accountTestTwo);
             Assert.Equal(expectedResult, obtainedResult);
         }

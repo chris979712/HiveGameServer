@@ -43,7 +43,7 @@ namespace TestServer.Operation
                 email = "vasquezChris984@gmail.com",
                 password = hashToSHA2("chrisSiu12*")
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = operation.UpdateLoginCredentialsToDataBase(odlAccessAccountTest, updatedAccessAccountTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -61,7 +61,7 @@ namespace TestServer.Operation
                 email = "777elcomandantesiu@gmail.com",
                 password = hashToSHA2("chrisSiu12*")
             };
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = operation.UpdateLoginCredentialsToDataBase(odlAccessAccountTest, updatedAccessAccountTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -78,7 +78,7 @@ namespace TestServer.Operation
                 description = "Si"
             };
             string email = "chrisvasquez985@gmail.com";
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = userOperation.UpdateProfileToDataBase(newUpdatedProfile, email);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -95,7 +95,7 @@ namespace TestServer.Operation
                 description = "Si"
             };
             string email = "elcomandantesiu777@gmail.com";
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = userOperation.UpdateProfileToDataBase(newUpdatedProfile, email);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -105,7 +105,7 @@ namespace TestServer.Operation
         {
             string username = "Chris985";
             int reputation = 50;
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = operation.UpdatePlusPlayerReputationToDataBase(username, reputation);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -115,7 +115,7 @@ namespace TestServer.Operation
         {
             string username = "ElComandante00007";
             int reputation = 50;
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = operation.UpdatePlusPlayerReputationToDataBase(username, reputation);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -125,7 +125,7 @@ namespace TestServer.Operation
         {
             string username = "Chris985";
             int reputation = 50;
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = operation.UpdateMinusPlayerReputationToDataBase(username, reputation);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -135,7 +135,7 @@ namespace TestServer.Operation
         {
             string username = "ElComandante00007";
             int reputation = 50;
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = operation.UpdateMinusPlayerReputationToDataBase(username, reputation);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -151,7 +151,7 @@ namespace TestServer.Operation
             {
                 idAccessAccount = 1
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = friendshipOperation.AcceptFriendRequestInToDataBase(responderPlayer, answererPlayer);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -167,7 +167,7 @@ namespace TestServer.Operation
                 FK_IdAccount = 1,
                 state = Enumerations.Match.Cancelled.ToString(),
             };
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = matchToCreateOperationTest.ModifyMatchState(matchToCreateTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -183,7 +183,7 @@ namespace TestServer.Operation
                 FK_IdAccount = 1,
                 state = Enumerations.Match.Cancelled.ToString(),
             };
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = matchToCreateOperationTest.ModifyMatchState(matchToCreateTest);
             Assert.Equal(resultExpected, resultObtained);
         }
@@ -203,7 +203,7 @@ namespace TestServer.Operation
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 20;
-            int expectedResult = Constants.NO_DATA_MATCHES;
+            int expectedResult = Constants.NoDataMatches;
             int obtainedResult = leaderBoardOperation.UpdateDrawResultToPlayerLeaderBoardToDataBase(idAccount);
             Assert.Equal(expectedResult, obtainedResult);
         }
@@ -223,7 +223,7 @@ namespace TestServer.Operation
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 20;
-            int expectedResult = Constants.NO_DATA_MATCHES;
+            int expectedResult = Constants.NoDataMatches;
             int obtainedResult = leaderBoardOperation.UpdateWinnerResultToPlayerLeaderBoardToDataBase(idAccount);
             Assert.Equal(expectedResult, obtainedResult);
         }
@@ -244,7 +244,7 @@ namespace TestServer.Operation
         {
             LeaderBoardOperation leaderBoardOperation = new LeaderBoardOperation();
             int idAccount = 20;
-            int expectedResult = Constants.NO_DATA_MATCHES;
+            int expectedResult = Constants.NoDataMatches;
             int obtainedResult = leaderBoardOperation.UpdateLoserResultToPlayerLeaderBoardToDataBase(idAccount);
             Assert.Equal(expectedResult, obtainedResult);
         }

@@ -183,7 +183,7 @@ namespace TestServer.Services
             string codeLobbyTest = "123456";
             GameManagerClient.ConnectToGameBoard(userSession, codeLobbyTest);
             await Task.Delay(3000);
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             int resultObtained = GameManagerClient.LeaveMatchFinished(codeLobbyTest, userSession);
             Assert.Equal(resultExpected, resultObtained);
             GameManagerClient.LeaveMatchFinished(codeLobbyTest, userSession);
@@ -207,7 +207,7 @@ namespace TestServer.Services
             string codeLobbyTest = "328976";
             GameManagerClient.ConnectToGameBoard(userSession, codeLobbyTest);
             await Task.Delay(3000);
-            int resultExpected = Constants.NO_DATA_MATCHES;
+            int resultExpected = Constants.NoDataMatches;
             int resultObtained = GameManagerClient.LeaveMatchFinished(codeLobbyTest, userSessionTwo);
             Assert.Equal(resultExpected, resultObtained);
             GameManagerClient.LeaveMatchFinished(codeLobbyTest, userSession);
@@ -225,7 +225,7 @@ namespace TestServer.Services
             string codeLobbyTest = "328976";
             GameManagerClient.ConnectToGameBoard(userSession, codeLobbyTest);
             await Task.Delay(3000);
-            int resultExpected = Constants.ERROR_OPERATION;
+            int resultExpected = Constants.ErrorOperation;
             int resultObtained = GameManagerClient.LeaveMatchFinished(codeLobbyTest, userSession);
             Assert.Equal(resultExpected, resultObtained);
         }

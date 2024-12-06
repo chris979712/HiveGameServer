@@ -17,7 +17,7 @@ namespace DataBaseManager.Operations
             LoggerManager logger = new LoggerManager(this.GetType());
             List<PlayerLeaderBoard> leaderBoardsListObtained = new List<PlayerLeaderBoard>();
             PlayerLeaderBoard playerLeaderBoardFailedOperation = new PlayerLeaderBoard();
-            playerLeaderBoardFailedOperation.idAccount = Constants.ERROR_OPERATION;
+            playerLeaderBoardFailedOperation.idAccount = Constants.ErrorOperation;
             try
             {
                 using (var databaseContext = new HiveEntityDataModel())
@@ -51,7 +51,7 @@ namespace DataBaseManager.Operations
                 leaderBoardsListObtained.Add(playerLeaderBoardFailedOperation);
             }catch(EntityException entityException)
             {
-                logger.LogError(entityException);
+                logger.LogFatal(entityException);
                 leaderBoardsListObtained.Add(playerLeaderBoardFailedOperation);
             }
             return leaderBoardsListObtained;
@@ -61,7 +61,7 @@ namespace DataBaseManager.Operations
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             PlayerLeaderBoard playerLaderBoard = new PlayerLeaderBoard();
-            playerLaderBoard.idAccount = Constants.ERROR_OPERATION;
+            playerLaderBoard.idAccount = Constants.ErrorOperation;
             try
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
@@ -80,18 +80,18 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        playerLaderBoard.idAccount = Constants.NO_DATA_MATCHES;
+                        playerLaderBoard.idAccount = Constants.NoDataMatches;
                     }
                 }
             }catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                playerLaderBoard.idAccount = Constants.ERROR_OPERATION;
+                playerLaderBoard.idAccount = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                playerLaderBoard.idAccount = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                playerLaderBoard.idAccount = Constants.ErrorOperation;
             }
             return playerLaderBoard;
         }
@@ -99,7 +99,7 @@ namespace DataBaseManager.Operations
         public int UpdateDrawResultToPlayerLeaderBoardToDataBase(int idAccount)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int resultUpdate = Constants.ERROR_OPERATION;
+            int resultUpdate = Constants.ErrorOperation;
             try
             {
                 using(var dataBaseContext = new HiveEntityDataModel())
@@ -110,27 +110,27 @@ namespace DataBaseManager.Operations
                         leaderBoard.drawMatches += 1;
                         leaderBoard.totalOfMatches += 1;
                         dataBaseContext.SaveChanges();
-                        resultUpdate = Constants.SUCCES_OPERATION;
+                        resultUpdate = Constants.SuccessOperation;
                     }
                     else
                     {
-                        resultUpdate = Constants.NO_DATA_MATCHES;
+                        resultUpdate = Constants.NoDataMatches;
                     }
                 }
 
             }catch(DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                resultUpdate = Constants.ErrorOperation;
             }catch(SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                resultUpdate = Constants.ErrorOperation;
             }
             catch(EntityException entityException)
             {
-                logger.LogError(entityException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                resultUpdate = Constants.ErrorOperation;
             }
             return resultUpdate;
         }
@@ -138,7 +138,7 @@ namespace DataBaseManager.Operations
         public int UpdateWinnerResultToPlayerLeaderBoardToDataBase(int idAccount)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int resultUpdate = Constants.ERROR_OPERATION;
+            int resultUpdate = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -149,28 +149,28 @@ namespace DataBaseManager.Operations
                         leaderBoard.wonMatches += 1;
                         leaderBoard.totalOfMatches += 1;
                         dataBaseContext.SaveChanges();
-                        resultUpdate = Constants.SUCCES_OPERATION;
+                        resultUpdate = Constants.SuccessOperation;
                     }
                     else
                     {
-                        resultUpdate = Constants.NO_DATA_MATCHES;
+                        resultUpdate = Constants.NoDataMatches;
                     }
                 }
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                resultUpdate = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                resultUpdate = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                resultUpdate = Constants.ErrorOperation;
             }
             return resultUpdate;
         }
@@ -178,7 +178,7 @@ namespace DataBaseManager.Operations
         public int UpdateLoserResultToPlayerLeaderBoardToDataBase(int idAccount)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int resultUpdate = Constants.ERROR_OPERATION;
+            int resultUpdate = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -189,29 +189,29 @@ namespace DataBaseManager.Operations
                         leaderBoard.lostMatches += 1;
                         leaderBoard.totalOfMatches += 1;
                         dataBaseContext.SaveChanges();
-                        resultUpdate = Constants.SUCCES_OPERATION;
+                        resultUpdate = Constants.SuccessOperation;
                     }
                     else
                     {
-                        resultUpdate = Constants.NO_DATA_MATCHES;
+                        resultUpdate = Constants.NoDataMatches;
                     }
                 }
 
             }
             catch (DbUpdateException dbUpdateException)
             {
-                logger.LogError(dbUpdateException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                logger.LogWarn(dbUpdateException);
+                resultUpdate = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                resultUpdate = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                resultUpdate = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                resultUpdate = Constants.ErrorOperation;
             }
             return resultUpdate;
         }
