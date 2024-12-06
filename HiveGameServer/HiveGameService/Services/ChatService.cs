@@ -54,10 +54,10 @@ namespace HiveGameService.Services
                     }
                     catch(CommunicationException communicationException)
                     {
-                        logger.LogError(communicationException);
+                        logger.LogFatal(communicationException);
                     }catch(TimeoutException timeOutException)
                     {
-                        logger.LogError(timeOutException);
+                        logger.LogWarn(timeOutException);
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace HiveGameService.Services
 
         public int DisconectPlayerFromChat(Profile user, string code)
         {
-            int disconectionResult = Constants.ERROR_OPERATION;
+            int disconectionResult = Constants.ErrorOperation;
             if (_chatCallBacks.ContainsKey(user.username))
             {
 
@@ -84,7 +84,7 @@ namespace HiveGameService.Services
                 {
                     usersByLobby[code].RemoveAll(userToDisconnect => userToDisconnect.username == user.username);
                 }
-                disconectionResult = Constants.SUCCES_OPERATION;
+                disconectionResult = Constants.SuccessOperation;
             }
             return disconectionResult;
         }

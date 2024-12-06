@@ -50,7 +50,7 @@ namespace HiveGameService.Services
             UserOperation operations = new UserOperation();
             Contracts.Profile profileObtained = new Contracts.Profile();
             Utilities.UserData profileFromDataBase = operations.GetUserDataFromDataBase(username, password);
-            if(profileFromDataBase.idAccessAccount!=Constants.ERROR_OPERATION && profileFromDataBase.idAccessAccount != Constants.NO_DATA_MATCHES)
+            if(profileFromDataBase.idAccessAccount!=Constants.ErrorOperation && profileFromDataBase.idAccessAccount != Constants.NoDataMatches)
             {
                 profileObtained.idAccesAccount = profileFromDataBase.idAccessAccount;
                 profileObtained.imagePath = profileFromDataBase.imagePath;

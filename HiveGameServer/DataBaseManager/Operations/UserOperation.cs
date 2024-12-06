@@ -11,7 +11,7 @@ namespace DataBaseManager.Operations
         public int addUserToDataBase(Profile profile, AccessAccount accessAccount)
         {
             LoggerManager logger = new LoggerManager(this.GetType());
-            int result = Constants.ERROR_OPERATION;
+            int result = Constants.ErrorOperation;
             try
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
@@ -51,26 +51,26 @@ namespace DataBaseManager.Operations
                             dataBaseContext.Leaderboard.Add(newLeaderboard);
                             dataBaseContext.SaveChanges();
                             dataBaseContextTransaction.Commit();
-                            result = Constants.SUCCES_OPERATION;
+                            result = Constants.SuccessOperation;
                         }
                         catch (DbUpdateException updateException)
                         {
-                            logger.LogError(updateException);
+                            logger.LogWarn(updateException);
                             dataBaseContextTransaction.Rollback();
-                            result = Constants.ERROR_OPERATION;
+                            result = Constants.ErrorOperation;
                         }
                         catch (SqlException sqlException)
                         {
                             logger.LogError(sqlException);
                             dataBaseContextTransaction.Rollback();
-                            result = Constants.ERROR_OPERATION;
+                            result = Constants.ErrorOperation;
                         }
                     }
                 }
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
+                logger.LogFatal(entityException);
             }
             return result;
         }
@@ -80,7 +80,7 @@ namespace DataBaseManager.Operations
         {
             LoggerManager logger = new LoggerManager(this.GetType());
             UserData userFound = new UserData();
-            userFound.idProfile = Constants.ERROR_OPERATION;
+            userFound.idProfile = Constants.ErrorOperation;
             try
             {
                 using(var dataBaseContet = new HiveEntityDataModel())
@@ -103,19 +103,19 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        userFound.idProfile = Constants.NO_DATA_MATCHES;
+                        userFound.idProfile = Constants.NoDataMatches;
                     }
                 }
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                userFound.idProfile = Constants.ERROR_OPERATION;
+                userFound.idProfile = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                userFound.idProfile = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                userFound.idProfile = Constants.ErrorOperation;
             }
             return userFound;
         }
@@ -148,25 +148,25 @@ namespace DataBaseManager.Operations
                     }
                     else
                     {
-                        dataObtained.idAccessAccount = Constants.NO_DATA_MATCHES;
+                        dataObtained.idAccessAccount = Constants.NoDataMatches;
                     }
                 }
             }catch(SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                dataObtained.idAccessAccount = Constants.ERROR_OPERATION;
+                dataObtained.idAccessAccount = Constants.ErrorOperation;
             }
             catch(EntityException entityException)
             {
-                logger.LogError(entityException);
-                dataObtained.idAccessAccount = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                dataObtained.idAccessAccount = Constants.ErrorOperation;
             }
             return dataObtained;
         }
 
         public int UpdatePlusPlayerReputationToDataBase(string username, int reputation)
         {
-            int updateResult = Constants.ERROR_OPERATION;
+            int updateResult = Constants.ErrorOperation;
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {
@@ -177,35 +177,35 @@ namespace DataBaseManager.Operations
                     {
                         existinAccount.reputation += reputation;
                         databaseContext.SaveChanges();
-                        updateResult = Constants.SUCCES_OPERATION;
+                        updateResult = Constants.SuccessOperation;
                     }
                     else
                     {
-                        updateResult = Constants.NO_DATA_MATCHES;
+                        updateResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (DbUpdateException updateException)
             {
-                logger.LogError(updateException);
-                updateResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(updateException);
+                updateResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                updateResult = Constants.ERROR_OPERATION;
+                updateResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                updateResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                updateResult = Constants.ErrorOperation;
             }
             return updateResult;
         }
 
         public int UpdateMinusPlayerReputationToDataBase(string username, int reputation)
         {
-            int updateResult = Constants.ERROR_OPERATION;
+            int updateResult = Constants.ErrorOperation;
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {
@@ -216,35 +216,35 @@ namespace DataBaseManager.Operations
                     {
                         existinAccount.reputation -= reputation;
                         databaseContext.SaveChanges();
-                        updateResult = Constants.SUCCES_OPERATION;
+                        updateResult = Constants.SuccessOperation;
                     }
                     else
                     {
-                        updateResult = Constants.NO_DATA_MATCHES;
+                        updateResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (DbUpdateException updateException)
             {
-                logger.LogError(updateException);
-                updateResult = Constants.ERROR_OPERATION;
+                logger.LogWarn(updateException);
+                updateResult = Constants.ErrorOperation;
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                updateResult = Constants.ERROR_OPERATION;
+                updateResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                updateResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                updateResult = Constants.ErrorOperation;
             }
             return updateResult;
         }
 
         public int UpdateLoginCredentialsToDataBase(AccessAccount oldAccessAccount, AccessAccount updatedAccessAccount)
         {
-            int updatedResult = Constants.ERROR_OPERATION;
+            int updatedResult = Constants.ErrorOperation;
             LoggerManager logger = new LoggerManager(this.GetType());
             try
             {
@@ -258,7 +258,7 @@ namespace DataBaseManager.Operations
                             existingAccessAccount.email = updatedAccessAccount.email;
                             existingAccessAccount.password = updatedAccessAccount.password;
                             dataBaseContext.SaveChanges();
-                            updatedResult = Constants.SUCCES_OPERATION;
+                            updatedResult = Constants.SuccessOperation;
                         }
                         else
                         {
@@ -267,19 +267,19 @@ namespace DataBaseManager.Operations
                     }
                     catch (DbUpdateException updateException)
                     {
-                        logger.LogError(updateException);
-                        updatedResult = Constants.ERROR_OPERATION;
+                        logger.LogWarn(updateException);
+                        updatedResult = Constants.ErrorOperation;
                     }
                     catch (SqlException sqlException)
                     {
                         logger.LogError(sqlException);
-                        updatedResult = Constants.ERROR_OPERATION;
+                        updatedResult = Constants.ErrorOperation;
                     }
                 }
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
+                logger.LogFatal(entityException);
             }
             return updatedResult;
         }
@@ -307,36 +307,36 @@ namespace DataBaseManager.Operations
                                     existingProfile.description = profile.description;
                                     dataBaseContext.SaveChanges();
                                     dataBaseContextTransaction.Commit();
-                                    updateResult = Constants.SUCCES_OPERATION;
+                                    updateResult = Constants.SuccessOperation;
                                 }
                                 else
                                 {
-                                    updateResult = Constants.NO_DATA_MATCHES;
+                                    updateResult = Constants.NoDataMatches;
                                 }
                             }
                             else
                             { 
-                                updateResult = Constants.NO_DATA_MATCHES;
+                                updateResult = Constants.NoDataMatches;
                             }
                         }
                         catch (DbUpdateException updateException)
                         {
-                            logger.LogError(updateException);
+                            logger.LogWarn(updateException);
                             dataBaseContextTransaction.Rollback();
-                            updateResult = Constants.ERROR_OPERATION;
+                            updateResult = Constants.ErrorOperation;
                         }
                         catch (SqlException sqlException)
                         {
                             logger.LogError(sqlException);
                             dataBaseContextTransaction.Rollback();
-                            updateResult = Constants.ERROR_OPERATION;
+                            updateResult = Constants.ErrorOperation;
                         }
                     }
                 }
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
+                logger.LogFatal(entityException);
             }
             return updateResult;
         }
@@ -352,23 +352,23 @@ namespace DataBaseManager.Operations
                     var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email && accessAccount.username == username);
                     if (existingAccount != null)
                     {
-                        verificationResult = Constants.DATA_MATCHES;
+                        verificationResult = Constants.DataMatches;
                     }
                     else
                     {
-                        verificationResult = Constants.NO_DATA_MATCHES;
+                        verificationResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                verificationResult = Constants.ERROR_OPERATION;
+                verificationResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                verificationResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                verificationResult = Constants.ErrorOperation;
             }
             return verificationResult;
         }
@@ -384,23 +384,23 @@ namespace DataBaseManager.Operations
                     var existingAccount = dataBaseContext.AccessAccount.Where(accessAccount => accessAccount.email == email).FirstOrDefault();
                     if (existingAccount != null && existingAccount.username != username)
                     {
-                        verificationResult = Constants.DATA_MATCHES;
+                        verificationResult = Constants.DataMatches;
                     }
                     else
                     {
-                        verificationResult = Constants.NO_DATA_MATCHES;
+                        verificationResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                verificationResult = Constants.ERROR_OPERATION;
+                verificationResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                verificationResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                verificationResult = Constants.ErrorOperation;
             }
             return verificationResult;
         }
@@ -416,23 +416,23 @@ namespace DataBaseManager.Operations
                     var existingAccount = dataBaseContext.AccessAccount.Where(accessAccount => accessAccount.username == username).FirstOrDefault();
                     if (existingAccount != null && existingAccount.password == password)
                     {
-                        verificationResult = Constants.DATA_MATCHES;
+                        verificationResult = Constants.DataMatches;
                     }
                     else
                     {
-                        verificationResult = Constants.NO_DATA_MATCHES;
+                        verificationResult = Constants.NoDataMatches;
                     }
                 }
             }
             catch (SqlException sqlException)
             {
                 logger.LogError(sqlException);
-                verificationResult = Constants.ERROR_OPERATION;
+                verificationResult = Constants.ErrorOperation;
             }
             catch (EntityException entityException)
             {
-                logger.LogError(entityException);
-                verificationResult = Constants.ERROR_OPERATION;
+                logger.LogFatal(entityException);
+                verificationResult = Constants.ErrorOperation;
             }
             return verificationResult;
         }

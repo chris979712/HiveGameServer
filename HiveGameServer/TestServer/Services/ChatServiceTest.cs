@@ -74,7 +74,7 @@ namespace TestServer.Services
             string codeLobby = "123456";
             chatProxy.ConnectToChatLobby(userTest, codeLobby);
             int resultObtained = chatProxy.DisconectPlayerFromChat(userTest, codeLobby);
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             Assert.Equal(resultObtained, resultExpected);
         }
 
@@ -92,7 +92,7 @@ namespace TestServer.Services
             string codeLobby = "123456";
             chatProxy.ConnectToChatLobby(userTestExisted, codeLobby);
             int resultObtained = chatProxy.DisconectPlayerFromChat(userTestInexisted, codeLobby);
-            int resultExpected = Constants.SUCCES_OPERATION;
+            int resultExpected = Constants.SuccessOperation;
             Assert.Equal(resultObtained, resultExpected);
             chatProxy.DisconectPlayerFromChat(userTestExisted, codeLobby);
         }
