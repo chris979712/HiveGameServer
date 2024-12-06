@@ -25,7 +25,7 @@ namespace DataBaseManager.Utilities
                 return totalMatches == other.totalMatches && wonMatches == other.wonMatches 
                     && lostMatches == other.lostMatches && drawMatches == other.drawMatches 
                     && drawMatches == other.drawMatches && username.Equals(other.username) 
-                    && idAccount == other.idAccount && imageProfile.Equals(other.imageProfile);
+                    && idAccount == other.idAccount;
             }
             return false;
         }
