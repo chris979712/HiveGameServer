@@ -447,7 +447,6 @@ namespace TestServer.Operation
             matchToCreateOperationTest.RegisterMatchToDataBase(matchToCreateTest);
             operation.CreateFriendRequestToDataBase(receiverPlaterSenderOne, accountPlayerReciver);
             operation.CreateFriendRequestToDataBase(receiverPlaterSenderTwo, accountPlayerReciver);
-            
         }
 
         public void Dispose()
