@@ -424,7 +424,7 @@ namespace TestServer.Operation
         private FriendRequestOperation operation = new FriendRequestOperation();
         public DatabaseFixtureQuery()
         {
-            /*AccessAccount accountPlayerReciver = new AccessAccount()
+            AccessAccount accountPlayerReciver = new AccessAccount()
             {
                 idAccessAccount = 2
             };
@@ -447,7 +447,6 @@ namespace TestServer.Operation
             matchToCreateOperationTest.RegisterMatchToDataBase(matchToCreateTest);
             operation.CreateFriendRequestToDataBase(receiverPlaterSenderOne, accountPlayerReciver);
             operation.CreateFriendRequestToDataBase(receiverPlaterSenderTwo, accountPlayerReciver);
-            */
         }
 
         public void Dispose()
