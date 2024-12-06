@@ -23,4 +23,6 @@ namespace DataBaseManager
     
         public virtual AccessAccount AccessAccount { get; set; }
     }
+
+
 }
