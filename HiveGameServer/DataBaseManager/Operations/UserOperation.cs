@@ -349,7 +349,7 @@ namespace DataBaseManager.Operations
             {
                 using (var dataBaseContext = new HiveEntityDataModel())
                 {
-                    var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email && accessAccount.username == username);
+                    var existingAccount = dataBaseContext.AccessAccount.FirstOrDefault(accessAccount => accessAccount.email == email || accessAccount.username == username);
                     if (existingAccount != null)
                     {
                         verificationResult = Constants.DataMatches;
