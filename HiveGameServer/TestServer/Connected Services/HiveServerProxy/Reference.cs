@@ -95,10 +95,10 @@ namespace TestServer.HiveServerProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateLoginCredentials", ReplyAction="http://tempuri.org/IUserManager/UpdateLoginCredentialsResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(HiveGameService.Contracts.Profile))]
-        int UpdateLoginCredentials(HiveGameService.Contracts.AccessAccount profile, HiveGameService.Contracts.AccessAccount updatedProfile);
+        int UpdateLoginCredentials(HiveGameService.Contracts.AccessAccount oldAccessProfile, HiveGameService.Contracts.AccessAccount newAccessProfile);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdateLoginCredentials", ReplyAction="http://tempuri.org/IUserManager/UpdateLoginCredentialsResponse")]
-        System.Threading.Tasks.Task<int> UpdateLoginCredentialsAsync(HiveGameService.Contracts.AccessAccount profile, HiveGameService.Contracts.AccessAccount updatedProfile);
+        System.Threading.Tasks.Task<int> UpdateLoginCredentialsAsync(HiveGameService.Contracts.AccessAccount oldAccessProfile, HiveGameService.Contracts.AccessAccount newAccessProfile);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserManager/UpdatePlusUserReputation", ReplyAction="http://tempuri.org/IUserManager/UpdatePlusUserReputationResponse")]
         int UpdatePlusUserReputation(string username, int reputation);
@@ -188,12 +188,12 @@ namespace TestServer.HiveServerProxy {
             return base.Channel.GetUserProfileAsync(username, password);
         }
         
-        public int UpdateLoginCredentials(HiveGameService.Contracts.AccessAccount profile, HiveGameService.Contracts.AccessAccount updatedProfile) {
-            return base.Channel.UpdateLoginCredentials(profile, updatedProfile);
+        public int UpdateLoginCredentials(HiveGameService.Contracts.AccessAccount oldAccessProfile, HiveGameService.Contracts.AccessAccount newAccessProfile) {
+            return base.Channel.UpdateLoginCredentials(oldAccessProfile, newAccessProfile);
         }
         
-        public System.Threading.Tasks.Task<int> UpdateLoginCredentialsAsync(HiveGameService.Contracts.AccessAccount profile, HiveGameService.Contracts.AccessAccount updatedProfile) {
-            return base.Channel.UpdateLoginCredentialsAsync(profile, updatedProfile);
+        public System.Threading.Tasks.Task<int> UpdateLoginCredentialsAsync(HiveGameService.Contracts.AccessAccount oldAccessProfile, HiveGameService.Contracts.AccessAccount newAccessProfile) {
+            return base.Channel.UpdateLoginCredentialsAsync(oldAccessProfile, newAccessProfile);
         }
         
         public int UpdatePlusUserReputation(string username, int reputation) {
@@ -946,10 +946,10 @@ namespace TestServer.HiveServerProxy {
         System.Threading.Tasks.Task JoinAsConnectedFriendAsync(HiveGameService.Contracts.UserSession user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteUserAsConnectedFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteUserAsConnectedFriendResponse")]
-        int DeleteUserAsConnectedFriend(HiveGameService.Contracts.UserSession username);
+        int DeleteUserAsConnectedFriend(HiveGameService.Contracts.UserSession user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IFriendsManager/DeleteUserAsConnectedFriend", ReplyAction="http://tempuri.org/IFriendsManager/DeleteUserAsConnectedFriendResponse")]
-        System.Threading.Tasks.Task<int> DeleteUserAsConnectedFriendAsync(HiveGameService.Contracts.UserSession username);
+        System.Threading.Tasks.Task<int> DeleteUserAsConnectedFriendAsync(HiveGameService.Contracts.UserSession user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1003,12 +1003,12 @@ namespace TestServer.HiveServerProxy {
             return base.Channel.JoinAsConnectedFriendAsync(user);
         }
         
-        public int DeleteUserAsConnectedFriend(HiveGameService.Contracts.UserSession username) {
-            return base.Channel.DeleteUserAsConnectedFriend(username);
+        public int DeleteUserAsConnectedFriend(HiveGameService.Contracts.UserSession user) {
+            return base.Channel.DeleteUserAsConnectedFriend(user);
         }
         
-        public System.Threading.Tasks.Task<int> DeleteUserAsConnectedFriendAsync(HiveGameService.Contracts.UserSession username) {
-            return base.Channel.DeleteUserAsConnectedFriendAsync(username);
+        public System.Threading.Tasks.Task<int> DeleteUserAsConnectedFriendAsync(HiveGameService.Contracts.UserSession user) {
+            return base.Channel.DeleteUserAsConnectedFriendAsync(user);
         }
     }
     
@@ -1154,6 +1154,18 @@ namespace TestServer.HiveServerProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/LeaveMatchFinished", ReplyAction="http://tempuri.org/IGameManager/LeaveMatchFinishedResponse")]
         System.Threading.Tasks.Task<int> LeaveMatchFinishedAsync(string codeMatch, HiveGameService.Contracts.UserSession session);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/CheckConnection", ReplyAction="http://tempuri.org/IGameManager/CheckConnectionResponse")]
+        bool CheckConnection(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/CheckConnection", ReplyAction="http://tempuri.org/IGameManager/CheckConnectionResponse")]
+        System.Threading.Tasks.Task<bool> CheckConnectionAsync(string username);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/CheckPersonalConnection", ReplyAction="http://tempuri.org/IGameManager/CheckPersonalConnectionResponse")]
+        bool CheckPersonalConnection();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/CheckPersonalConnection", ReplyAction="http://tempuri.org/IGameManager/CheckPersonalConnectionResponse")]
+        System.Threading.Tasks.Task<bool> CheckPersonalConnectionAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1176,6 +1188,12 @@ namespace TestServer.HiveServerProxy {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/ReceiveFinalMatchResult", ReplyAction="http://tempuri.org/IGameManager/ReceiveFinalMatchResultResponse")]
         void ReceiveFinalMatchResult(string winner);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/PlayerDisconnected", ReplyAction="http://tempuri.org/IGameManager/PlayerDisconnectedResponse")]
+        void PlayerDisconnected(string disconnectedUsername);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IGameManager/RecieveRequestPingFromOtherPlayer", ReplyAction="http://tempuri.org/IGameManager/RecieveRequestPingFromOtherPlayerResponse")]
+        void RecieveRequestPingFromOtherPlayer();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1252,6 +1270,22 @@ namespace TestServer.HiveServerProxy {
         
         public System.Threading.Tasks.Task<int> LeaveMatchFinishedAsync(string codeMatch, HiveGameService.Contracts.UserSession session) {
             return base.Channel.LeaveMatchFinishedAsync(codeMatch, session);
+        }
+        
+        public bool CheckConnection(string username) {
+            return base.Channel.CheckConnection(username);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckConnectionAsync(string username) {
+            return base.Channel.CheckConnectionAsync(username);
+        }
+        
+        public bool CheckPersonalConnection() {
+            return base.Channel.CheckPersonalConnection();
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckPersonalConnectionAsync() {
+            return base.Channel.CheckPersonalConnectionAsync();
         }
     }
 }

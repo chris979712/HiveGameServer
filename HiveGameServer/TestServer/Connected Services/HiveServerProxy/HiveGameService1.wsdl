@@ -146,10 +146,10 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" />
-      <xsd:import schemaLocation="http://localhost:1442/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
+      <xsd:import schemaLocation="http://192.168.176.26:1442/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://192.168.176.26:1442/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://192.168.176.26:1442/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/HiveGameService.Contracts" />
+      <xsd:import schemaLocation="http://192.168.176.26:1442/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Windows" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserManager_AddUser_InputMessage">
@@ -458,6 +458,18 @@
   <wsdl:message name="IGameManager_LeaveMatchFinished_OutputMessage">
     <wsdl:part name="parameters" element="tns:LeaveMatchFinishedResponse" />
   </wsdl:message>
+  <wsdl:message name="IGameManager_CheckConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckConnection" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_CheckConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckConnectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_CheckPersonalConnection_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPersonalConnection" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_CheckPersonalConnection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckPersonalConnectionResponse" />
+  </wsdl:message>
   <wsdl:message name="IGameManager_ChargePlayerGameBoard_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ChargePlayerGameBoard" />
   </wsdl:message>
@@ -493,6 +505,18 @@
   </wsdl:message>
   <wsdl:message name="IGameManager_ReceiveFinalMatchResult_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ReceiveFinalMatchResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_PlayerDisconnected_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PlayerDisconnected" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_PlayerDisconnected_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:PlayerDisconnectedResponse" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_RecieveRequestPingFromOtherPlayer_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecieveRequestPingFromOtherPlayer" />
+  </wsdl:message>
+  <wsdl:message name="IGameManager_RecieveRequestPingFromOtherPlayer_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecieveRequestPingFromOtherPlayerResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserManager">
     <wsdl:operation name="AddUser">
@@ -733,6 +757,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/LeaveMatchFinished" message="tns:IGameManager_LeaveMatchFinished_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/LeaveMatchFinishedResponse" message="tns:IGameManager_LeaveMatchFinished_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="CheckConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/CheckConnection" message="tns:IGameManager_CheckConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/CheckConnectionResponse" message="tns:IGameManager_CheckConnection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckPersonalConnection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/CheckPersonalConnection" message="tns:IGameManager_CheckPersonalConnection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/CheckPersonalConnectionResponse" message="tns:IGameManager_CheckPersonalConnection_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="ChargePlayerGameBoard">
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ChargePlayerGameBoard" message="tns:IGameManager_ChargePlayerGameBoard_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ChargePlayerGameBoardResponse" message="tns:IGameManager_ChargePlayerGameBoard_InputCallbackMessage" />
@@ -756,6 +788,14 @@
     <wsdl:operation name="ReceiveFinalMatchResult">
       <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/ReceiveFinalMatchResult" message="tns:IGameManager_ReceiveFinalMatchResult_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/ReceiveFinalMatchResultResponse" message="tns:IGameManager_ReceiveFinalMatchResult_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PlayerDisconnected">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/PlayerDisconnected" message="tns:IGameManager_PlayerDisconnected_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/PlayerDisconnectedResponse" message="tns:IGameManager_PlayerDisconnected_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecieveRequestPingFromOtherPlayer">
+      <wsdl:output wsaw:Action="http://tempuri.org/IGameManager/RecieveRequestPingFromOtherPlayer" message="tns:IGameManager_RecieveRequestPingFromOtherPlayer_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IGameManager/RecieveRequestPingFromOtherPlayerResponse" message="tns:IGameManager_RecieveRequestPingFromOtherPlayer_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IUserManager" type="tns:IUserManager">
@@ -1282,6 +1322,24 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CheckConnection">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/CheckConnection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckPersonalConnection">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/CheckPersonalConnection" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ChargePlayerGameBoard">
       <soap12:operation soapAction="http://tempuri.org/IGameManager/ChargePlayerGameBoard" style="document" />
       <wsdl:input>
@@ -1336,78 +1394,96 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PlayerDisconnected">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/PlayerDisconnected" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecieveRequestPingFromOtherPlayer">
+      <soap12:operation soapAction="http://tempuri.org/IGameManager/RecieveRequestPingFromOtherPlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="HiveGameService">
     <wsdl:port name="NetTcpBinding_IUserManager" binding="tns:NetTcpBinding_IUserManager">
-      <soap12:address location="net.tcp://localhost:1441/UserService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/UserService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/UserService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/UserService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IFriendshipManager" binding="tns:NetTcpBinding_IFriendshipManager">
-      <soap12:address location="net.tcp://localhost:1441/FriendshipService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/FriendshipService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/FriendshipService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/FriendshipService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IFriendRequestManager" binding="tns:NetTcpBinding_IFriendRequestManager">
-      <soap12:address location="net.tcp://localhost:1441/FriendRequestService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/FriendRequestService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/FriendRequestService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/FriendRequestService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IChatManager" binding="tns:NetTcpBinding_IChatManager">
-      <soap12:address location="net.tcp://localhost:1441/ChatService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/ChatService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/ChatService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/ChatService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_ILeaderBoardManager" binding="tns:NetTcpBinding_ILeaderBoardManager">
-      <soap12:address location="net.tcp://localhost:1441/LeaderBoardService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/LeaderBoardService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/LeaderBoardService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/LeaderBoardService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IEmailVerificationManager" binding="tns:NetTcpBinding_IEmailVerificationManager">
-      <soap12:address location="net.tcp://localhost:1441/EmailVerificationService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/EmailVerificationService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/EmailVerificationService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/EmailVerificationService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IEmailInvitationManager" binding="tns:NetTcpBinding_IEmailInvitationManager">
-      <soap12:address location="net.tcp://localhost:1441/EmailInvitationService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/EmailInvitationService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/EmailInvitationService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/EmailInvitationService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IUserSessionManager" binding="tns:NetTcpBinding_IUserSessionManager">
-      <soap12:address location="net.tcp://localhost:1441/UserSessionService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/UserSessionService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/UserSessionService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/UserSessionService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IMatchCreatorManager" binding="tns:NetTcpBinding_IMatchCreatorManager">
-      <soap12:address location="net.tcp://localhost:1441/MatchCreatorService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/MatchCreatorService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/MatchCreatorService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/MatchCreatorService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IFriendsManager" binding="tns:NetTcpBinding_IFriendsManager">
-      <soap12:address location="net.tcp://localhost:1441/FriendsService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/FriendsService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/FriendsService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/FriendsService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_ILobbyManager" binding="tns:NetTcpBinding_ILobbyManager">
-      <soap12:address location="net.tcp://localhost:1441/LobbyService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/LobbyService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/LobbyService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/LobbyService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IGameManager" binding="tns:NetTcpBinding_IGameManager">
-      <soap12:address location="net.tcp://localhost:1441/GameService" />
+      <soap12:address location="net.tcp://192.168.176.26:1441/GameService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:1441/GameService</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.176.26:1441/GameService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

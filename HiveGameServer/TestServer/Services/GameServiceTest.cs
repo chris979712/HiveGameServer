@@ -17,10 +17,17 @@ namespace TestServer.Services
         public bool receivePlayerHasLeftNotification {  get; set; }
         public bool receivePlayerSide {  get; set; }
         public bool receiveMatchResult { get; set; }
+        public bool receivePlayerDisconnected { get; set; }
+        public bool receiveRequestFromPing { get; set; }
 
         public void ChargePlayerGameBoard(PlayerSide side)
         {
             receivedMatchStartNotification = true;
+        }
+
+        public void PlayerDisconnected(string disconnectedUsername)
+        {
+            receivePlayerDisconnected = true;
         }
 
         public void ReceiveFinalMatchResult(string winner)
@@ -55,6 +62,11 @@ namespace TestServer.Services
         {
             Assert.True(isTurn);
         }
+
+        public void RecieveRequestPingFromOtherPlayer()
+        {
+            receiveRequestFromPing = true;
+        }
     }
 
     public class GameServiceTest 
@@ -72,6 +84,8 @@ namespace TestServer.Services
             gameManagerClientCallback.receivedMatchStartNotification = false;
             gameManagerClientCallback.receivePlayerHasLeftNotification = false;
             gameManagerClientCallback.receiveMatchResult = false;
+            gameManagerClientCallback.receivePlayerDisconnected = false;
+            gameManagerClientCallback.receiveRequestFromPing = false;
         }
 
         [Fact]
@@ -256,6 +270,38 @@ namespace TestServer.Services
             await Task.Delay(3000);
             GameManagerClient.MovePiece(gamePiece,userSession,codeLobbyTest);
             
+        }
+
+        [Fact]
+        public async void CheckPersonalConnectionTestSuccess()
+        {
+            UserSession userSession = new UserSession()
+            {
+                username = "Chris984",
+                idAccount = 1,
+                codeMatch = "190492"
+            };
+            string codeLobbyTest = "190492";
+            GameManagerClient.ConnectToGameBoard(userSession,codeLobbyTest);
+            await Task.Delay(3000);
+            bool checkConnection = GameManagerClient.CheckPersonalConnection();
+            Assert.True(checkConnection);
+        }
+
+        [Fact]
+        public async void CheckConnectionTestSuccess()
+        {
+            UserSession userSession = new UserSession()
+            {
+                username = "Chris984",
+                idAccount = 1,
+                codeMatch = "666777"
+            };
+            string codeLobbyTest = "666777";
+            GameManagerClient.ConnectToGameBoard(userSession, codeLobbyTest);
+            await Task.Delay(3000);
+            GameManagerClient.CheckConnection("Chris984");
+            Assert.True(gameManagerClientCallback.receiveRequestFromPing);
         }
 
     }

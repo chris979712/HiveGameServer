@@ -77,6 +77,12 @@ namespace HiveGameService.Contracts
         [OperationContract]
         bool CheckConnection(string username);
 
+        /// <summary>
+        /// In this method checks if the connection to the server is active
+        /// </summary>
+        /// <returns>True if could connect to the server</returns>
+        [OperationContract]
+        bool CheckPersonalConnection();
 
     }
 
@@ -125,11 +131,18 @@ namespace HiveGameService.Contracts
         [OperationContract]
         void ReceiveFinalMatchResult(string winner);
 
-        
-        [OperationContract(IsOneWay = true)] 
+        /// <summary>
+        /// Check if one player is disconnected
+        /// </summary>
+        /// <param name="disconnectedUsername">Name of the player who is disconnected</param>
+        [OperationContract] 
         void PlayerDisconnected(string disconnectedUsername);
-        
 
+        /// <summary>
+        /// Receive the ping request of another player
+        /// </summary>
+        [OperationContract]
+        void RecieveRequestPingFromOtherPlayer();
     }
 
     [DataContract]

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading;
+
 
 namespace HiveGameService.Services
 {
@@ -328,35 +328,71 @@ namespace HiveGameService.Services
 
         public bool CheckConnection(string username)
         {
-            bool connection;
+            bool connection = true;
+            LoggerManager logger = new LoggerManager(this.GetType());
+            UserSession session = _gameCallbacks.Keys.Where(userSession => userSession.username == username).FirstOrDefault();
             try
             {
-                connection = true;
+                _gameCallbacks[session].RecieveRequestPingFromOtherPlayer();
             }
-            catch
+            catch (CommunicationException communicationException)
             {
-                NotifyPlayerDisconnected(username);
+                logger.LogFatal(communicationException);
                 connection = false;
             }
-
+            catch (TimeoutException timeoutException)
+            {
+                logger.LogWarn(timeoutException);
+                connection = false;
+            }
+            if(!connection)
+            {
+                NotifyPlayerDisconnected(username);
+                DisconnectPlayerWhoLostConnection(session);
+            }
             return connection;
         }
+
+        private void DisconnectPlayerWhoLostConnection(UserSession session)
+        {
+            Profile userProfile = new Profile()
+            {
+                username = session.username
+            };
+            _usersConnected.RemoveAll(userToDisconnect => userToDisconnect.username == session.username);
+            UpdateFriendsListOfConectedFriends(session);
+            LeaveMatchFinished(session.codeMatch, session);
+        } 
+
         public void NotifyPlayerDisconnected(string disconnectedUsername)
         {
-            foreach (var callback in _connectedPlayers)
+            LoggerManager logger = new LoggerManager(this.GetType());
+            foreach (var callback in _gameCallbacks)
             {
-                if (callback.Key != disconnectedUsername)
+                string username = callback.Key.username;
+                if (username != disconnectedUsername)
+                {
                     try
                     {
                         callback.Value.PlayerDisconnected(disconnectedUsername);
                     }
-                    catch (Exception)
+                    catch (CommunicationException communicationException)
                     {
-                        
+                        logger.LogFatal(communicationException);
                     }
-                }
+                    catch (TimeoutException timeoutException)
+                    {
+                        logger.LogWarn(timeoutException);
+                    }
+                }     
             }
         }
+
+        public bool CheckPersonalConnection()
+        {
+            return true;
+        }
+    }
 
     
 }
